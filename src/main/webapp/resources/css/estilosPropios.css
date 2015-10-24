@@ -1,0 +1,388 @@
+@CHARSET "UTF-8";
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,600&subset=latin,latin-ext);
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.header-document{
+	background: #CB3E3E url("../images/mosaic-pattern.png") repeat !important;
+}
+
+.header-document h4{
+	color: #fff !important;
+}
+
+.header-popup{
+	background: #CB3E3E url("../images/mosaic-pattern.png") repeat !important;
+}
+
+.header-popup h4{
+	color: #fff !important;
+}
+
+.container-popup{
+	width: 60%;margin-left: -30%;
+}
+
+.input-document {
+	width: 203px !important;
+}
+
+.input-document-small {
+	width: 175px !important;
+}
+
+.input-document-small2 {
+	width: 120px !important;
+}
+
+
+.input-document-cuentaEntidad {
+	width: 196px !important;
+}
+
+.input-document-cotizacion {
+	width: 80px !important;
+}
+
+.input-readOnly{
+background: #fff !important;
+}
+
+.input-date {
+	width: 150px !important;
+}
+
+.input-date-small {
+	width: 80px !important;
+}
+
+.input-marginLeft {
+	margin-left: 10px !important;
+}
+
+.input-marginRight {
+	margin-right: 10px !important;
+}
+
+.input-radio {
+	width: 15px;
+}
+
+.input-totales{
+	margin-bottom: 5px !important;
+} 
+
+.input-totales-ancho{
+	width: 100px !important;
+} 
+
+.ducument-numeroLetra {
+	width: 65px !important;
+}
+
+.ducument-numeroDia {
+	width: 55px !important;
+}
+
+.ducument-numeroMes {
+	width: 55px !important;
+}
+
+.ducument-numeroAno {
+	width: 65px !important;
+}
+
+.ducument-numero {
+	width: 80px !important;
+}
+
+.campo-importe {
+	width: 95px !important;
+	text-align: right;
+}
+
+.document-bold{
+	font-weight: bold !important;
+}
+
+
+.ducument-numeroEstablecimiento {
+	width: 50px !important;
+}
+
+.document-totales{
+	background-color: #FAFAFA;
+	padding: 0 20px !important;
+	border-left: 1px dotted #ccc !important;
+	background-color: #e04545 !important; 
+	padding: 20px !important; 
+	border-radius: 22px solid  !important; 
+	 -webkit-border-radius: 20px !important;  
+	 -moz-border-radius: 20px !important;  
+	 border-radius: 20px !important;  
+	 color: white !important;
+	 width: 318px !important;
+	 /* margin-left: 30px !important; */
+	 
+}
+
+.document-tabla{
+	margin-left: 0px !important; width: 100% !important;
+}
+
+.select-document {
+	width: 203px !important;
+}
+
+.select-document-small {
+	width: 175px !important;
+}
+
+.select-document-small-2 {
+	width: 60px !important;
+}
+
+.table-document-aplicaciones{
+	font-size: 11px !important;
+	height: 210px !important;
+    overflow-y: scroll;
+    display: block;
+}
+
+.table-document-tabingreso{
+	font-size: 11px !important;
+	height: 210px !important;
+    width: 100%;
+    overflow-y: scroll;
+    display: block;
+}
+
+.table-document-tabingreso td{
+	padding: 2px !important; 
+	text-align: center;
+	vertical-align: middle;
+}
+
+.table-document-tabingreso .col0 {min-width: 20px; max-width: 20px;}
+.table-document-tabingreso .col1 {min-width: 90px;}
+.table-document-tabingreso .col2 {min-width: 90px;}
+.table-document-tabingreso .col3 {min-width: 90px;}
+.table-document-tabingreso .col4 {min-width: 90px;}
+.table-document-tabingreso .col5 {min-width: 90px;}
+.table-document-tabingreso .col6 {min-width: 60px;}
+.table-document-tabingreso .col7 {min-width: 90px;}
+.table-document-tabingreso .col8 {min-width: 90px;}
+.table-document-tabingreso .col9 {min-width: 90px;}
+.table-document-tabingreso .col10{min-width: 90px;}
+.table-document-tabingreso .col11{min-width: 90px;}
+
+
+.table-document-tabegreso{ 	font-size: 11px !important; 	height: 170px !important;     width: 100%;    overflow-y: scroll;    display: block; 	margin-top: 2px !important;}
+.table-document-tabegreso td{	padding: 2px !important;	text-align: center;	vertical-align: middle; }
+.table-document-tabegreso .col1 { width: 20px;min-width: 20px;max-width: 20px;}
+.table-document-tabegreso .col2 { width: 35px;min-width: 35px;max-width: 35px;}
+.table-document-tabegreso .col3 { min-width: 80px; max-width: 20%;}
+.table-document-tabegreso .col4 { min-width: 80px; max-width: 20%;}
+.table-document-tabegreso .col5 { min-width: 80px; max-width: 20%;}
+.table-document-tabegreso .col6 { min-width: 12%; max-width: 20%;}
+.table-document-tabegreso .col7 { min-width: 80px; max-width: 20%;}
+.table-document-tabegreso .col8 { min-width: 60px;max-width: 100px;}
+
+
+.table-document-imputaciones{ 	font-size: 11px !important; 	height: 210px !important;     width: 100%;    overflow-y: scroll;    display: block;}
+.table-document-imputaciones td{	padding: 2px !important;	text-align: center;	vertical-align: middle;}
+.table-document-imputaciones .col0 {width: 20px;min-width: 20px;max-width: 20px;}
+.table-document-imputaciones .col1 {min-width: 160px;max-width: 200px;}
+.table-document-imputaciones .col2 {min-width: 120px;max-width: 200px;}
+.table-document-imputaciones .col3 {min-width: 120px;max-width: 200px;}
+.table-document-imputaciones .col4 {min-width: 120px;max-width: 200px;}
+.table-document-imputaciones .col5 {min-width: 150px;max-width: 200px;}
+.table-document-imputaciones .col6 {min-width: 60px;}
+.table-document-imputaciones .col7 {min-width: 75px;}
+.table-document-imputaciones .col8 {width: 100px;min-width: 100px;max-width: 100px;}
+
+
+.table-document-valores{ 	font-size: 11px !important; 	height: 210px !important;     width: 100%;    overflow-y: scroll;    display: block;}
+.table-document-valores td{	padding: 2px !important;	text-align: center;	vertical-align: middle;}
+.table-document-valores .col0 {min-width: 20px; max-width: 20px;}
+.table-document-valores .col1 {min-width: 90px;}
+.table-document-valores .col2 {min-width: 90px;}
+.table-document-valores .col3 {min-width: 60px;}
+.table-document-valores .col4 {min-width: 90px;}
+.table-document-valores .col5 {min-width: 90px;}
+.table-document-valores .col6 {min-width: 60px;}
+.table-document-valores .col7 {min-width: 90px;}
+.table-document-valores .col8 {min-width: 90px;}
+.table-document-valores .col9 {min-width: 70px;}
+.table-document-valores .col10{min-width: 90px;}
+.table-document-valores .col11{min-width: 90px;}
+.table-document-valores .col12{min-width: 90px;}
+
+
+.table-document-valoresPropios{ 	font-size: 11px !important; 	height: 210px !important;     width: 100%;    overflow-y: scroll;    display: block;}
+.table-document-valoresPropios td{	padding: 2px !important;	text-align: center;	vertical-align: middle;}
+.table-document-valoresPropios .col0 {min-width: 20px; max-width: 20px;}
+.table-document-valoresPropios .col1 {min-width: 90px;}
+.table-document-valoresPropios .col2 {min-width: 90px;}
+.table-document-valoresPropios .col3 {min-width: 90px;}
+.table-document-valoresPropios .col4 {min-width: 120px;}
+.table-document-valoresPropios .col5 {min-width: 90px;}
+.table-document-valoresPropios .col6 {min-width: 90px;}
+.table-document-valoresPropios .col7 {min-width: 70px;}
+.table-document-valoresPropios .col8 {min-width: 70px;}
+.table-document-valoresPropios .col9 {min-width: 70px;}
+.table-document-valoresPropios .col10 {min-width: 70px;}
+.table-document-valoresPropios .col11 {min-width: 90px;}
+.table-document-valoresPropios .col12 {min-width: 120px;}
+
+
+.tableSaldoEstructuraMovimiento{ 	font-size: 11px !important; 	height: 350px !important;     width: 100%;    overflow-y: scroll;    display: block;}
+.tableSaldoEstructuraMovimiento td{	padding: 2px !important;	vertical-align: middle; }
+.tableSaldoEstructuraMovimiento .col1 { width: 10%; min-width: 130px;max-width: 10%;}
+.tableSaldoEstructuraMovimiento .col2 { width: 10%; min-width: 140px;max-width: 15%;}
+.tableSaldoEstructuraMovimiento .col3 { width: 10%; min-width: 100px;max-width: 15%;}
+.tableSaldoEstructuraMovimiento .col4 { width: 10%; min-width: 50px;max-width: 15%;}
+.tableSaldoEstructuraMovimiento .col5 { width: 5%; min-width: 20px;max-width: 15%;}
+.tableSaldoEstructuraMovimiento .col6 { }
+.tableSaldoEstructuraMovimiento .col7 { }
+.tableSaldoEstructuraMovimiento .col8 { min-width: 120px;max-width: 25%;}
+
+
+.tableSaldoCuentas .col1 { text-align: left}
+.tableSaldoCuentas .col2 { text-align: left}
+.tableSaldoCuentas .col3 { text-align: left}
+.tableSaldoCuentas .col4 { text-align: right}
+.tableSaldoCuentas .col5 { text-align: right}
+.tableSaldoCuentas .col5 { text-align: right}
+.tableSaldoCuentas .col5 { text-align: right}
+
+.tableSaldoCuentas  td:first-child {
+  text-align :left 
+}
+.tableSaldoCuentas  td:first-child + td {
+  text-align :left 
+}
+.tableSaldoCuentas  td:first-child + td + td{
+  text-align :left 
+}
+.tableSaldoCuentas  td:first-child + td + td + td {
+  text-align :right 
+}
+.tableSaldoCuentas  td:first-child + td + td + td + td{
+  text-align :right 
+}
+
+.tableResumenCuentas  td:first-child {
+  text-align :left 
+}
+.tableResumenCuentas  td:first-child + td {
+  text-align :left 
+}
+.tableResumenCuentas  td:first-child + td + td{
+  text-align :left 
+}
+.tableResumenCuentas  td:first-child + td + td + td {
+  text-align :left 
+}
+.tableResumenCuentas  td:first-child + td + td + td + td{
+  text-align :left 
+}
+.tableResumenCuentas  td:first-child + td + td + td + td+ td{
+  text-align :left 
+}
+.tableResumenCuentas  td:first-child + td + td + td + td+ td+ td{
+  text-align :left 
+}
+.tableResumenCuentas  td:first-child + td + td + td + td+ td+ td+ td{
+  text-align :left 
+}
+.tableResumenCuentas  td:first-child + td + td + td + td+ td+ td+ td+ td{
+  text-align :left 
+}
+.tableResumenCuentas  td:first-child + td + td + td + td+ td+ td+ td+ td+ td{
+  text-align :left 
+}
+.tableResumenCuentas  td:first-child + td + td + td + td+ td+ td+ td+ td+ td+td{
+  text-align :right 
+}
+.tableResumenCuentas  td:first-child + td + td + td + td+ td+ td+ td+ td+ td+td+td{
+  text-align :right 
+}
+.tableResumenCuentas  td:first-child + td + td + td + td+ td+ td+ td+ td+ td+td+td+td{
+  text-align :left 
+}
+.tableResumenCuentas  td:first-child + td + td + td + td+ td+ td+ td+ td+ td+td+td+td+td{
+  text-align :right 
+}
+.tableResumenCuentas  td:first-child + td + td + td + td+ td+ td+ td+ td+ td+td+td+td+td+td{
+  text-align :right 
+}
+.tableResumenCuentas  td:first-child + td + td + td + td+ td+ td+ td+ td+ td+td+td+td+td+td+td{
+  text-align :right 
+}
+
+.tablaDocumentosAplicados td:first-child { display: none;}
+.tablaDocumentosAplicados td:first-child + td {display: none;}
+
+
+
+.tableSaldoEstructuraMovimiento  td:first-child + td + td + td + td{
+  text-align :right 
+}
+.tableSaldoEstructuraMovimiento  td:first-child + td + td + td + td+ td{
+  text-align :center 
+}
+.tableSaldoEstructuraMovimiento  td:first-child + td + td + td + td+ td+ td{
+  text-align :right 
+}
+
+.tableSaldoEstructuraMovimiento  td:first-child + td + td + td + td+ td+ td+ td{
+  text-align :right 
+}
+.tableSaldoEstructuraMovimiento  td:first-child + td + td + td + td+ td+ td+ td+ td{
+  text-align :center 
+}
+.tableSaldoEstructuraMovimiento  td:first-child + td + td + td + td+ td + td + td + td + td{
+  text-align :right}
+
+.tableSaldoEstructuraMovimiento  td:first-child + td + td + td + td+ td + td + td + td + td + td{
+  text-align :right}
+
+.tableSaldoEstructuraMovimiento  td:first-child + td + td + td + td+ td + td + td + td + td + td + td{
+  text-align :right}
+
+.cotizacionTable td:first-child + td + td + td {text-align :right}
+
+.tabla-cancelaciones td:first-child + td + td {text-align :right}
+
+.tableBusquedaDocumentos  td:first-child + td + td + td + td + td +td + td +td +td +td +td {
+  text-align :right 
+}
+
+.tableBusquedaDocumentos .col11 { text-align :right}
+
+.separatorMarginTop{
+	margin-top: 20px;
+	background-color: red;
+}
+
+.text-button {
+	width: 250px !important;
+	background-color: #fff !important;
+	border:0 !important;
+}
+
+.text-button span.text-label{
+	font-size: 13px !important;
+	color: rgb(63, 96, 140) !important;
+	font-weight: bold !important;
+	font-style: normal !important;
+	padding: 5px !important
+}
+.descripcion{
+	word-wrap:break-word;
+}
+.icono_listado { width:20px;height:20;display:inline;float:right;margin-top:0.1cm;	}
