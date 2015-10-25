@@ -6,7 +6,6 @@
 	<!-- Form -->
 			<form:form commandName="Usuario" class="contFormEdit form-horizontal" style="margin-bottom: 0;" id="validateSubmitForm" method="get" autocomplete="off" novalidate="novalidate">
 			<form:input path ="id" class="span12" id="id" name="id" type="hidden"/>
-			<form:input class="span12" id="id" path="idRole" value="1" type="hidden"/>
 			<form:input class="span12" id="id" path="validaPassword" value="T" type="hidden"/>
 			<form:input class="span12" id="id" path="validaRol" value="T" type="hidden"/>
 			<form:input class="span12" id="id" path="estado" value="T" type="hidden"/>
@@ -37,6 +36,14 @@
 							<label class="control-label" for="firstname">Email</label>
 							<div class="controls"><form:input class="span10" id="email" path="email" type="text" maxlength="100"/></div>
 						</div>	
+						<div class="control-group">
+								<label class="control-label">Rol</label>
+								<div class="controls">
+									<form:select class='contAdministracionCombo selectpicker span10'  path ='idRole' multiple="false">
+										<form:options items="${rolesDeUsuario}" itemValue="id" itemLabel="nombre" />
+									</form:select>
+								</div>
+						</div>								
 						<div class="control-group">
 							<label class="control-label" for="firstname">Password</label>
 							<div class="controls"><form:input class="span10" id="password" path="password" type="text" maxlength="100"/></div>

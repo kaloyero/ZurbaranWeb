@@ -171,6 +171,25 @@ public abstract class GenericDaoImpl<E, PK extends Serializable> extends Generic
 
       }    
 
+      @SuppressWarnings("unchecked")
+      @Transactional(readOnly=true)
+      public List<E>  getAll(List<Property> properties, String campoOrder,boolean orderByAscId) {
+    	  	List<E>  list  = new ArrayList<E>();
+      	
+    	  	Criteria criteria = getSession().createCriteria(getEntityClass());
+    	  	
+        	/* Agrega los filtros */
+        	setCriteriaProperties(criteria, properties);
+    	  	
+        	/* Agrega el orden */
+           	setOrderBy(criteria,campoOrder,orderByAscId);
+			  
+			list = criteria.list();
+			
+			return list;
+
+      }    
+      
       @Transactional(readOnly=true)
     public Map<String, Integer> listByPropertiesTotals(List<Property> properties, String searchText) {
     	Map<String, Integer> res  = new HashMap<String, Integer>();

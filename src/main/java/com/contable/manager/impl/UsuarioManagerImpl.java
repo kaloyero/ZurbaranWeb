@@ -46,6 +46,13 @@ public class UsuarioManagerImpl extends ConfigurationManagerImpl<Usuario,Usuario
 
 	}
 
+	public UsuarioForm getLoginUser(String usuario, String clave) {
+		
+		return getMapper().getForm(usuarioService.getLoginUser(usuario, clave));
+
+	}
+
+	
 	public boolean changePass (String usuario,String clave, String claveNueva){
 		return usuarioService.changeUsrPwd(usuario, clave, claveNueva);
 	}

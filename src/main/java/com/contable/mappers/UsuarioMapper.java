@@ -10,6 +10,7 @@ public class UsuarioMapper extends MapperImpl<Usuario,UsuarioForm>{
 
 	public Usuario getEntidad(UsuarioForm form) {
 		Usuario ent = new Usuario();
+		
 		if (form != null){
 			ent.setId(form.getId());
 			ent.setDescripcion(form.getDescripcion());

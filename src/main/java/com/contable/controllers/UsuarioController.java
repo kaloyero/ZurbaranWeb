@@ -21,13 +21,11 @@ import com.contable.common.ConfigurationControllerImpl;
 import com.contable.common.ConfigurationManager;
 import com.contable.common.beans.ConfigBean;
 import com.contable.common.beans.ErrorRespuestaBean;
-import com.contable.common.constants.Constants;
 import com.contable.common.utils.ControllerUtil;
 import com.contable.common.utils.ConvertionUtil;
-import com.contable.form.BancoForm;
-import com.contable.form.EstructuraForm;
 import com.contable.form.UsuarioForm;
 import com.contable.hibernate.model.Usuario;
+import com.contable.manager.RolManager;
 import com.contable.manager.UsuarioManager;
 
 
@@ -40,7 +38,9 @@ public class UsuarioController extends ConfigurationControllerImpl<Usuario, Usua
 	
 	@Autowired
 	private UsuarioManager usuarioManager;
-
+	@Autowired
+	private RolManager rolManager;
+	
 	@Override
 	protected ConfigurationManager<Usuario, UsuarioForm> getRelatedManager() {
 		return usuarioManager;
@@ -53,13 +53,18 @@ public class UsuarioController extends ConfigurationControllerImpl<Usuario, Usua
 		row.add(formRow.getUsername());
 		row.add(formRow.getEmail());
 		row.add(ControllerUtil.getEstadoDescripcion(formRow.getEstado()));
-		row.add("<a href='#' class='contChange'><img style='width:20px;height:20;display:inline;float:right;margin-top:0.1cm;' src='resources/images/change.jpeg'></a><a href='#' class='contView'><img style='width:20px;height:20;display:inline;float:right;margin-top:0.1cm;' src='resources/images/view.jpg'></a>");
-
+		row.add(BOTON_LISTADO_ELIMINAR+
+				BOTON_LISTADO_CAMBIARESTADO +
+				BOTON_LISTADO_EDITAR);
 		return row;
 	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public  String  showInit(Locale locale, Model model, HttpServletRequest request) {
+		
+		List<ConfigBean> rolesDeUsuario =rolManager.getConfigNameList();
+		model.addAttribute("rolesDeUsuario", rolesDeUsuario);
+		
 		model.addAttribute("Usuario", new UsuarioForm());
 	   return "configuraciones/usuario";
 	}
@@ -67,11 +72,9 @@ public class UsuarioController extends ConfigurationControllerImpl<Usuario, Usua
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public @ResponseBody  ErrorRespuestaBean guardar(@ModelAttribute(value = "Form") UsuarioForm form,BindingResult result, HttpServletRequest request) throws ParseException{
 		//TODO cambiar
-		form.setIdRole(1);
 		form.setValidaPassword("T");
 		form.setValidaRol("T");
 		form.setEstado("T");
-		
 		
 		ErrorRespuestaBean respuesta=getRelatedManager().guardarNuevo(form);		
 		return respuesta;
@@ -82,6 +85,10 @@ public class UsuarioController extends ConfigurationControllerImpl<Usuario, Usua
 	public String get(Locale locale, Model model,@PathVariable int id, HttpServletRequest request) throws ParseException{
 		UsuarioForm usuario =usuarioManager.findById(id);
 
+		//obtengo los roles de usuario
+		List<ConfigBean> rolesDeUsuario =rolManager.getConfigNameList();
+		model.addAttribute("rolesDeUsuario", rolesDeUsuario);
+		
 		model.addAttribute("Usuario", usuario);
 	   return "configuraciones/editUsuario";
 	}

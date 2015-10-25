@@ -30,6 +30,16 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario> implements 
 		}
 		return true;
 	}
+
+	@Override
+	@Transactional
+	public Usuario getLoginUser(String user, String pass) {
+		Usuario us = usuarioDao.loginUserName(user, pass);
+		if (us == null) {
+			return null;
+		}
+		return us;
+	}
 	
 	@Transactional
 	public boolean changeUsrPwd(String user, String pass, String newPass) {

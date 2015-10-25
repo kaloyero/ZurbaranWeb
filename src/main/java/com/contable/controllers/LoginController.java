@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.contable.form.RolForm;
 import com.contable.form.UsuarioForm;
 import com.contable.form.UsuarioLogin;
+import com.contable.manager.RolManager;
 import com.contable.manager.UsuarioManager;
 
 
@@ -33,7 +35,9 @@ public class LoginController {
 	
 	@Autowired
 	UsuarioManager usuarioManager;
-	
+	@Autowired
+	RolManager rolManager;
+		
 	@RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
 	public ModelAndView defaultPage() {
 
@@ -66,6 +70,13 @@ public class LoginController {
 		boolean validUser = usuarioManager.loginUser(form.getUsername(), form.getPassword());		
 		
 		if (validUser){
+			UsuarioForm usuario = usuarioManager.getLoginUser(form.getUsername(), form.getPassword());
+			RolForm rol = rolManager.findById(usuario.getIdRole());
+			usuario.setRole(rol);
+			usuario.setRoleAccesos(rol.getOpcionesSeleccionadasTodo());
+			//Guardo la info del usuario en la sessión
+			request.getSession().setAttribute("usuarioInfo",usuario);
+			
 			model.setViewName("index");	
 		} else {
 			model.setViewName("");

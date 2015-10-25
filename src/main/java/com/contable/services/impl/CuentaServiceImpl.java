@@ -140,7 +140,8 @@ public class CuentaServiceImpl extends AbstractServiceImpl<Cuenta> implements Cu
 				String anioDesde = ConvertionUtil.StrValueOf(calendarDesde.get(Calendar.YEAR));
 				//Toma de 0 a 11 por lo que no hace falta restarle 1 mes a la fecha
 				mFormat= new DecimalFormat("00");
-				String mesDesde =  mFormat.format(Double.valueOf(calendarDesde.get(Calendar.MONTH)));
+				//Le sumo uno al mes desde
+				String mesDesde =  mFormat.format(Double.valueOf(calendarDesde.get(Calendar.MONTH) + 1));
 				anioMesDesde = anioDesde + mesDesde;
 			}
 

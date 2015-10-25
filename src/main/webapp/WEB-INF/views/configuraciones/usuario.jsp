@@ -101,7 +101,16 @@
 						<div class="control-group">
 							<label class="control-label" for="firstname">Email</label>
 							<div class="controls"><input class="span10" id="email" name="email" type="text" maxlength="100"></div>
-						</div>	
+						</div>
+							<div class="control-group">
+								<label class="control-label">Rol</label>
+								<div class="controls">
+									<form:select class='contAdministracionCombo selectpicker span10'  path ='idRole' multiple="false">
+										<form:options items="${rolesDeUsuario}" itemValue="id" itemLabel="nombre" />
+									</form:select>
+								</div>
+							</div>						
+							
 						<div class="control-group">
 							<label class="control-label" for="firstname">Password</label>
 							<div class="controls"><input class="span10" id="password" name="password" type="text" maxlength="100"></div>

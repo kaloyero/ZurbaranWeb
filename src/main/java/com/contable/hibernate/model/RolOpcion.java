@@ -27,10 +27,10 @@ public class RolOpcion implements Serializable {
 
 	@Column(name = "IdRole")
 	private int idRole;
-	
+
 	@Column(name = "IdOpcion")
 	private int idOpcion;
-
+	
 	public int getId() {
 		return id;
 	}
@@ -53,8 +53,7 @@ public class RolOpcion implements Serializable {
 
 	public void setIdOpcion(int idOpcion) {
 		this.idOpcion = idOpcion;
-	}	
+	}
 
-	
 	
 }

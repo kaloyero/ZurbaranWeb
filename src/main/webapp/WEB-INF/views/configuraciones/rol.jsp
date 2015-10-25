@@ -76,7 +76,7 @@
 <div class="innerLR">
 
 	<!-- Form -->
-	<form:form commandName="Administracion" class="contFormNew form-horizontal" style="margin-bottom: 0;" id="validateSubmitForm" method="get" autocomplete="off" novalidate="novalidate">
+	<form:form commandName="Rol" class="contFormNew form-horizontal" style="margin-bottom: 0;" id="validateSubmitForm" method="get" autocomplete="off" novalidate="novalidate">
 
 		<!-- Widget -->
 		<div class="widget">
@@ -107,11 +107,10 @@
 
 						<div class="control-group">	
 												
-							<div class="span5">										
-								<select multiple size="10" id="from">
-							      <option value="1">Ingresar Documento</option>
-							      <option value="2">Buscar Documentos</option>
-							    </select>
+							<div class="span5">			
+									<form:select class='contOpcionesNoSelectCombo selectpicker span10'  path ='opcionesTodas' multiple="true" id="from" size="10">
+										<form:options items="${opcionesSistemaTodas}" itemValue="id" itemLabel="nombre" />
+									</form:select>							
 							</div>
 							<div class="span1 flecha" href="#" style="text-align:center">			
 						        <a id="allToRight" href="#" class="glyphicons no-js circle_arrow_right"><i></i></a><br/> 
@@ -121,8 +120,9 @@
 						        
 							</div>
 						 	<div class="span5">
-							    <select multiple id="to" size="10">
-							    </select>						
+									<form:select class='contOpcionesSelectCombo selectpicker span10'  path ='opcionesSeleccionadas' multiple="true" id="to" size="10">
+										<form:options items="${opcionesSistemaSeleccionadas}" itemValue="id" itemLabel="nombre" />
+									</form:select>							
 							</div>								
 																
 						</div>	

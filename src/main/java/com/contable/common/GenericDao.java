@@ -33,6 +33,7 @@ public interface GenericDao<E,PK  extends Serializable> extends GenericBaseDao<E
     
     public List<E> findAll(Boolean orderByAscId);
     
+    public List<E>  getAll(List<Property> properties, String campoOrder,boolean orderByAscId);
     /**
      * List all filtrando por un campo
      * 

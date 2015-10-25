@@ -19,6 +19,7 @@ import com.contable.common.ConfigurationManager;
 import com.contable.common.utils.ControllerUtil;
 import com.contable.common.utils.ConvertionUtil;
 import com.contable.form.RolForm;
+import com.contable.hibernate.model.Opcion;
 import com.contable.hibernate.model.Rol;
 import com.contable.manager.RolManager;
 
@@ -45,13 +46,18 @@ public class RolController extends ConfigurationControllerImpl<Rol, RolForm> {
 		row.add(ControllerUtil.getAdministracionDescripcion(formRow.getNombre()));
 		row.add(ControllerUtil.getAdministracionDescripcion(formRow.getDescripcion()));
 		row.add(ControllerUtil.getEstadoDescripcion(formRow.getEstado()));
-		row.add("<a href='#' class='contChange'><img style='width:20px;height:20;display:inline;float:right;margin-top:0.1cm;' src='resources/images/change.jpeg'></a><a href='#' class='contView'><img style='width:20px;height:20;display:inline;float:right;margin-top:0.1cm;' src='resources/images/view.jpg'></a>");
-		
+		row.add(BOTON_LISTADO_ELIMINAR+
+				BOTON_LISTADO_CAMBIARESTADO +
+				BOTON_LISTADO_EDITAR);		
 		return row;
 	}
 	
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public  String  showInit(Locale locale, Model model, HttpServletRequest request) {
+		
+		//Obtengo todas las opciones activas del sistema
+		model.addAttribute("opcionesSistemaTodas", rolManager.obtenerOpcionesSistemaActivas());
+		model.addAttribute("opcionesSistemaSeleccionados", new ArrayList<Opcion>());
 		model.addAttribute("Rol", new RolForm());
 		
 		return "configuraciones/rol";
@@ -59,7 +65,13 @@ public class RolController extends ConfigurationControllerImpl<Rol, RolForm> {
 
 	@RequestMapping(value = "/getEntidadById/{id}", method = RequestMethod.GET)
 	public String get(Locale locale, Model model,@PathVariable int id, HttpServletRequest request) throws ParseException{
+
 		RolForm rol =rolManager.findById(id);
+		
+		//Obtengo todas las opciones activas del sistema que el usuario no agrego
+		model.addAttribute("opcionesSistemaTodas", rolManager.obtenerOpcionesSistemaActivasNoAgregadas(rol.getOpcionesSeleccionadasTodo()));
+		
+		
 
 		model.addAttribute("Rol", rol);
 	    return "configuraciones/editRol";

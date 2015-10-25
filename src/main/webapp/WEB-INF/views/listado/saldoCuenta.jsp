@@ -93,9 +93,9 @@
 										<input class="contFechaAlDesde input-date-small input-marginRight datepicker" type="text" >
 									</div>
 								</div>
-							<div class="span6">
-									<label class="control-label">Al</label>
-									<div class="controls contTipoDoc">					
+								<div class="span3" style="  margin-left: 120px;">
+									<!-- <label class="control-label" style=" width: 15px;    margin-left: 95%;">Al</label> -->
+									<div class="contTipoDoc" style="width: 201px;">Al  			
 										<input class="contVencimientoDesde input-date-small input-marginRight datepicker" type="text" >
 									</div>
 								</div>

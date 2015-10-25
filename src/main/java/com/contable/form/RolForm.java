@@ -1,6 +1,7 @@
 package com.contable.form;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import com.contable.common.beans.FormConfig;
 
@@ -9,8 +10,16 @@ public class RolForm implements FormConfig  {
 	private int id;
 	private String nombre;
 	private String descripcion;
-	private List<Integer> idsOpciones;
+	private Collection<Integer> opcionesTodas;	
+	private Collection<Integer> opcionesSeleccionadas;
+	private Collection<OpcionForm> opcionesSeleccionadasTodo;
 	private String estado;
+	
+	public RolForm() {
+		opcionesTodas = new ArrayList<Integer>();	
+		opcionesSeleccionadas = new ArrayList<Integer>();
+		opcionesSeleccionadasTodo = new ArrayList<OpcionForm>();
+	}
 	
 	public int getId() {
 		return id;
@@ -30,17 +39,33 @@ public class RolForm implements FormConfig  {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public List<Integer> getIdsOpciones() {
-		return idsOpciones;
-	}
-	public void setIdsOpciones(List<Integer> idsOpciones) {
-		this.idsOpciones = idsOpciones;
-	}
+
 	public String getEstado() {
 		return estado;
 	}
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+	public Collection<Integer> getOpcionesTodas() {
+		return opcionesTodas;
+	}
+	public void setOpcionesTodas(Collection<Integer> opcionesTodas) {
+		this.opcionesTodas = opcionesTodas;
+	}
+	public Collection<Integer> getOpcionesSeleccionadas() {
+		return opcionesSeleccionadas;
+	}
+	public void setOpcionesSeleccionadas(Collection<Integer> opcionesSeleccionadas) {
+		this.opcionesSeleccionadas = opcionesSeleccionadas;
+	}
+	public Collection<OpcionForm> getOpcionesSeleccionadasTodo() {
+		return opcionesSeleccionadasTodo;
+	}
+	public void setOpcionesSeleccionadasTodo(
+			Collection<OpcionForm> opcionesSeleccionadasTodo) {
+		this.opcionesSeleccionadasTodo = opcionesSeleccionadasTodo;
+	}
+
+	
 	
 }

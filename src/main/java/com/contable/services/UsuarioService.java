@@ -9,4 +9,5 @@ public interface UsuarioService extends AbstractService<Usuario>{
 	
 	public boolean changeUsrPwd(String user, String pass, String newPass);
 
+	public Usuario getLoginUser(String user, String pass) ;
 }

@@ -63,9 +63,11 @@ public interface ConstantsErrors {
 	public static final String  CONCEPTO_COD_1_ERROR = "El codigo ingresado existe.";
 
 	/** LOGIN / VALIDACION */
-	public static final Integer LOGIN_COD_1_COD_ERROR = 16;
+	public static final Integer LOGIN_COD_1_COD_ERROR = 18;
 	public static final String  LOGIN_COD_1_ERROR = "Usuario o clave inválida.";
-	public static final Integer LOGIN_COD_2_COD_ERROR = 16;
+	public static final Integer LOGIN_COD_2_COD_ERROR = 19;
 	public static final String  LOGIN_COD_2_ERROR = "Nueva Clave y repetir nueva clave deben ser iguales.";
+	public static final Integer LOGIN_COD_3_COD_ERROR = 20;
+	public static final String  LOGIN_COD_3_ERROR = "Usuario seleccionado incorrecto.";
 
 }

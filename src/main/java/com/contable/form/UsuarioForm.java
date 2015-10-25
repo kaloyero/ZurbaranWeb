@@ -1,5 +1,7 @@
 package com.contable.form;
 
+import java.util.Collection;
+
 import com.contable.common.beans.FormConfig;
 
 
@@ -18,6 +20,8 @@ public class UsuarioForm implements FormConfig {
 	private String  descripcion;
 	private String email;
 	private Integer idRole;
+	private RolForm role;
+	private Collection<OpcionForm> roleAccesos;
 	private String nuevaPassword;
 	private String validaPassword;
 	private String validaRol;
@@ -25,6 +29,18 @@ public class UsuarioForm implements FormConfig {
 	
 	
 	
+	public Collection<OpcionForm> getRoleAccesos() {
+		return roleAccesos;
+	}
+	public void setRoleAccesos(Collection<OpcionForm> roleAccesos) {
+		this.roleAccesos = roleAccesos;
+	}
+	public RolForm getRole() {
+		return role;
+	}
+	public void setRole(RolForm role) {
+		this.role = role;
+	}
 	public String getNuevaPassword() {
 		return nuevaPassword;
 	}
