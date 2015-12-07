@@ -14,6 +14,7 @@ import com.contable.common.beans.Mapper;
 import com.contable.common.beans.Property;
 import com.contable.common.constants.Constants;
 import com.contable.common.constants.ConstantsErrors;
+import com.contable.common.utils.MapperUtil;
 import com.contable.form.ChequeraForm;
 import com.contable.form.ValorPropioForm;
 import com.contable.hibernate.model.Chequera;
@@ -98,7 +99,7 @@ public class ChequeraManagerImpl extends ConfigurationManagerImpl<Chequera,Chequ
 		ChequeraForm chequera = findViewById(idChequera);
 		
 		//VALIDA QUE LA CHEQUERA EXISTA Y SEA VALIDA
-		if (chequera != null && Constants.BD_ACTIVO.equals(chequera.getEstado())){
+		if (chequera != null && MapperUtil.getCompleteStatusToForm(Constants.BD_ACTIVO).equals(chequera.getEstado())){
 			//VALIDA QUE EL NUMERO DE CHEQUE ESTE EN EL RANGO CORRECTO
 			if (numero >= chequera.getNumeroIni() && numero <= chequera.getNumeroFin()) {
 				//VALIDA QUE EL NUMERO DE CHEQUE NO EXISTA PARA ESA CHEQUERA
@@ -140,7 +141,7 @@ public class ChequeraManagerImpl extends ConfigurationManagerImpl<Chequera,Chequ
 		ChequeraForm chequera = findViewById(idChequera);
 		
 		//VALIDA QUE LA CHEQUERA EXISTA Y SEA VALIDA
-		if (chequera != null && Constants.BD_ACTIVO.equals(chequera.getEstado())){
+		if (chequera != null && MapperUtil.getCompleteStatusToForm(Constants.BD_ACTIVO).equals(chequera.getEstado())){
 			
 			//Busca los numeros de cheques en chequeras
 			Integer valorPropio =      documentoPropioManager.getUltimoNumeroChequeByChequera(idChequera);		
