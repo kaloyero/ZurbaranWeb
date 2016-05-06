@@ -39,6 +39,17 @@ public interface CotizacionManager extends ConfigurationManager<Cotizacion,Cotiz
 	 */
 	public CotizacionForm getUltimaCotizacionValidacion(int monedaId);
 
+	/**
+	 * Trae la cotizacion para la moneda indicada para la fecha que se desee.
+	 * VAlidaciones:
+	 * - valida que si la moneda es local devuelva "0"
+	 * - valida que si la cotizacion es null devuelva "1"
+	 *
+	 * @param monedaId
+	 * @return
+	 */
+	public Double getUltimaCotizacionValidacionByFecha(int monedaId, String fecha);
+
 	
 	/**
 	 * Obtengo el historico de una moneda en especifico (monedaId). 

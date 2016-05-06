@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.contable.hibernate.model.Moneda;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,18 +65,35 @@ public class CotizacionManagerImpl extends ConfigurationManagerImpl<Cotizacion,C
 
 	
 	public CotizacionForm getUltimaCotizacionValidacion(int monedaId){
-		Cotizacion cotizacion = cotizacionService.getUltimaCotizacion(monedaId); 
-
+		Cotizacion cotizacion = cotizacionService.getUltimaCotizacion(monedaId);
 		if (cotizacion != null){
-			if (cotizacion.getCotizacion() == null){
-				/* - valida que si la moneda es local devuelva "0"  */
-				cotizacion.setCotizacion(1.00);
-			} else if (cotizacion.getMoneda().getMonedaLocal().equals(Constants.BD_ACTIVO)){
-				/* - valida que si la cotizacion es null devuelva "1" */
-				cotizacion.setCotizacion(0.00);
-			}
+			cotizacion.setCotizacion(doValidation(cotizacion.getCotizacion(),cotizacion.getMoneda().getMonedaLocal()));
+			;
 		}
+
 		return getMapper().getForm(cotizacion);
+	}
+
+	private Double doValidation(Double cotizacion,String monedaLocal){
+			Double res= cotizacion;
+			if (cotizacion == null){
+				/* - valida que si la moneda es local devuelva "0"  */
+				res= 1.00;
+			} else if (Constants.BD_ACTIVO.equals(monedaLocal)){
+				/* - valida que si la cotizacion es null devuelva "1" */
+				res = 0.00;
+			}
+			return res;
+	}
+
+	@Override
+	public Double getUltimaCotizacionValidacionByFecha(int monedaId, String fecha) {
+		Double cotizacion = cotizacionService.obtenerCotizacionPorFechaProxima(monedaId,fecha);
+		MonedaForm moneda = monedaManager.findById(monedaId);
+
+		cotizacion = doValidation(cotizacion, moneda.getMonedaLocal() );
+
+		return cotizacion;
 	}
 
 	@Transactional

@@ -259,6 +259,17 @@ showCambiarClave: function(config){
 			}
 		});
     },
+	getCotizacionyByMonedaIdAndDate: function(config){
+		$.ajax({
+			type: 'POST',
+			url: 'moneda/getCotizacionyByMonedaIdAndDate/',
+			contentType: "application/json",
+			data : JSON.stringify(config.data),
+			success: function(data) {
+				config.onSuccess(data);
+			}
+		});
+	},
     getAplicaciones: function(config){
     	$.ajax({
 			type: 'POST',

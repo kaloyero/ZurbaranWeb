@@ -177,7 +177,16 @@ var ComponentTranslator = new Class(
 					}
 				});
 			},
-			
+			getCotizacionyByMonedaIdAndDate : function(cotizacion,callback) {
+				serverManager.getCotizacionyByMonedaIdAndDate({
+					data:cotizacion,
+					onSuccess : function(data) {
+						callback(data);
+
+					}
+				});
+			},
+
 		getDocumentoHeader : function(tipoDocumentoId,callback) {
 				serverManager.getDocumentoHeader({
 					tipoDocumentoId:tipoDocumentoId,

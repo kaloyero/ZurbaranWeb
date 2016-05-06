@@ -90,7 +90,7 @@ public class DocumentoAplicacionMovimientoDaoImpl extends GenericDaoImpl<Documen
 				queryStr.append(" da.`nombreTipoDocumentoAplicado` docAplicaTipoDocumentoNombre, da.`NumeroFormateadoAplicacion` docAplicaNumeroFormateado, da.`TotalAplicado` docAplicaTotal, da.`DescripcionAplicacion` docAplicaDescripcion, da.`monedaNombreMov` movMonedaNombre, da.`monedaCodigoMov` movMonedaCodigo, ");
 				queryStr.append(" da.`IdMovimiento` movId, da.`IdCuentaMov` movCuentaId, da.`IdTipoEntidadMov` movTipoEntidadId, da.`IdEntidadMov` movEntidadId, da.`IdMonedaMov` movMonedaId, da.`ImporteMov` movImporte, da.`Referencia` movReferencia");
 				queryStr.append(", da.cotizacion cotizacion,  dcot.cotizacion movCotizacion ");
-				//No estoy usando el campo `CotizacionMov` entonces lo uso para cotizacion Convertir que si lo necesito. En el futuro habrá q crear otra clase q tenga este campo
+				//No estoy usando el campo `CotizacionMov` entonces lo uso para cotizacion Convertir que si lo necesito. En el futuro habr q crear otra clase q tenga este campo
 				//queryStr.append(", da.`CotizacionMov` movCotizacion,  dcot.cotizacion cotizacionConvertir  ");
 				/*FROM*/
 				queryStr.append("   FROM documentoaplicacionesmovimientos_v da ");

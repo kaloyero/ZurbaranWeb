@@ -1,22 +1,9 @@
 package com.contable.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.contable.common.ConfigurationControllerImpl;
 import com.contable.common.ConfigurationManager;
 import com.contable.common.beans.ConfigBean;
+import com.contable.common.beans.CotizacionBean;
 import com.contable.common.utils.ControllerUtil;
 import com.contable.common.utils.ConvertionUtil;
 import com.contable.form.CotizacionForm;
@@ -25,7 +12,16 @@ import com.contable.hibernate.model.Moneda;
 import com.contable.manager.AdministracionManager;
 import com.contable.manager.CotizacionManager;
 import com.contable.manager.MonedaManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -33,15 +29,15 @@ import org.springframework.expression.ParseException;
  */
 @Controller
 @RequestMapping(value = "/moneda")
-public class MonedaController extends ConfigurationControllerImpl<Moneda, MonedaForm>{
-	
+public class MonedaController extends ConfigurationControllerImpl<Moneda, MonedaForm> {
+
 	@Autowired
 	private MonedaManager monedaManager;
 	@Autowired
 	private CotizacionManager cotizacionManager;
 	@Autowired
 	private AdministracionManager adminManager;
-     
+
 	@Override
 	protected ConfigurationManager<Moneda, MonedaForm> getRelatedManager() {
 		return monedaManager;
@@ -49,7 +45,7 @@ public class MonedaController extends ConfigurationControllerImpl<Moneda, Moneda
 
 	@Override
 	protected List<String> getRowDataList(MonedaForm formRow) {
-		List <String> row =new ArrayList<String>();
+		List<String> row = new ArrayList<String>();
 		row.add(ConvertionUtil.StrValueOf(formRow.getId()));
 		row.add(formRow.getNombre());
 		row.add(formRow.getCodigo());
@@ -59,29 +55,45 @@ public class MonedaController extends ConfigurationControllerImpl<Moneda, Moneda
 	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public  String  showInit(Locale locale, Model model, HttpServletRequest request) {
-		List<ConfigBean> listadoAdministraciones =adminManager.getConfigNameList(AdministracionManager.CAMPO_TODAS);
-		
+	public String showInit(Locale locale, Model model, HttpServletRequest request) {
+		List<ConfigBean> listadoAdministraciones = adminManager.getConfigNameList(AdministracionManager.CAMPO_TODAS);
+
 		model.addAttribute("Moneda", new MonedaForm());
 		model.addAttribute("administraciones", listadoAdministraciones);
-	   return "configuraciones/moneda";
+		return "configuraciones/moneda";
 	}
 
 	@RequestMapping(value = "/getEntidadById/{id}", method = RequestMethod.GET)
-	public String get(Locale locale, Model model,@PathVariable int id, HttpServletRequest request) throws ParseException{
-		MonedaForm moneda =monedaManager.findById(id);
-		List<ConfigBean> listadoAdministraciones =adminManager.getConfigNameList(AdministracionManager.CAMPO_TODAS);
-		
+	public String get(Locale locale, Model model, @PathVariable int id, HttpServletRequest request) throws ParseException {
+		MonedaForm moneda = monedaManager.findById(id);
+		List<ConfigBean> listadoAdministraciones = adminManager.getConfigNameList(AdministracionManager.CAMPO_TODAS);
+
 		model.addAttribute("administraciones", listadoAdministraciones);
 		model.addAttribute("Moneda", moneda);
-	   return "configuraciones/editMoneda";
+		return "configuraciones/editMoneda";
 	}
+
 	@RequestMapping(value = "/getCotizacionyByMonedaId/{id}", method = RequestMethod.GET)
-	public @ResponseBody double getCotizacion(Locale locale, Model model,@PathVariable int id, HttpServletRequest request) throws ParseException{
-		CotizacionForm form=cotizacionManager.getUltimaCotizacionValidacion(id);
-		// Si la moneda no tiene cotización no muestra nada.
-		
+	public
+	@ResponseBody
+	double getCotizacion(Locale locale, Model model, @PathVariable int id, HttpServletRequest request) throws ParseException {
+		CotizacionForm form = cotizacionManager.getUltimaCotizacionValidacion(id);
+		// Si la moneda no tiene cotizaciï¿½n no muestra nada.
+
 		return form.getCotizacion();
+	}
+	@RequestMapping(value = "/getCotizacionyByMonedaIdAndDate", method = RequestMethod.POST)
+	public @ResponseBody Double getCotizacionByMonedaIdAndDate(@RequestBody CotizacionBean cotizacion) {
+
+		Double cotiza = cotizacionManager.getUltimaCotizacionValidacionByFecha(cotizacion.getId(),cotizacion.getFechaIngreso() );
+
+		// Si la moneda no tiene cotizaciï¿½n no muestra nada.
+		System.out.println("---------------------");
+		System.out.println("LLEGA El ID " + cotizacion.getId() );
+		System.out.println("LLEGA LA FECHA " + cotizacion.getFechaIngreso() );
+		System.out.println("---------------------");
+		return cotiza;
+
 	}
 
 }
