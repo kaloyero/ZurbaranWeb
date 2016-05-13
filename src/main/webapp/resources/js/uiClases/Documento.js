@@ -59,8 +59,8 @@ var Documento = new Class({
         $(".contFormNew").find(".contFechaIngreso").change(function () {
             self.getLastNumeracion();
             var selectedId = $(".contFormNew").find("#monedaCombo").select2('data').id;
-            self.getCotizacion(selectedId);
-            self.updateImputacionesCotizacion();
+            self.getCotizacion(selectedId)
+			self.updateImputacionesCotizacion()
         })
 
 
@@ -253,6 +253,7 @@ var Documento = new Class({
     },
 
     getCotizacionObj: function (id) {
+		debugger
         var cotiza = new Object();
         cotiza.id = id;
         cotiza.fechaIngreso = $(".contFechaIngreso").val();
@@ -1007,9 +1008,11 @@ var Documento = new Class({
         $(primero).find("a").trigger('click');
 
     },
+
+
     updateImputacionesCotizacion: function () {
         console.log("ALE: paso 1");
-
+var self = this;
         $("#contImputacionesBody >tr").not(':last').each(function( index,element ) {
             console.log("ALE: paso 3");
             var monedaId = $(this).find(".contImputacionesMoneda").find("select").select2('data').id;
@@ -1017,7 +1020,8 @@ var Documento = new Class({
             var cotizacion = $(this).find(".contCotizacion").find("input").val();
             console.log("ALE: paso 5");
             //Obtengo la cotización y cambio el campo cotización
-            translator.getCotizacionyByMonedaIdAndDate(monedaId, function (data) {
+			debugger
+            translator.getCotizacionyByMonedaIdAndDate(self.getCotizacionObj(monedaId), function (data) {
                 console.log("ALE: paso 6");
                 self.fillCotizacion($(this), data);
                 console.log("ALE: paso 7");
@@ -1031,7 +1035,7 @@ var Documento = new Class({
 
         })
 
-    },
+    }
 
 
 
