@@ -61,6 +61,8 @@ var Documento = new Class({
             var selectedId = $(".contFormNew").find("#monedaCombo").select2('data').id;
             self.getCotizacion(selectedId)
 			self.updateImputacionesCotizacion()
+			self.updateIngresosCotizacion()
+			self.updatePropiosCotizacion()
         })
 
 
@@ -1030,6 +1032,47 @@ var self = this;
             })
 
             console.log("ALE: paso Atajo");
+            //Probar si funciona
+            $(this).find(".contImputacionesMoneda").find("select").change();
+
+        })
+
+    },
+	  updateIngresosCotizacion: function () {
+        console.log("ALE: paso 1");
+var self = this;
+        $("#contIngresoBody >tr").not(':last').each(function( index,element ) {
+            var monedaId = $(this).find(".contImputacionesMoneda").find("select").select2('data').id;
+            var cotizacion = $(this).find(".contCotizacion").find("input").val();
+            //Obtengo la cotización y cambio el campo cotización
+			debugger
+            translator.getCotizacionyByMonedaIdAndDate(self.getCotizacionObj(monedaId), function (data) {
+                self.fillCotizacion($(this), data);
+                self.mostrarTotales($(this).parent().parent());
+
+            })
+
+            console.log("ALE: paso Atajo");
+            //Probar si funciona
+            $(this).find(".contImputacionesMoneda").find("select").change();
+
+        })
+
+    },
+	  updatePropiosCotizacion: function () {
+			var self = this;
+			debugger
+        $("#contPropiosBody >tr").not(':last').each(function( index,element ) {
+            var monedaId = $(this).find(".contImputacionesMoneda").find("select").select2('data').id;
+            var cotizacion = $(this).find(".contCotizacion").find("input").val();
+            //Obtengo la cotización y cambio el campo cotización
+			debugger
+            translator.getCotizacionyByMonedaIdAndDate(self.getCotizacionObj(monedaId), function (data) {
+                self.fillCotizacion($(this), data);
+                self.mostrarTotales($(this).parent().parent());
+
+            })
+
             //Probar si funciona
             $(this).find(".contImputacionesMoneda").find("select").change();
 

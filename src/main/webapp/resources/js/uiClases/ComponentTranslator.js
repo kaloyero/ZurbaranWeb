@@ -178,6 +178,7 @@ var ComponentTranslator = new Class(
 				});
 			},
 			getCotizacionyByMonedaIdAndDate : function(cotizacion,callback) {
+				console.log("DATA",cotizacion)
 				serverManager.getCotizacionyByMonedaIdAndDate({
 					data:cotizacion,
 					onSuccess : function(data) {
