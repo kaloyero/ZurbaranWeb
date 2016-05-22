@@ -1,7 +1,6 @@
 package com.contable.manager.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +43,7 @@ import com.contable.hibernate.model.Cuenta;
 import com.contable.hibernate.model.Documento;
 import com.contable.hibernate.model.DocumentoAplicacion;
 import com.contable.hibernate.model.DocumentoAplicacionPendiente_V;
+import com.contable.hibernate.model.DocumentoMovimientoCotizacion;
 import com.contable.hibernate.model.Moneda;
 import com.contable.hibernate.model.TipoDocumento;
 import com.contable.hibernate.model.TipoDocumento_v;
@@ -57,6 +57,7 @@ import com.contable.mappers.MonedaMapper;
 import com.contable.mappers.NumeracionMapper;
 import com.contable.services.CuentaService;
 import com.contable.services.DocumentoAplicacionService;
+import com.contable.services.DocumentoMovimientoCotizacionService;
 import com.contable.services.DocumentoService;
 import com.contable.services.MonedaService;
 import com.contable.services.TipoDocumentoService;
@@ -75,6 +76,9 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 
 	@Autowired
 	TipoDocumentoService tipoDocumentoService;
+
+	@Autowired
+	DocumentoMovimientoCotizacionService documentoMovimientoCotizacionService;
 	
 	@Autowired
 	DocumentoAplicacionService documentoAplicacionService;
@@ -118,7 +122,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 	}
 
 	public List<ConfigBean> getDocAplicacionesLista(int tipoDocumento,Integer cuenta, Integer entidad, Integer moneda ) {
-
+		
 		//Obtengo de la cuenta el Tipo de Entidad
 		Integer tipoEntidadId = null;
 		if (cuenta != null){
@@ -179,7 +183,9 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 	@Transactional
 	@Override
 	public ErrorRespuestaBean guardarNuevo(DocumentoForm form){
-		ErrorRespuestaBean res = new ErrorRespuestaBean(); 
+		
+		ErrorRespuestaBean res = new ErrorRespuestaBean();
+
 		int idAministracion = form.getAdministracion().getId().intValue();
 		/* 
 		 * Validaciones Previas aguardar el Documento 
@@ -223,7 +229,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		form.setId(idDocumento);
 		/* ----  Guardo el MOVIMIENTO ENCABEZADO ---- */
 		documentoMovimientoManager.guardarHeader(form);			
-		
+
 		if (form.getAplicaciones() != null && ! form.getAplicaciones().isEmpty()){
 			/*  Guardar Aplicaciones  */
 			guardarDocumentoAplicaciones(form.getAplicaciones(),idDocumento);
@@ -248,8 +254,66 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 				return res;
 			}
 		}
-			
+
+		/* Guardo las cotizaciones para el documento*/
+		saveDocumentoCotizacionMovimiento(form);
+		
 		return res;
+	}
+	
+	
+	private void saveDocumentoCotizacionMovimiento(DocumentoForm form){
+		Map<Integer, DocumentoMovimientoCotizacion> cotizaciones =  getDocumentoMovimientosCotizaciones(form);
+		
+		for (DocumentoMovimientoCotizacion cotizacion : cotizaciones.values()) {
+			documentoMovimientoCotizacionService.save(cotizacion);
+		}
+		
+	}
+	
+	private Map<Integer, DocumentoMovimientoCotizacion> getDocumentoMovimientosCotizaciones(DocumentoForm form){
+		Map<Integer, DocumentoMovimientoCotizacion> cotizaciones =  new HashMap<Integer, DocumentoMovimientoCotizacion>();
+		String fechaIngreso = form.getFechaIngreso();
+		Integer documentoId  = form.getId();
+		
+		//Agrego la cotización del encabezado
+		addNewCotizacion(cotizaciones, form.getMonedaId(),fechaIngreso,documentoId);
+		if (form.getImputaciones() != null && ! form.getImputaciones().isEmpty()){
+			for (DocumentoMovimientoForm dmForm : form.getImputaciones()) {
+				addNewCotizacion(cotizaciones, dmForm.getMonedaId(),fechaIngreso,documentoId);
+			}
+		}
+		if (form.getValoresEgreTerce() != null && ! form.getValoresEgreTerce().isEmpty()){
+			for (DocumentoMovimientoForm vetForm : form.getValoresEgreTerce()) {
+				addNewCotizacion(cotizaciones, vetForm.getMonedaId(),fechaIngreso,documentoId);
+			}
+		}
+		if (form.getValoresIngreTerce() != null && ! form.getValoresIngreTerce().isEmpty()){
+			for (DocumentoMovimientoForm vitForm : form.getValoresIngreTerce()) {
+				addNewCotizacion(cotizaciones, vitForm.getMonedaId(),fechaIngreso,documentoId);
+			}
+		}
+		if (form.getValoresPropio() != null && ! form.getValoresPropio().isEmpty()){
+			for (DocumentoMovimientoForm vpForm : form.getValoresPropio()) {
+				addNewCotizacion(cotizaciones, vpForm.getMonedaId(),fechaIngreso,documentoId);
+			}
+		}
+		
+		return cotizaciones;
+	}
+	
+	
+	private void addNewCotizacion (Map<Integer,DocumentoMovimientoCotizacion> cotizaciones, Integer monedaId, String fechaIngreso,Integer documentoId){
+		if ( ! cotizaciones.containsKey(monedaId)){
+			Double cotizacion = cotizacionManager.getUltimaCotizacionValidacionByFecha(monedaId, fechaIngreso);
+			DocumentoMovimientoCotizacion docMovCot = new DocumentoMovimientoCotizacion();
+			docMovCot.setCotizacion(cotizacion);
+			docMovCot.setMonedaId(monedaId);
+			docMovCot.setDocumentoId(documentoId);
+			
+			cotizaciones.put(monedaId, docMovCot);	
+		}
+		
 	}
 	
 	private ErrorRespuestaBean validacionesPreGuardarNuevo (DocumentoForm form){
@@ -354,7 +418,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 
 		/* Obtengo Header */
 			documento = mapper.getForm(documentoService.findViewById(id) );
-		
+
 		/* Obtengo Imputaciones */
 			List <DocumentoMovimientoForm> imputaciones = documentoMovimientoManager.getListaMovImputacionesByDocId(id);
 			actualizaElImporteMonedaHeader_IM(imputaciones, documento.getMonedaId(), documento.getCotizacion());
@@ -542,9 +606,24 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 			documentoService.actualizarEstadoDocumento(documentoId, Constants.DOCUMENTO_ESTADO_ANULADO);	
 			documentoService.actualizarDocumentoAnuladoPor(documentoId, idDocumentoAnulacion);
 
+		/* 	ix. Guardo las cotizaciones de los movimientos */
+			saveAnulacionDocumentoCotizacionMovimiento(documentoId, idDocumentoAnulacion);;
+			
+			
 		return respuesta;
 	}
 
+	private void saveAnulacionDocumentoCotizacionMovimiento(int idDocumentoAnular, int idDocumentoAnulador){
+		List<DocumentoMovimientoCotizacion>cotizaciones = documentoMovimientoCotizacionService.getCotizacionesByIdDocumento(idDocumentoAnular);
+			
+		for (DocumentoMovimientoCotizacion cotizacion : cotizaciones ) {
+			DocumentoMovimientoCotizacion cotizacionAnulada = cotizacion.clone();
+			cotizacionAnulada.setDocumentoId(idDocumentoAnulador);
+			documentoMovimientoCotizacionService.save(cotizacionAnulada);
+		}
+		
+	}
+	
 	@Transactional
 	public ErrorRespuestaBean eliminarById(int documentoId) {
 		ErrorRespuestaBean respuesta = new ErrorRespuestaBean(true);
