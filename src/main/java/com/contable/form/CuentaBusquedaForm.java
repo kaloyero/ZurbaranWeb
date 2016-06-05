@@ -43,6 +43,7 @@ public class CuentaBusquedaForm implements Serializable{
 	private Integer numeroDia;
 	private Integer numero;
 	private String cotizacion;
+	private String cotizacionAconvertir;
 	private BigInteger aplicacionesEnDocumento;
 
 	private Date fecha;
@@ -53,6 +54,12 @@ public class CuentaBusquedaForm implements Serializable{
 	
 	
 
+	public String getCotizacionAconvertir() {
+		return cotizacionAconvertir;
+	}
+	public void setCotizacionAconvertir(String cotizacionAconvertir) {
+		this.cotizacionAconvertir = cotizacionAconvertir;
+	}
 	public String getDebitoMostrar() {
 		return debitoMostrar;
 	}

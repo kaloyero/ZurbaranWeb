@@ -199,8 +199,7 @@ public class CuentaSaldo_VDaoImpl extends GenericDaoImpl<CuentaSaldo_V, Integer>
 					+ " ) SaldoAAMM, sum(round(mov.Importe * (case when (mov.TipoMovimiento = 'D') then 1 when (mov.TipoMovimiento = 'C') then -1 else 0 end ) * " 
 					+ " IFNULL(mov.cotizacion,1) / 	"
 					+ " (case when mov.IdMoneda = " + filtro.getMonedaMuestraId() + " then IFNULL(mov.cotizacion,1) else "
-					+ " (SELECT IFNULL(max(IFNULL(cotizacion,1)),1)	FROM cotizaciones cot where cot.Idmoneda = " + filtro.getMonedaMuestraId() + " "
-					+ "	and cot.fecha = (select max(fecha) from cotizaciones cot1 where cot1.Idmoneda = " + filtro.getMonedaMuestraId() + "  and fecha <= doc.FechaIngreso  ) ) "
+					+ " (SELECT IFNULL(cot.cotizacion,1) FROM documentomovimientoscotizaciones cot where cot.Idmoneda = " + filtro.getMonedaMuestraId() + " 	and cot.IdDocumento = `mov`.`IdDocumento` ) "
 					+ " end ) "
 					+ " ,2) )  totalMostrar ");
 		}

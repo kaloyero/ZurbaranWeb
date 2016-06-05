@@ -158,8 +158,9 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 
 	@Transactional
 	public List<CuentaBusquedaForm> buscarResumenCuenta(FiltroCuentaBean filtros){
-		List<CuentaBusquedaForm> list = cuentaService.buscarResumenPorFiltros(filtros,"FechaIngreso desc, IdDocumento asc ,movimientoId",true);
-		
+		List<CuentaBusquedaForm> list = cuentaService.buscarResumenPorFiltros(filtros,"FechaIngreso desc, rcm.IdDocumento asc ,movimientoId",true);
+
+		/*CAMBIOMONEDA*/
 		/* Mostrar moneda en */
 		mostrarEnMoneda(list, filtros);
 		
@@ -169,6 +170,7 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 	private void mostrarEnMoneda(List<CuentaBusquedaForm> list,FiltroCuentaBean filtros){
 		if (filtros.getMonedaMuestraId() != null )
 		{
+			boolean mostrarMonedaLocal = false;
 			//Pregunto si la moneda que muestro es igual a la que quiero mostrar.
 			CotizacionForm cotForm = null;
 			String monedaCodigoMostrar = "";
@@ -176,10 +178,11 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 				//Obtengo la COtizacion A convertir
 				Moneda moneda = monedaService.findById(filtros.getMonedaMuestraId());
 				monedaCodigoMostrar = moneda.getCodigo();
-				
+				if (moneda.getMonedaLocal().equals(Constants.BD_ACTIVO)){
+					 mostrarMonedaLocal = true;
+				}
 			}
 			
-			Map<Integer,List<Cotizacion>> listadoCotizaciones = cotizacionService.obtenerListadoCotizacionAnuales(filtros.getMonedaMuestraId());
 			for (CuentaBusquedaForm saldo : list) {
 				Double cotizacionMoneda = ConvertionUtil.DouValueOf(saldo.getCotizacion());
 				
@@ -190,11 +193,13 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 					saldo.setDebitoMostrar(saldo.getDebito());					
 					saldo.setCreditoMostrar(saldo.getCredito());
 				} else {
-					Double cotizacionAConvertir = CalculosUtil.getCotizacionFechaMovDia(listadoCotizaciones, DateUtil.convertStringToDate(saldo.getFechaIngreso()), cotForm);
+					Double cotizacionAConvertir = ConvertionUtil.DouValueOf(saldo.getCotizacionAconvertir());
 					
-					//seteo la cotización a la moneda q convierto
-					saldo.setCotizacion(FormatUtil.format2DecimalsStr( cotizacionAConvertir));
-					
+					if ( ! mostrarMonedaLocal){
+						//seteo la cotización a la moneda q convierto
+						saldo.setCotizacion(FormatUtil.format2DecimalsStr( cotizacionAConvertir));
+							
+					}
 					saldo.setMonedaMostrarCodigo(monedaCodigoMostrar);
 					//Calculo los valores
 					saldo.setDebitoMostrar(CalculosUtil.calcularImporteByCOtizacion(ConvertionUtil.DouValueOf(saldo.getDebito()), cotizacionMoneda, cotizacionAConvertir));					

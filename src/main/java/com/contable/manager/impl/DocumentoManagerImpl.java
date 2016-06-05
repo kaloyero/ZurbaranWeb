@@ -3,7 +3,6 @@ package com.contable.manager.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -263,57 +262,41 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 	
 	
 	private void saveDocumentoCotizacionMovimiento(DocumentoForm form){
-		Map<Integer, DocumentoMovimientoCotizacion> cotizaciones =  getDocumentoMovimientosCotizaciones(form);
+		List<DocumentoMovimientoCotizacion> cotizaciones =	getDocumentoMovimientosCotizaciones(form);
 		
-		for (DocumentoMovimientoCotizacion cotizacion : cotizaciones.values()) {
+		for (DocumentoMovimientoCotizacion cotizacion : cotizaciones) {
 			documentoMovimientoCotizacionService.save(cotizacion);
 		}
 		
 	}
 	
-	private Map<Integer, DocumentoMovimientoCotizacion> getDocumentoMovimientosCotizaciones(DocumentoForm form){
-		Map<Integer, DocumentoMovimientoCotizacion> cotizaciones =  new HashMap<Integer, DocumentoMovimientoCotizacion>();
+	private List<DocumentoMovimientoCotizacion> getDocumentoMovimientosCotizaciones(DocumentoForm form){
+		List<DocumentoMovimientoCotizacion> cotizaciones =  new ArrayList<DocumentoMovimientoCotizacion>();
+		List<Moneda> monedas = monedaService.listAll();
+				
 		String fechaIngreso = form.getFechaIngreso();
 		Integer documentoId  = form.getId();
 		
-		//Agrego la cotización del encabezado
-		addNewCotizacion(cotizaciones, form.getMonedaId(),fechaIngreso,documentoId);
-		if (form.getImputaciones() != null && ! form.getImputaciones().isEmpty()){
-			for (DocumentoMovimientoForm dmForm : form.getImputaciones()) {
-				addNewCotizacion(cotizaciones, dmForm.getMonedaId(),fechaIngreso,documentoId);
-			}
-		}
-		if (form.getValoresEgreTerce() != null && ! form.getValoresEgreTerce().isEmpty()){
-			for (DocumentoMovimientoForm vetForm : form.getValoresEgreTerce()) {
-				addNewCotizacion(cotizaciones, vetForm.getMonedaId(),fechaIngreso,documentoId);
-			}
-		}
-		if (form.getValoresIngreTerce() != null && ! form.getValoresIngreTerce().isEmpty()){
-			for (DocumentoMovimientoForm vitForm : form.getValoresIngreTerce()) {
-				addNewCotizacion(cotizaciones, vitForm.getMonedaId(),fechaIngreso,documentoId);
-			}
-		}
-		if (form.getValoresPropio() != null && ! form.getValoresPropio().isEmpty()){
-			for (DocumentoMovimientoForm vpForm : form.getValoresPropio()) {
-				addNewCotizacion(cotizaciones, vpForm.getMonedaId(),fechaIngreso,documentoId);
-			}
+		for (Moneda moneda : monedas) {
+			addNewCotizacion(cotizaciones, moneda.getId(),fechaIngreso,documentoId);	
 		}
 		
 		return cotizaciones;
 	}
 	
 	
-	private void addNewCotizacion (Map<Integer,DocumentoMovimientoCotizacion> cotizaciones, Integer monedaId, String fechaIngreso,Integer documentoId){
-		if ( ! cotizaciones.containsKey(monedaId)){
+	private void addNewCotizacion (List<DocumentoMovimientoCotizacion> cotizaciones, Integer monedaId, String fechaIngreso,Integer documentoId){
 			Double cotizacion = cotizacionManager.getUltimaCotizacionValidacionByFecha(monedaId, fechaIngreso);
+			//Valida que si es 0 setee en 1
+			if (cotizacion.doubleValue() == 0.0 ){
+				cotizacion = 1.0;
+			}
 			DocumentoMovimientoCotizacion docMovCot = new DocumentoMovimientoCotizacion();
 			docMovCot.setCotizacion(cotizacion);
 			docMovCot.setMonedaId(monedaId);
 			docMovCot.setDocumentoId(documentoId);
 			
-			cotizaciones.put(monedaId, docMovCot);	
-		}
-		
+			cotizaciones.add(docMovCot);	
 	}
 	
 	private ErrorRespuestaBean validacionesPreGuardarNuevo (DocumentoForm form){
