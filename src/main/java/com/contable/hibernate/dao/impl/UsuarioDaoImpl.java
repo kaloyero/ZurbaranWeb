@@ -65,7 +65,7 @@ public class UsuarioDaoImpl extends GenericDaoImpl<Usuario, Integer> implements 
 		if (usr != null){
 			StringBuilder queryStr = new StringBuilder();
 		    
-			queryStr.append("update `Usuarios` set `ClaveAcceso`='"+ passwordNew +"'");
+			queryStr.append("update `Usuarios` set `ClaveAcceso`='"+ passwordNew +"' where id = '"+usr.getId()+"' ; ");
 			Query query = getSession().createSQLQuery(queryStr.toString());
 		
 			query.executeUpdate();

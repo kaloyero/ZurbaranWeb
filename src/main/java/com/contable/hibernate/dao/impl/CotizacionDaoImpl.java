@@ -86,12 +86,15 @@ public class CotizacionDaoImpl extends GenericDaoImpl<Cotizacion, Integer> imple
 			criteria.add(Restrictions.le("fecha", fecha));
 		}
 		criteria.addOrder(Order.desc("fecha"));
-		criteria.addOrder(Order.desc("cotizacion"));
+		criteria.addOrder(Order.desc("id"));
+		//Para tomar la mayor cotizacion del dia
+		//criteria.addOrder(Order.desc("cotizacion"));
+		
 		
 		criteria.setMaxResults(1);
 
 		return (Cotizacion) criteria.uniqueResult();
-		
+
   	}
     
 }

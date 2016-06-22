@@ -9,6 +9,8 @@ import com.contable.hibernate.model.CuentaResumen_V;
 
 public interface CuentaResumen_VDao extends GenericDao<CuentaResumen_V, Integer> {
 
-	public List<CuentaBusquedaForm> buscarSaldoAnteriorCuentaByFiltros(	FiltroCuentaBean filtro, String orderField, boolean orderAsc);
+	 List<CuentaBusquedaForm> buscarSaldoAnteriorCuentaByFiltros(	FiltroCuentaBean filtro, String orderField, boolean orderAsc);
+	
+	 List<CuentaBusquedaForm> buscarSaldoAnteriorCuentaByFiltrosBuscarMoneda(	FiltroCuentaBean filtro, String orderField,Integer monedaIdMonstrarEn, boolean orderAsc);
 	
 }

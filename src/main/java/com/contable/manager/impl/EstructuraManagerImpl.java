@@ -94,77 +94,6 @@ public class EstructuraManagerImpl extends ConfigurationManagerImpl<Estructura,E
 		return list;
 	}
 
-	
-	
-// CODIGO VIEEEJOOOO	
-//	public List<EstructuraSaldoForm> getEstructuraSaldos (int idEstructura, int idAdministracion,String fecha, Integer monedaMostrarId){
-//		//Si la fecha viene vacía devuelve un listado vacio
-//		if (StringUtils.isBlank(fecha)){
-//			return new ArrayList<EstructuraSaldoForm>(); 
-//		}
-//		
-//		List<EstructuraSaldoForm> saldosEstructura = new ArrayList<EstructuraSaldoForm>();
-//		
-//		Estructura estructura = estructuraService.findById(idEstructura);
-//		
-//		if (idEstructura <1 || idAdministracion < 1 ){
-//			return saldosEstructura;
-//		}
-//		
-//		//Contenidos - Ordeno los contenidos según el orden de alta
-//		List<EstructuraContenido> contenidos = ordenarContenidos(estructura.getContenidos());
-//		for (EstructuraContenido contenido : contenidos) {
-//			List<CuentaBusquedaForm> listaSaldos = new ArrayList<CuentaBusquedaForm>();
-//			
-//			//Contenido Cuentas - Ordeno las cuentas según el orden de alta
-//			List<EstructuraContenidoCuenta> contenidoCuentas = ordenarContenidoCuentas(contenido.getCuentas());
-//			
-//			for (EstructuraContenidoCuenta conteCuenta : contenidoCuentas) {
-//				String entidad = null;
-//				if (conteCuenta.getEntidad() != null)
-//					entidad = ConvertionUtil.StrValueOf(conteCuenta.getEntidad().getId());
-//				
-//				//Por cada cuenta consulto y agrego a lista de saldos
-//				listaSaldos.addAll(getListadoPorContenidoCuenta(fecha, contenido.getModo(), idAdministracion, conteCuenta.getCuenta().getId(), entidad, conteCuenta.getMoneda().getId(),monedaMostrarId));
-//			}
-//			if (Constants.ESTRUCTURA_AGRUPA.equals(contenido.getModo())){
-//				/* Obtengo saldos */
-//				HashMap<Integer, EstructuraSaldoForm> saldos = getSaldosAgrupadosPorMonedas(listaSaldos, Constants.ESTRUCTURA_MOV_SALDO_MOVIMINETO,contenido.getCodigo());
-//				/*Agrego los Saldos Iniciales al listado que voy a mostrar */ 
-//				for (Integer key : saldos.keySet()) {
-//					saldosEstructura.add(saldos.get(key));
-//				}
-//
-//				
-//				
-//			} else if (Constants.ESTRUCTURA_DETALLA.equals(contenido.getModo())){
-//				for (CuentaBusquedaForm cuentaBusquedaForm : listaSaldos) {
-//					saldosEstructura.add( getEstructuraSaldoForm(cuentaBusquedaForm, Constants.ESTRUCTURA_MOV_SALDO_INICIAL ,contenido.getCodigo(),true));
-//					
-//				}
-//			}
-//		}
-//
-//		//Actualiza los valores de Mostrar en moneda.
-////		muestraEnMoneda(saldosEstructura, monedaMostrarId,false);
-//		
-//		//Actualiza el codigo de la moneda q muestra
-//		if (monedaMostrarId != null && monedaMostrarId > 1){
-//
-//			//Obtengo Moneda Local
-//			Moneda monedaMostrar = monedaService.findById(monedaMostrarId); 
-//			String codigoMonedaMostrarEn =monedaMostrar.getCodigo(); 
-//			for (EstructuraSaldoForm saldo : saldosEstructura) {
-//				saldo.setCodigo(codigoMonedaMostrarEn);
-//			}
-//			
-//		}
-//			
-//		
-//		return saldosEstructura;
-//		
-//	}
-
 	@Transactional
 	public List<EstructuraSaldoForm> getEstructuraSaldos (int idEstructura, int idAdministracion,String fechaDesde,String fechaHasta, Integer monedaMostrarId){
 		//Si la fecha viene vacía devuelve un listado vacio
@@ -263,12 +192,12 @@ public class EstructuraManagerImpl extends ConfigurationManagerImpl<Estructura,E
 					entidad = ConvertionUtil.StrValueOf(conteCuenta.getEntidad().getId());
 				
 				/* Saldos Ini */
-				listaSaldoInicial.addAll(getListadoPorContenidoCuenta(fechaSaldoInicial, contenido.getModo(), idAdministracion, conteCuenta.getCuenta().getId(), entidad, conteCuenta.getMoneda().getId(),null));
+				listaSaldoInicial.addAll(getListadoPorContenidoCuenta(fechaSaldoInicial, contenido.getModo(), idAdministracion, conteCuenta.getCuenta().getId(), entidad, conteCuenta.getMoneda().getId(),monedaMostrarId));
 				/* Saldos Fin */
-				listaSaldoFinal.addAll(getListadoPorContenidoCuenta(fechaFinal, contenido.getModo(), idAdministracion, conteCuenta.getCuenta().getId(), entidad, conteCuenta.getMoneda().getId(),null));
+				listaSaldoFinal.addAll(getListadoPorContenidoCuenta(fechaFinal, contenido.getModo(), idAdministracion, conteCuenta.getCuenta().getId(), entidad, conteCuenta.getMoneda().getId(),monedaMostrarId));
 				
 				/* Obtengo Lista de resumen Movimientos*/
-				FiltroCuentaBean filtros = new FiltroCuentaBean(idAdministracion, fechaInicial, fechaFinal, conteCuenta.getCuenta().getId(), entidad, conteCuenta.getMoneda().getId());
+				FiltroCuentaBean filtros = new FiltroCuentaBean(idAdministracion, fechaInicial, fechaFinal, conteCuenta.getCuenta().getId(), entidad, conteCuenta.getMoneda().getId(),monedaMostrarId);
 				listaResumen.addAll(cuentaService.buscarResumenPorFiltros(filtros,"FechaIngreso",true));
 			}
 			/* AGRUPA */
@@ -345,31 +274,9 @@ public class EstructuraManagerImpl extends ConfigurationManagerImpl<Estructura,E
 		}
 		
 		//Actualiza los valores de Mostrar en moneda.
-		muestraEnMoneda(saldosEstructura, monedaMostrarId, muestrafechaMovimiento);
-		
-		/* AGREGA REGISTRO PARA DOCUMENTOS APLICADOS */
-//		for (EstructuraSaldoForm saldo : saldosEstructura) {
-//			if (saldo.isAplicacionesEnDocumento()){
-//				List<DocumentoAplicaciones_V> documentosAplicados= documentoMovimientoService.getCancelacionesByIdDoc(saldo.getDocumentoId());
-//				for (DocumentoAplicaciones_V docApl : documentosAplicados) {
-//					List <String> rowDocApp =new ArrayList<String>();
-//					rowDocApp.add(ConvertionUtil.StrValueOf(docApl.getDocumentoAplicaId()));
-//					rowDocApp.add("");rowDocApp.add("");
-//					rowDocApp.add("");rowDocApp.add("");
-//					rowDocApp.add("");rowDocApp.add("");
-//					rowDocApp.add("");rowDocApp.add("");
-//					rowDocApp.add("");rowDocApp.add("");
-//					rowDocApp.add("Documento Aplicado: ");
-//					rowDocApp.add("<a href='#' class='contView'>" + docApl.getNumeroFormateado() + "</a> ");
-//					dataTable.getAaData().add(rowDocApp);
-//				}
-//			}
-//		}
+		muestraEnMoneda(saldosEstructura, monedaMostrarId);
 		
 
-		
-		
-		
 		return saldosEstructura;
 		
 	}
@@ -380,30 +287,23 @@ public class EstructuraManagerImpl extends ConfigurationManagerImpl<Estructura,E
 	 * @param muestrafechaMovimiento Si es true, quiere decir que va a buscar la cotización por la fecha del movimiento. 
 	 * 								 Si es false, utilizará la cotización de la fecha actual 
 	 */
-	private void muestraEnMoneda(List<EstructuraSaldoForm> saldosEstructura, Integer monedaMuestraId, boolean muestrafechaMovimiento){
+	private void muestraEnMoneda(List<EstructuraSaldoForm> saldosEstructura, Integer monedaMuestraId){
 		/* MOSTRAR EN MONEDA*/
 		if ( ! saldosEstructura.isEmpty()){
 			/* verifico si desea mostrar en alguna moneda en especial */
 			if (monedaMuestraId != null && monedaMuestraId > 1){
 
-				//Obtengo Moneda Local
-				CotizacionForm cotForm =cotizacionManager.getUltimaCotizacion(monedaMuestraId); 
-				Double cotizacion = cotForm.getCotizacion();
+				//Obtengo Moneda 
+				Moneda moneda = monedaService.findById(monedaMuestraId);
+
 
 				//Obtengo la COtizacion A convertir
 				Integer monedaLocalId =monedaService.obtenerMonedaLocal().getId(); 
 				
-				// Si la moneda no tiene cotización no muestra nada.
-				if (cotForm.getMoneda() == null && (new Double(0.00)).equals(cotizacion)){
-					return;
-				}
-
+	
 				//MUESTRA POR COTIZACION DEL DIA O COTIZACION DE LA FECHA
-				if (muestrafechaMovimiento){
-					muestraEnMonedaFechaMovCotizacion(saldosEstructura, monedaMuestraId,cotForm,monedaLocalId);
-				} else {
-					muestraEnMonedaUltimaCotizacion(saldosEstructura, monedaMuestraId,cotForm,monedaLocalId);
-				}
+					muestraEnMonedaFechaMovCotizacion(saldosEstructura, monedaMuestraId,moneda,monedaLocalId);
+
 			} else {
 				//Si no muestra en alguna moneda igualo el total al saldo
 				for (EstructuraSaldoForm saldo : saldosEstructura) {
@@ -416,80 +316,34 @@ public class EstructuraManagerImpl extends ConfigurationManagerImpl<Estructura,E
 		
 	}
 
-	private void muestraEnMonedaFechaMovCotizacion(List<EstructuraSaldoForm> saldosEstructura, Integer monedaMuestraId, CotizacionForm cotForm,Integer monedaLocalId){
-		
-		Map<Integer,List<Cotizacion>> listadoCotizaciones = cotizacionService.obtenerListadoCotizacionAnuales(monedaMuestraId);
-		
-		Integer ultimaCotizacionMonedaId = 0;
-		Double cotizacionMoneda = 0.0;
+	private void muestraEnMonedaFechaMovCotizacion(List<EstructuraSaldoForm> saldosEstructura, Integer monedaMuestraId, Moneda moneda,Integer monedaLocalId){
+
+		Double cotizacionAConvertir = 0.0;
 		//Si elige moneda obtiene su cotizacion y calcula
 		for (EstructuraSaldoForm saldo : saldosEstructura) {
 			if (saldo.getFecha() != null){
 				//Cotizacion
-				Double cotizacion = CalculosUtil.getCotizacionFechaMovDia(listadoCotizaciones, DateUtil.convertStringToDate(saldo.getFecha()), cotForm);
-				
-				cotizacionMoneda = getMuestraenUltimaCotMoneda(saldo, monedaMuestraId, ultimaCotizacionMonedaId, cotizacionMoneda, monedaLocalId, true);
-				//setea la ultima cotizacion. Para este caso> solo sirve si la fecha es null
-				ultimaCotizacionMonedaId = saldo.getMonedaId();
-				
-				setFormMonedaMuestraen(saldo, monedaMuestraId, cotForm, cotizacion, cotizacionMoneda);	
-			}
-		}
-		
-	}
-	
-	private void muestraEnMonedaUltimaCotizacion(List<EstructuraSaldoForm> saldosEstructura, Integer monedaMuestraId, CotizacionForm cotForm,Integer monedaLocalId){
-		Double cotizacion = cotForm.getCotizacion();
-		Integer ultimaCotizacionMoneda = 0;
-		Double cotizacionMoneda = 0.0;
-		//Si elige moneda obtiene su cotizacion y calcula
-		for (EstructuraSaldoForm saldo : saldosEstructura) {
-			cotizacionMoneda = getMuestraenUltimaCotMoneda(saldo, monedaMuestraId, ultimaCotizacionMoneda, cotizacionMoneda, monedaLocalId, false);
-			//setea la ultima cotizacion
-			ultimaCotizacionMoneda = saldo.getMonedaId();
-			setFormMonedaMuestraen(saldo, monedaMuestraId, cotForm, cotizacion, cotizacionMoneda);
-		}
-
-	}
-
-	private Double getMuestraenUltimaCotMoneda(EstructuraSaldoForm saldo, Integer monedaMuestraId, Integer ultimaCotizacionMoneda,Double cotizacionMoneda,Integer monedaLocalId, boolean muestrafechaMovimiento){
-		Double res = 0.0;
-		
-		if ( ! monedaMuestraId.equals(saldo.getMonedaId())){
-			/* Si es igual a la moneda local la cotización es 1 */
-			if (saldo.getMonedaId().equals(monedaLocalId)){
-				cotizacionMoneda = 1.0;
-			} else {
-				if (muestrafechaMovimiento) {
-					if ( (saldo.getFecha() != null) ){
-						cotizacionMoneda = cotizacionService.obtenerCotizacionPorFechaProxima(saldo.getMonedaId().intValue(), saldo.getFecha());
-					} else {
-						cotizacionMoneda = -1.0;
-					}
+				Double cotizacion = ConvertionUtil.DouValueOf(saldo.getMonedaCotizacion());
+				cotizacionAConvertir = ConvertionUtil.DouValueOf(saldo.getMonedaCotizacionMuestra());;
+				if ( ! moneda.getMonedaLocal().equals(Constants.BD_ACTIVO)){
+					//seteo la cotización a la moneda q convierto
+					saldo.setMonedaCotizacionMuestra(FormatUtil.format2DecimalsStr( cotizacionAConvertir));
 				} else {
-					/* para no hacer la consulta siempre por la misma moneda*/
-					if ( ! ultimaCotizacionMoneda.equals(saldo.getMonedaId()) ){
-						cotizacionMoneda = cotizacionManager.getUltimaCotizacionValidacion(saldo.getMonedaId()).getCotizacion();
-						if (cotizacionMoneda == 0){
-							cotizacionMoneda = 1.0;
-						}
-					}
+					saldo.setMonedaCotizacionMuestra(FormatUtil.format2DecimalsStr( cotizacion));
 				}
-				
+				setFormMonedaMuestraen(saldo, monedaMuestraId, moneda, cotizacionAConvertir, cotizacion);	
 			}
-			res = cotizacionMoneda;
 		}
-		return res;
 		
 	}
 
 	
-	private void setFormMonedaMuestraen(EstructuraSaldoForm saldo, Integer monedaMuestraId, CotizacionForm cotForm, Double cotizacion,Double cotizacionMoneda){
+	private void setFormMonedaMuestraen(EstructuraSaldoForm saldo, Integer monedaMuestraId, Moneda moneda, Double cotizacion,Double cotizacionMoneda){
 			
 			//seteo el nombre de la moneda en que muestro
-			saldo.setMonedaCodigoMuestra(cotForm.getMoneda().getCodigo());
-			saldo.setMonedaNombreMuestra(cotForm.getMoneda().getNombre());
-			saldo.setMonedaCotizacionMuestra(FormatUtil.format2DecimalsStr(cotizacion));
+			saldo.setMonedaCodigoMuestra(moneda.getCodigo());
+			saldo.setMonedaNombreMuestra(moneda.getNombre());
+
 			//Pregunto si la moneda que muestro es igual a la que quiero mostrar. De ser así dejo el mismo valor.
 			if (monedaMuestraId.equals(saldo.getMonedaId())){
 				saldo.setCreditoMuestra(saldo.getCredito());
@@ -600,6 +454,8 @@ public class EstructuraManagerImpl extends ConfigurationManagerImpl<Estructura,E
 		form.setMonedaId(movimiento.getMonedaId());
 		form.setMonedaCodigo(movimiento.getMonedaCodigo());
 		form.setMonedaNombre(movimiento.getMonedaNombre());
+		form.setMonedaCotizacion(movimiento.getCotizacion());
+		form.setMonedaCotizacionMuestra(movimiento.getCotizacionAconvertir());
 		form.setFecha(movimiento.getFechaIngreso());
 		form.setDocumento(movimiento.getNumeroFormateado());
 		form.setDebito(movimiento.getDebito());

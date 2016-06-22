@@ -25,19 +25,35 @@ public class CuentaResumen_VDaoImpl extends GenericDaoImpl<CuentaResumen_V, Inte
 	}
 
 	@Transactional
-	@SuppressWarnings("unchecked")
 	public  List<CuentaBusquedaForm> buscarSaldoAnteriorCuentaByFiltros(	FiltroCuentaBean filtro, String orderField, boolean orderAsc) {
+
+		return buscarSaldoAnteriorCuentaByFiltrosBuscarMoneda(	 filtro,  orderField, null ,  orderAsc);
+	
+	}
+	
+	
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public  List<CuentaBusquedaForm> buscarSaldoAnteriorCuentaByFiltrosBuscarMoneda(	FiltroCuentaBean filtro, String orderField,Integer monedaIdMonstrarEn, boolean orderAsc) {
+		String cotizacionField = "rcm.`cotizacion` `cotizacion`, 1 as `cotizacionAconvertir`,";
+		if (monedaIdMonstrarEn != null) {
+			cotizacionField = "rcm.`cotizacion` `cotizacion`,dc.`cotizacion` `cotizacionAconvertir`,";
+		} 
 
 		StringBuilder queryStr = new StringBuilder();
 		/*SELECT*/
 		queryStr.append("select `IdAdministracion` AS `administracionId`, `FechaIngreso` `fecha`, `tipodocumentoNombre` `tipoDocumentoNombre`, `NumeroLetra`, `NumeroEstablecimiento`, " +
-				"`NumeroAnio`, `NumeroMes`, `NumeroDia`, `Numero`, `docDescripcion` ,`IdDocumento` `documentoId`, `IdMovimiento` `movimientoId`, `Descripcion` , `IdCuenta` `cuentaId`," +
-				" `IdTipoEntidad` `tipoEntidadId`, `IdEntidad` `entidadId`, `IdMoneda` `monedaId`, `cotizacion` `cotizacion`, `monedaNombre`, `monedaCodigo`, `cuentaNombre`, " +
+				"`NumeroAnio`, `NumeroMes`, `NumeroDia`, `Numero`, `docDescripcion` ,rcm.`IdDocumento` `documentoId`, `IdMovimiento` `movimientoId`, `Descripcion` , `IdCuenta` `cuentaId`," +
+				" `IdTipoEntidad` `tipoEntidadId`, `IdEntidad` `entidadId`, rcm.`IdMoneda` `monedaId`, " + cotizacionField +
+				" `monedaNombre`, `monedaCodigo`, `cuentaNombre`, " +
 				" `entidadNombre`, `tipoEntidadNombre`, `Debito` `debito`, `Credito` `credito` , `Referencia` `referencia`, `AplicacionesEnDocumento` `aplicacionesEnDocumento` " +
 				" , `estado`, `IdDocumentoAnulaa` documentoAnulaaId, `IdDocumentoAnuladoPor` documentoAnuladoPorId ");
 		
 		/*FROM*/
-		queryStr.append("from resumencuentamovimientos_v ");
+		queryStr.append(" from resumencuentamovimientos_v rcm ");
+		if (monedaIdMonstrarEn != null) {
+			queryStr.append(" left join documentomovimientoscotizaciones dc on (dc.idDocumento = rcm.IdDocumento AND dc.IdMoneda = '"+ monedaIdMonstrarEn +"') ");
+		}
 		/*WHERE*/
 		queryStr.append("WHERE ");
 		//fecha
@@ -52,7 +68,7 @@ public class CuentaResumen_VDaoImpl extends GenericDaoImpl<CuentaResumen_V, Inte
 		if (StringUtils.isNotBlank(filtro.getEntidadId()))
 			queryStr.append(" AND `IdEntidad` in ("+filtro.getEntidadId().replace("{", "").replace("{", "")+") ");
 		if (filtro.getMonedaId() != null && filtro.getMonedaId() > 0)
-			queryStr.append(" AND `IdMoneda` = '"+filtro.getMonedaId()+"' ");
+			queryStr.append(" AND rcm.`IdMoneda` = '"+filtro.getMonedaId()+"' ");
 		if (StringUtils.isNotBlank(filtro.getFechaDesde()))
 			queryStr.append(" AND `fechaIngreso` >= :fechaDesde ");
 		if (StringUtils.isNotBlank(filtro.getFechaHasta()))
@@ -92,6 +108,7 @@ public class CuentaResumen_VDaoImpl extends GenericDaoImpl<CuentaResumen_V, Inte
 				.addScalar("debito",Hibernate.STRING)
 				.addScalar("credito",Hibernate.STRING)
 				.addScalar("cotizacion",Hibernate.STRING)
+				.addScalar("cotizacionAconvertir",Hibernate.STRING)
 				.addScalar("estado")
 				.addScalar("documentoAnulaaId")
 				.addScalar("documentoAnuladoPorId")				
@@ -107,6 +124,5 @@ public class CuentaResumen_VDaoImpl extends GenericDaoImpl<CuentaResumen_V, Inte
 		
 		return result;
 	
-	}
-	
+	}	
 }

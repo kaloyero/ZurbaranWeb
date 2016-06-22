@@ -17,6 +17,7 @@ public class EstructuraSaldoForm implements Serializable{
 	private Integer monedaId;
 	private String monedaNombre;
 	private String monedaCodigo;
+	private String monedaCotizacion;
 	private String fecha;
 	private String debito;
 	private String credito;
@@ -165,6 +166,12 @@ public class EstructuraSaldoForm implements Serializable{
 	public String getDebito() {
 		return debito;
 	}
+	public String getMonedaCotizacion() {
+		return monedaCotizacion;
+	}
+	public void setMonedaCotizacion(String monedaCotizacion) {
+		this.monedaCotizacion = monedaCotizacion;
+	}
 	public void setDebito(String debito) {
 		this.debito = debito;
 	}
@@ -186,6 +193,7 @@ public class EstructuraSaldoForm implements Serializable{
 	public void setMonedaCotizacionMuestra(String monedaCotizacionMuestra) {
 		this.monedaCotizacionMuestra = monedaCotizacionMuestra;
 	}
+	
 
 	
 }

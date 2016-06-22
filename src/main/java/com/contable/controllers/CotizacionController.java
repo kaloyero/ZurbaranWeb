@@ -70,7 +70,7 @@ public class CotizacionController  extends ConfigurationControllerImpl<Cotizacio
 	public String get(Locale locale, Model model,@PathVariable int id, HttpServletRequest request) throws ParseException{
 		CotizacionForm cotizacion =cotizacionManager.findById(id);
 		//Actualizo la fecha Actual
-		cotizacion.setFecha(DateUtil.getStringToday());
+		//cotizacion.setFecha("");
 		
 		List<ConfigBean> listadoMonedas =monedaManager.getConfigNameList();
 
@@ -85,10 +85,7 @@ public class CotizacionController  extends ConfigurationControllerImpl<Cotizacio
 		CotizacionForm cotizacion =cotizacionManager.findById(id);
 		//Actualizo la fecha Actual
 		List<CotizacionForm> form=cotizacionManager.obtenerHistoricoCotizacion(id, DateUtil.getStringToday(), DateUtil.convertDateToString(DateUtil.sumarMeses(DateUtil.getStringToday(), -12)));
-		
-
-
-	
+			
 		return form;
 	}
 

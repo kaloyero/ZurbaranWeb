@@ -79,7 +79,15 @@ public class CuentaServiceImpl extends AbstractServiceImpl<Cuenta> implements Cu
 	}
 
 	public List<CuentaBusquedaForm> buscarResumenPorFiltros(FiltroCuentaBean filtros, String orderField, boolean orderAsc) {
-			List<CuentaBusquedaForm> list = cuentaResumen_VDao.buscarSaldoAnteriorCuentaByFiltros(filtros,orderField,orderAsc);
+		List<CuentaBusquedaForm> list ;
+			
+		if (filtros.getMonedaMuestraId() != null && filtros.getMonedaMuestraId().intValue() != filtros.getMonedaId().intValue() )
+			{
+				list= cuentaResumen_VDao.buscarSaldoAnteriorCuentaByFiltrosBuscarMoneda(filtros,orderField,filtros.getMonedaMuestraId(),orderAsc);
+				
+			} else {
+				list= cuentaResumen_VDao.buscarSaldoAnteriorCuentaByFiltros(filtros,orderField,orderAsc);
+			}
 			
 			//Ordeno el resumen por fecha
 			list = ordenarResumen(list);

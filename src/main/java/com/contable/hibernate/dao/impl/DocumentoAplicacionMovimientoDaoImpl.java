@@ -95,7 +95,7 @@ public class DocumentoAplicacionMovimientoDaoImpl extends GenericDaoImpl<Documen
 				/*FROM*/
 				queryStr.append("   FROM documentoaplicacionesmovimientos_v da ");
 				/*JOIN*/
-				queryStr.append(" JOIN documentocotizaciones dcot ON (dcot.fecha = da.fechaingreso AND dcot.IdMoneda = " + filtro.getMonedaMuestraId() + ") ");
+				queryStr.append(" JOIN documentomovimientoscotizaciones dcot ON (dcot.idDocumento = da.IdDocumento AND dcot.IdMoneda = " + filtro.getMonedaMuestraId() + ") ");
 				/*WHERE*/
 				queryStr.append(" WHERE 1 = 1 ");
 				
@@ -145,6 +145,8 @@ public class DocumentoAplicacionMovimientoDaoImpl extends GenericDaoImpl<Documen
 				
 				/*WHERE*/
 				queryStr.append(" ORDER BY `da`.`FechaIngreso` asc,  da.`nombreTipoDocumento`  asc, da.`IdDocumento` asc ,  da.`IdAplicacion` asc ");
+				
+				System.out.println(queryStr);
 				
 				Query query = getSession().createSQLQuery(queryStr.toString())
 						.addScalar("aplicacionId")

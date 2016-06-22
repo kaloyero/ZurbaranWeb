@@ -43,7 +43,7 @@ public class FiltroCuentaBean {
 	
 	
 	public FiltroCuentaBean(Integer administracionId, String fechaDesde,
-			String fechaHasta, Integer cuentaId,	String entidadId, Integer monedaId) {
+			String fechaHasta, Integer cuentaId,	String entidadId, Integer monedaId, Integer monedaMuestraId) {
 		super();
 		this.administracionId = administracionId;
 		this.fechaDesde = fechaDesde;
@@ -51,6 +51,7 @@ public class FiltroCuentaBean {
 		this.cuentaId = cuentaId;
 		this.entidadId = entidadId;
 		this.monedaId = monedaId;
+		this.monedaMuestraId = monedaMuestraId;
 	}
 
 

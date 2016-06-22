@@ -58,6 +58,7 @@ public class EstructuraDaoImpl extends GenericDaoImpl<Estructura, Integer> imple
 			queryStr = getQueryEstructuraSaldos(idEstructura, filtroFechaDesde,idAdministracion);
 		}
 		
+		System.out.println(queryStr);
 		lista = excecuteQueryEstructuraSaldos(queryStr,fechaDesde, fechaHasta);
 				
 		return lista;
@@ -84,7 +85,7 @@ public class EstructuraDaoImpl extends GenericDaoImpl<Estructura, Integer> imple
 		queryStr.append(",2) ");
 		queryStr.append(") saldoMuestra ");
 		queryStr.append("from estructuramovimientos_v em ");
-		queryStr.append("join documentocotizaciones dc on dc.Fecha = em.FechaMovimiento ");
+		queryStr.append("join documentomovimientoscotizaciones dc on dc.idDocumento = em.IdDocumento ");
 		queryStr.append(" AND dc.IdMoneda =  " + monedaMostrarId + "  ");
 		queryStr.append("where IdEstructura =  " + idEstructura + "  ");
 		queryStr.append("and FechaMovimiento <= :fechaHasta ");

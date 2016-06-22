@@ -54,7 +54,7 @@
 						</li>
 						<li>
 							<span>
-								<a class="btn btn-default btn-mini pull-right" href="#">Salir</a>
+								<a class="btn btn-default btn-mini pull-right" href="">Salir</a>
 								<a class="option btn btn-default btn-mini pull-right" style="margin-right: 10px;    " id="cambiarClave">Cambiar Clave</a>
 								<!--<a class="btn btn-default btn-mini pull-right" href="login.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-light">Salir</a>-->
 							</span>
