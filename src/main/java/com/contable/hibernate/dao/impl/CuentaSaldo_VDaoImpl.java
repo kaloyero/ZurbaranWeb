@@ -85,8 +85,8 @@ public class CuentaSaldo_VDaoImpl extends GenericDaoImpl<CuentaSaldo_V, Integer>
 			tabla = "saldoscuentasaamm_v";
 		}
 		
-		queryStr.append("select `IdAdministracion` AS `administracionId`, `IdCuenta` as `cuentaId`, `cuentaNombre`, `IdTipoEntidad` as `tipoEntidadId`, `tipoentidadNombre`, " +
-				"`IdEntidad` as `entidadId`, `entidadNombre`, `IdMoneda` as `monedaId`, `monedaNombre`, `monedaCodigo`, sum(saldoaamm) as `saldo` ");
+		queryStr.append("select `IdAdministracion` AS `administracionId`, `IdCuenta` as `cuentaId`, `CuentaNombre`, `IdTipoEntidad` as `tipoEntidadId`, `TipoEntidadNombre`, " +
+				"`IdEntidad` as `entidadId`, `EntidadNombre`, `IdMoneda` as `monedaId`, `MonedaNombre`, `MonedaCodigo`, sum(SaldoAAMM) as `saldo` ");
 				if (mostrarMonedaEn) {
 					queryStr.append(" ,sum(`SaldoMonedaAAMM`) as `totalMostrar`");
 				}
@@ -119,7 +119,7 @@ public class CuentaSaldo_VDaoImpl extends GenericDaoImpl<CuentaSaldo_V, Integer>
 		}
 		
 		queryStr.append(" group  ");
-		queryStr.append(" by	Idadministracion, ");
+		queryStr.append(" by	IdAdministracion, ");
 		queryStr.append(" IdCuenta, ");
 		queryStr.append(" IdTipoEntidad, ");
 		queryStr.append(" IdEntidad, ");
@@ -197,9 +197,9 @@ public class CuentaSaldo_VDaoImpl extends GenericDaoImpl<CuentaSaldo_V, Integer>
 					+ " )) AS `saldo`, " + filtro.getMonedaMuestraId() + " IdMonedaEn, (year(doc.FechaIngreso)*100+month(doc.FechaIngreso)) AnioMes,sum(mov.Importe * " 
 					+ " (case when (mov.TipoMovimiento = 'D') then 1 when (mov.TipoMovimiento = 'C') then -1 else 0 end) "
 					+ " ) SaldoAAMM, sum(round(mov.Importe * (case when (mov.TipoMovimiento = 'D') then 1 when (mov.TipoMovimiento = 'C') then -1 else 0 end ) * " 
-					+ " IFNULL(mov.cotizacion,1) / 	"
-					+ " (case when mov.IdMoneda = " + filtro.getMonedaMuestraId() + " then IFNULL(mov.cotizacion,1) else "
-					+ " (SELECT IFNULL(cot.cotizacion,1) FROM documentomovimientoscotizaciones cot where cot.Idmoneda = " + filtro.getMonedaMuestraId() + " 	and cot.IdDocumento = `mov`.`IdDocumento` ) "
+					+ " IFNULL(mov.Cotizacion,1) / 	"
+					+ " (case when mov.IdMoneda = " + filtro.getMonedaMuestraId() + " then IFNULL(mov.Cotizacion,1) else "
+					+ " (SELECT IFNULL(cot.Cotizacion,1) FROM documentomovimientoscotizaciones cot where cot.Idmoneda = " + filtro.getMonedaMuestraId() + " 	and cot.IdDocumento = `mov`.`IdDocumento` ) "
 					+ " end ) "
 					+ " ,2) )  totalMostrar ");
 		}
@@ -350,14 +350,14 @@ public class CuentaSaldo_VDaoImpl extends GenericDaoImpl<CuentaSaldo_V, Integer>
 		queryStr.append(" IdTipoEntidad as tipoEntidadId, ");
 		queryStr.append(" IdEntidad as entidadId, ");
 		queryStr.append(" IdMoneda as monedaId, ");
-		queryStr.append(" cuentaNombre, ");
-		queryStr.append(" entidadNombre, ");
-		queryStr.append(" tipoentidadNombre, ");
-		queryStr.append(" monedaNombre,monedaCodigo, ");
+		queryStr.append(" CuentaNombre, ");
+		queryStr.append(" EntidadNombre, ");
+		queryStr.append(" TipoentidadNombre, ");
+		queryStr.append(" MonedaNombre,monedaCodigo, ");
 		queryStr.append(" sum(Saldo) as saldo");
 		queryStr.append(" FROM ");
 		queryStr.append(" ( ");
-		queryStr.append(" SELECT `Idadministracion`, `IdCuenta`, `cuentaNombre`,`IdTipoEntidad`,`entidadNombre`,`tipoentidadNombre`, `IdEntidad`, `IdMoneda`,`monedaNombre`,`monedaCodigo`, sum(saldoaamm) `Saldo` ");  
+		queryStr.append(" SELECT `Idadministracion`, `IdCuenta`, `CuentaNombre`,`IdTipoEntidad`,`EntidadNombre`,`TipoEntidadNombre`, `IdEntidad`, `IdMoneda`,`MonedaNombre`,`MonedaCodigo`, sum(SaldoAAMM) `Saldo` ");  
 		queryStr.append(" FROM saldoscuentasaamm_v ");
 		queryStr.append(" 	where  ");
 		//fecha
@@ -376,7 +376,7 @@ public class CuentaSaldo_VDaoImpl extends GenericDaoImpl<CuentaSaldo_V, Integer>
 //		queryStr.append(" group by 	Idadministracion, IdCuenta, IdTipoEntidad, IdEntidad, IdMoneda ");    
 	    
 		queryStr.append(" UNION ALL ");
-		queryStr.append("select `doc`.`IdAdministracion` AS `administracionId`,`mov`.`IdCuenta` AS `cuentaId`,`cu`.`Nombre` AS `cuentaNombre`,`mov`.`IdTipoEntidad` AS `tipoEntidadId`,`te`.`Nombre` AS `tipoEntidadNombre`,`mov`.`IdEntidad` AS `entidadId`" +
+		queryStr.append("select `doc`.`IdAdministracion` AS `administracionId`,`mov`.`IdCuenta` AS `cuentaId`,`cu`.`Nombre` AS `CuentaNombre`,`mov`.`IdTipoEntidad` AS `tipoEntidadId`,`te`.`Nombre` AS `tipoEntidadNombre`,`mov`.`IdEntidad` AS `entidadId`" +
 				",`en`.`Nombre` AS `entidadNombre`,`mov`.`IdMoneda` AS `monedaId`,`mo`.`Nombre` AS `monedaNombre`,`mo`.`Codigo` AS `monedaCodigo`" +
 				",sum((`mov`.`Importe` * (case when (`mov`.`TipoMovimiento` = 'D') then 1 when (`mov`.`TipoMovimiento` = 'C') then -(1) else 0 end))) AS `saldo`");
 		/*FROM*/
@@ -402,7 +402,7 @@ public class CuentaSaldo_VDaoImpl extends GenericDaoImpl<CuentaSaldo_V, Integer>
 
 		queryStr.append(" ) SALDOCUENTAS ");
 		queryStr.append(" group  ");
-		queryStr.append(" by	Idadministracion, ");
+		queryStr.append(" by	IdAdministracion, ");
 		queryStr.append(" IdCuenta, ");
 		queryStr.append(" IdTipoEntidad, ");
 		queryStr.append(" IdEntidad, ");

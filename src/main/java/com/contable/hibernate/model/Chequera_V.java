@@ -22,7 +22,7 @@ public class Chequera_V implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "Id", unique = true, nullable = false)
 	private  int id ;
 	
 	@Column(name = "NumeroIni")
@@ -37,15 +37,15 @@ public class Chequera_V implements Serializable {
 	@Column(name = "Descripcion")
 	private  String descripcion;
 
-	@Column(name = "administracionNombre")
+	@Column(name = "AdministracionNombre")
 	private  String administracionNombre;
-	@Column(name = "cuentaNombre")
+	@Column(name = "CuentaNombre")
 	private  String cuentaNombre;
-	@Column(name = "tipoentidadNombre")
+	@Column(name = "TipoentidadNombre")
 	private  String tipoEntidadNombre;
-	@Column(name = "entidadNombre")
+	@Column(name = "EntidadNombre")
 	private  String entidadNombre;
-	@Column(name = "monedaCodigo")
+	@Column(name = "MonedaCodigo")
 	private  String monedaCodigo;
 
 	public int getId() {

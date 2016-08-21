@@ -25,7 +25,7 @@ public class Documento_v implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "Id", unique = true, nullable = false)
 	private  int id ;
 	
 	@Column(name = "NumeroLetra",insertable=false, updatable=false)
@@ -47,7 +47,7 @@ public class Documento_v implements Serializable {
 	private Date fechaReal;
 	@Column(name = "FechaIngreso",insertable=false, updatable=false)
 	private Date fechaIngreso;
-	@Column(name = "fechaVencimiento",insertable=false, updatable=false)
+	@Column(name = "FechaVencimiento",insertable=false, updatable=false)
 	private Date fechaVencimiento;
 
 	@Column(name="IdCuenta",insertable=false, updatable=false)
@@ -62,37 +62,37 @@ public class Documento_v implements Serializable {
 	@Column(name="IdEntidad",insertable=false, updatable=false)
 	private Integer entidad;
   	
-	@Column(name = "entidadNombre",insertable=false, updatable=false)
+	@Column(name = "EntidadNombre",insertable=false, updatable=false)
 	private String entidadNombre;
 
 	@Column(name="IdCuenta",insertable=false, updatable=false)
 	private Integer cuentaId;
   	
-	@Column(name = "cuentaNombre",insertable=false, updatable=false)
+	@Column(name = "CuentaNombre",insertable=false, updatable=false)
 	private String cuentaNombre;
 
-	@Column(name = "cuentaCodigo",insertable=false, updatable=false)
+	@Column(name = "CuentaCodigo",insertable=false, updatable=false)
 	private String cuentaCodigo;
 
 	@Column(name = "IdTipoDocumento",insertable=false, updatable=false)
 	private Integer idTipoDocumento;
 	
-	@Column(name = "tipodocumentoNombre",insertable=false, updatable=false)
+	@Column(name = "TipoDocumentoNombre",insertable=false, updatable=false)
 	private String tipodocumentoNombre;
 
     @Column(name="IdMoneda")
 	private Integer moneda;
 
-    @Column(name = "monedaNombre",insertable=false, updatable=false)
+    @Column(name = "MonedaNombre",insertable=false, updatable=false)
 	private String monedaNombre;
     
-    @Column(name = "monedaCodigo",insertable=false, updatable=false)
+    @Column(name = "MonedaCodigo",insertable=false, updatable=false)
 	private String monedaCodigo;
 
     @Column(name="IdAdministracion",insertable=false, updatable=false)
 	private  Integer administracionId;
 
-    @Column(name = "administracionNombre",insertable=false, updatable=false)
+    @Column(name = "AdministracionNombre",insertable=false, updatable=false)
 	private String administracionNombre;
 
 	@Column(name = "Estado")
@@ -101,7 +101,7 @@ public class Documento_v implements Serializable {
 	@Column(name = "PermiteAnular")
 	private String  permiteAnular;
 	
-	@Column(name = "tipoentidadNombre",insertable=false, updatable=false)
+	@Column(name = "TipoEntidadNombre",insertable=false, updatable=false)
 	private String tipoEntidadNombre;
 
 	@Column(name = "NumeroFormateado",insertable=false, updatable=false)
@@ -114,7 +114,7 @@ public class Documento_v implements Serializable {
     @Column(name="IdDocumentoAnulaA",insertable=false, updatable=false)
 	private  Integer idDocumentoAnulaA;
 
-    @Column(name="descripcionEstado",insertable=false, updatable=false)
+    @Column(name="DescripcionEstado",insertable=false, updatable=false)
 	private  String descripcionEstado;
     
     @Column(name="CantidadAplicaciones",insertable=false, updatable=false)

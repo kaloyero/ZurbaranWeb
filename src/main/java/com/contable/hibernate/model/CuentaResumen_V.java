@@ -24,7 +24,7 @@ public class CuentaResumen_V implements Serializable {
 	private Integer administracionId;
 	@Column(name = "FechaIngreso",updatable=false,insertable=false)
 	private Date fechaIngreso;
-	@Column(name = "tipodocumentoNombre",updatable=false,insertable=false)
+	@Column(name = "TipoDocumentoNombre",updatable=false,insertable=false)
 	private String tipodocumentoNombre;
 	@Column(name = "NumeroLetra",updatable=false,insertable=false)
 	private String numeroLetra;
@@ -52,17 +52,17 @@ public class CuentaResumen_V implements Serializable {
 	private String cuentaNombre;
 	@Column(name = "IdTipoEntidad",updatable=false,insertable=false)
 	private Integer tipoEntidadId;
-	@Column(name = "tipoentidadNombre",updatable=false,insertable=false)
+	@Column(name = "TipoEntidadNombre",updatable=false,insertable=false)
 	private String tipoentidadNombre;
 	@Column(name = "IdEntidad",updatable=false,insertable=false)
 	private Integer entidadId;
-	@Column(name = "entidadNombre",updatable=false,insertable=false)
+	@Column(name = "EntidadNombre",updatable=false,insertable=false)
 	private String entidadNombre;
 	@Column(name = "IdMoneda",updatable=false,insertable=false)
 	private String monedaId;
-	@Column(name = "monedaNombre",updatable=false,insertable=false)
+	@Column(name = "MonedaNombre",updatable=false,insertable=false)
 	private String monedaNombre;
-	@Column(name = "monedaCodigo",updatable=false,insertable=false)
+	@Column(name = "MonedaCodigo",updatable=false,insertable=false)
 	private String monedaCodigo;
 	@Column(name = "Debito",updatable=false,insertable=false)
 	private Double debito;

@@ -23,7 +23,7 @@ public class DocumentoValorTerceDisp_V implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "Id", unique = true, nullable = false)
 	private  int id ;
 	
 	@Column(name = "IdBanco")
@@ -35,11 +35,11 @@ public class DocumentoValorTerceDisp_V implements Serializable {
 	@Column(name = "FechaVencimiento")
 	private  Date fechaVencimiento;
 	
-	@Column(name = "nombreBanco",updatable=false,insertable=false)	
+	@Column(name = "NombreBanco",updatable=false,insertable=false)	
 
 	private  String bancoNombre;
 
-	@Column(name = "codigoMoneda")
+	@Column(name = "CodigoMoneda")
 	private  String monedaCodigo;
 
 	@Column(name = "Importe")
@@ -48,16 +48,16 @@ public class DocumentoValorTerceDisp_V implements Serializable {
 	@Column(name = "Cotizacion")
 	private  Double cotizacion;
 	
-	@Column(name = "cuentaNombre",updatable=false,insertable=false)
+	@Column(name = "CuentaNombre",updatable=false,insertable=false)
 	private  String cuentaNombre;
 
-	@Column(name = "entidadNombre",updatable=false,insertable=false)
+	@Column(name = "EntidadNombre",updatable=false,insertable=false)
 	private  String entidadNombre;
 
-	@Column(name = "tipoentidadNombre",updatable=false,insertable=false)
+	@Column(name = "TipoentidadNombre",updatable=false,insertable=false)
 	private  String tipoEntidadNombre;
 
-	@Column(name = "monedaNombre",updatable=false,insertable=false)
+	@Column(name = "NonedaNombre",updatable=false,insertable=false)
 	private  String monedaNombre;
 
 

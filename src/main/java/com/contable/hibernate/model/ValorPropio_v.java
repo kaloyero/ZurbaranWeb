@@ -22,7 +22,7 @@ public class ValorPropio_v implements Serializable {
 	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "Id", unique = true, nullable = false)
 	private  int id ;
 	@Column(name = "Numero")
 	private  int numero;
@@ -35,7 +35,7 @@ public class ValorPropio_v implements Serializable {
 	private  Integer chequeraId;
 	@Column(name = "IdAdministracion")
 	private Integer administracionId;
-	@Column(name = "administracionNombre")
+	@Column(name = "AdministracionNombre")
 	private String administracionNombre;
 	@Column(name = "FechaIngreso")
 	private Date fechaIngreso;
@@ -43,7 +43,7 @@ public class ValorPropio_v implements Serializable {
 	private Integer documentoId;
 	@Column(name = "IdTipoDocumento")
 	private String tipoDocumentoId;
-	@Column(name = "nombreTipoDocumento")
+	@Column(name = "NombreTipoDocumento")
 	private String tipoDocumentoNombre;
 	@Column(name = "NumeroFormateado")
 	private String documentoFormateado;
@@ -51,7 +51,7 @@ public class ValorPropio_v implements Serializable {
 	private Integer movimientoId;
 	@Column(name = "Cotizacion")
 	private Double cotizacion;
-	@Column(name = "importeValor")
+	@Column(name = "ImporteValor")
 	private Double importeValor;
 	@Column(name = "IdCuenta")
 	private Integer cuentaId;
@@ -61,17 +61,17 @@ public class ValorPropio_v implements Serializable {
 	private Integer entidadId;
 	@Column(name = "IdMoneda")
 	private Integer monedaId;
-	@Column(name = "monedaNombre")
+	@Column(name = "MonedaNombre")
 	private String monedaNombre;
-	@Column(name = "monedaCodigo")
+	@Column(name = "MonedaCodigo")
 	private String monedaCodigo;
-	@Column(name = "cuentaNombre")
+	@Column(name = "CuentaNombre")
 	private String cuentaNombre;
-	@Column(name = "cuentaCodigo")
+	@Column(name = "CuentaCodigo")
 	private String cuentaCodigo;
-	@Column(name = "tipoentidadNombre")
+	@Column(name = "TipoEntidadNombre")
 	private String tipoEntidadNombre;
-	@Column(name = "entidadNombre")
+	@Column(name = "EntidadNombre")
 	private String entidadNombre;
 	@Column(name = "Estado")
 	private String estado;

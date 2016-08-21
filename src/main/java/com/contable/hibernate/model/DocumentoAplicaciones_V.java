@@ -38,7 +38,7 @@ public class DocumentoAplicaciones_V implements Serializable {
 	@Column(name = "IdTipoDocumentoAplicado",insertable=false,updatable=false)
 	private  Integer tipoDocumentoAplicadoId ;
 
-	@Column(name = "nombreTipoDocumentoAplicado",insertable=false,updatable=false)
+	@Column(name = "NombreTipoDocumentoAplicado",insertable=false,updatable=false)
 	private  String tipoDocumentoAplicadoNombre ;
 
 	@Column(name = "NumeroFormateadoAplicacion",insertable=false,updatable=false)
@@ -47,7 +47,7 @@ public class DocumentoAplicaciones_V implements Serializable {
 	@Column(name = "IdTipoDocumento",insertable=false,updatable=false)
 	private  Integer tipoDocumentoId ;
 
-	@Column(name = "nombreTipoDocumento",insertable=false,updatable=false)
+	@Column(name = "NombreTipoDocumento",insertable=false,updatable=false)
 	private  String tipoDocumentoNombre ;
 
 	@Column(name = "NumeroFormateado",insertable=false,updatable=false)
@@ -77,10 +77,10 @@ public class DocumentoAplicaciones_V implements Serializable {
     @Column(name="IdMoneda",insertable=false,updatable=false)
   	private  Integer moneda ;
 
-	@Column(name = "monedaNombre",insertable=false,updatable=false)
+	@Column(name = "MonedaNombre",insertable=false,updatable=false)
 	private  String monedaNombre ;
 
-	@Column(name = "monedaCodigo",insertable=false,updatable=false)
+	@Column(name = "MonedaCodigo",insertable=false,updatable=false)
 	private  String monedaCodigo ;
 	
 	@Column(name = "IdTipoEntidad",insertable=false,updatable=false)

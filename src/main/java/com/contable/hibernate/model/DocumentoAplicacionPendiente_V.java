@@ -25,7 +25,7 @@ public class DocumentoAplicacionPendiente_V implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "Id", unique = true, nullable = false)
 	private  int id ;
 
 	@Column(name = "NumeroLetra",insertable=false,updatable=false)
@@ -52,7 +52,7 @@ public class DocumentoAplicacionPendiente_V implements Serializable {
 	@Column(name = "IdTipoDocumento",insertable=false,updatable=false)
 	private  Integer tipoDocumentoId ;
 
-	@Column(name = "nombreTipoDocumento",insertable=false,updatable=false)
+	@Column(name = "NombreTipoDocumento",insertable=false,updatable=false)
 	private  String tipoDocumentoNombre ;
 
 	@Column(name = "IdCuenta",insertable=false,updatable=false)

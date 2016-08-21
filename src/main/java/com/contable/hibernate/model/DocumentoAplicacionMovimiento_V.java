@@ -23,7 +23,7 @@ public class DocumentoAplicacionMovimiento_V implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "Id", unique = true, nullable = false)
 	private  int id ;
 
 	
@@ -35,7 +35,7 @@ public class DocumentoAplicacionMovimiento_V implements Serializable {
 	private Integer administracionId;
 	@Column(name = "IdTipoDocumento")
 	private Integer tipoDocumentoId;
-	@Column(name = "nombreTipoDocumento")
+	@Column(name = "NombreTipoDocumento")
 	private String tipoDocumentoNombre;
 	@Column(name = "NumeroFormateado")
 	private String numeroFormateado;
@@ -53,7 +53,7 @@ public class DocumentoAplicacionMovimiento_V implements Serializable {
 	private Integer docAplicaAdministracionId;
 	@Column(name = "IdTipoDocumentoAplicado")
 	private Integer docAplicaTipoDocumentoId;
-	@Column(name = "nombreTipoDocumentoAplicado")
+	@Column(name = "NombreTipoDocumentoAplicado")
 	private String  docAplicaTipoDocumentoNombre;
 	@Column(name = "NumeroFormateadoAplicacion")
 	private String  docAplicaNumeroFormateado;
@@ -61,9 +61,9 @@ public class DocumentoAplicacionMovimiento_V implements Serializable {
 	private Double  docAplicaTotal;
 	@Column(name = "DescripcionAplicacion")
 	private String  docAplicaDescripcion;
-	@Column(name = "monedaNombreMov")
+	@Column(name = "MonedaNombreMov")
 	private String movMonedaNombre;
-	@Column(name = "monedaCodigoMov")
+	@Column(name = "MonedaCodigoMov")
 	private String movMonedaCodigo;
 	@Column(name = "IdMovimiento")
 	private Integer movId;
@@ -84,21 +84,21 @@ public class DocumentoAplicacionMovimiento_V implements Serializable {
 
 	@Column(name = "IdCuenta")
 	private Integer cuentaId;
-	@Column(name = "cuentaNombre")
+	@Column(name = "CuentaNombre")
 	private String cuentaNombre;
 	@Column(name = "IdTipoEntidad")
 	private Integer tipoEntidadId;
-	@Column(name = "tipoentidadNombre")
+	@Column(name = "TipoEntidadNombre")
 	private String tipoentidadNombre;
 	@Column(name = "IdEntidad")
 	private Integer entidadId;
-	@Column(name = "entidadNombre")
+	@Column(name = "EntidadNombre")
 	private String entidadNombre;
 	@Column(name = "IdMoneda")
 	private Integer monedaId;
-	@Column(name = "monedaNombre")
+	@Column(name = "MonedaNombre")
 	private String monedaNombre;
-	@Column(name = "monedaCodigo")
+	@Column(name = "MonedaCodigo")
 	private String monedaCodigo;
 
 	

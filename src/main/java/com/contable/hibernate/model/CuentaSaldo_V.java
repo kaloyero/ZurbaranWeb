@@ -23,21 +23,21 @@ public class CuentaSaldo_V implements Serializable {
 	private Integer administracionId;
 	@Column(name = "IdCuenta", updatable = false, insertable = false)
 	private Integer cuentaId;
-	@Column(name = "cuentaNombre", updatable = false, insertable = false)
+	@Column(name = "CuentaNombre", updatable = false, insertable = false)
 	private String cuentaNombre;
 	@Column(name = "IdTipoEntidad", updatable = false, insertable = false)
 	private Integer tipoEntidadId;
-	@Column(name = "tipoentidadNombre", updatable = false, insertable = false)
+	@Column(name = "TipoEntidadNombre", updatable = false, insertable = false)
 	private String tipoentidadNombre;
 	@Column(name = "IdEntidad", updatable = false, insertable = false)
 	private Integer entidadId;
-	@Column(name = "entidadNombre", updatable = false, insertable = false)
+	@Column(name = "EntidadNombre", updatable = false, insertable = false)
 	private String entidadNombre;
 	@Column(name = "IdMoneda", updatable = false, insertable = false)
 	private Integer monedaId;
-	@Column(name = "monedaNombre", updatable = false, insertable = false)
+	@Column(name = "MonedaNombre", updatable = false, insertable = false)
 	private String monedaNombre;
-	@Column(name = "monedaCodigo", updatable = false, insertable = false)
+	@Column(name = "MonedaCodigo", updatable = false, insertable = false)
 	private String monedaCodigo;
 	@Column(name = "Anio", updatable = false, insertable = false)
 	private Integer anio;

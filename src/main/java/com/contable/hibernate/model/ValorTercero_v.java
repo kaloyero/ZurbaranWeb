@@ -29,15 +29,15 @@ public class ValorTercero_v implements Serializable {
 	private  int numero;
 	@Column(name = "FechaVencimiento", updatable = false, insertable = false)
 	private  Date fechaVencimiento;
-	@Column(name = "tipomovimiento")
+	@Column(name = "TipoMovimiento")
 	private  String tipomovimiento;
 	@Column(name = "IdBanco")
 	private  Integer bancoId;
-	@Column(name = "nombreBanco" , updatable = false, insertable = false)
+	@Column(name = "NombreBanco" , updatable = false, insertable = false)
 	private  String nombreBanco;
 	@Column(name = "IdAdministracion")
 	private Integer administracionId;
-	@Column(name = "administracionNombre")
+	@Column(name = "AdministracionNombre")
 	private String administracionNombre;
 	@Column(name = "IdDocumento")
 	private Integer documentoId;
@@ -45,7 +45,7 @@ public class ValorTercero_v implements Serializable {
 	private Integer movimientoId;
 	@Column(name = "Cotizacion")
 	private Double cotizacion;
-	@Column(name = "importeValor")
+	@Column(name = "ImporteValor")
 	private Double importeValor;
 	@Column(name = "IdCuenta")
 	private Integer cuentaId;
@@ -55,19 +55,19 @@ public class ValorTercero_v implements Serializable {
 	private Integer entidadId;
 	@Column(name = "IdMoneda")
 	private Integer monedaId;
-	@Column(name = "monedaNombre")
+	@Column(name = "MonedaNombre")
 	private String monedaNombre;
-	@Column(name = "monedaCodigo")
+	@Column(name = "MonedaCodigo")
 	private String monedaCodigo;
-	@Column(name = "cuentaNombre")
+	@Column(name = "CuentaNombre")
 	private String cuentaNombre;
-	@Column(name = "cuentaCodigo")
+	@Column(name = "CuentaCodigo")
 	private String cuentaCodigo;
-	@Column(name = "tipoentidadNombre")
+	@Column(name = "TipoEntidadNombre")
 	private String tipoEntidadNombre;
-	@Column(name = "entidadNombre")
+	@Column(name = "EntidadNombre")
 	private String entidadNombre;
-	@Column(name = "nombreTipoDocumento")
+	@Column(name = "NombreTipoDocumento")
 	private String tipoDocumentoNombre;
 	@Column(name = "NumeroFormateado" , updatable = false, insertable = false)
 	private  String numeroFormateado;

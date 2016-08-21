@@ -84,18 +84,18 @@ public class DocumentoAplicacionMovimientoDaoImpl extends GenericDaoImpl<Documen
 		
 				StringBuilder queryStr = new StringBuilder();
 				/*SELECT*/
-				queryStr.append("SELECT da.`Id`, da.`IdDocumento` documentoId , da.`IdAplicacion` aplicacionId , da.`IdAdministracion` administracionId, da.`IdTipoDocumento` tipoDocumentoId, da.`nombreTipoDocumento` tipoDocumentoNombre, da.`NumeroFormateado`, da.`FechaIngreso`, ");
-				queryStr.append(" da.`Descripcion`, da.`IdCuenta` cuentaId, da.`cuentaNombre`, da.`IdTipoEntidad` tipoEntidadId, da.`tipoentidadNombre`, da.`IdEntidad` entidadId, da.`entidadNombre`, da.`IdMoneda` monedaId, ");
-				queryStr.append(" da.`monedaNombre`, da.`monedaCodigo`, da.`ImporteTotal`, da.`IdDocumentoAplica` docAplicaId, da.`IdAdministracionDocumentoAplicado` docAplicaAdministracionId, da.`IdTipoDocumentoAplicado` docAplicaTipoDocumentoId, ");
-				queryStr.append(" da.`nombreTipoDocumentoAplicado` docAplicaTipoDocumentoNombre, da.`NumeroFormateadoAplicacion` docAplicaNumeroFormateado, da.`TotalAplicado` docAplicaTotal, da.`DescripcionAplicacion` docAplicaDescripcion, da.`monedaNombreMov` movMonedaNombre, da.`monedaCodigoMov` movMonedaCodigo, ");
+				queryStr.append("SELECT da.`Id`, da.`IdDocumento` documentoId , da.`IdAplicacion` aplicacionId , da.`IdAdministracion` administracionId, da.`IdTipoDocumento` tipoDocumentoId, da.`NombreTipoDocumento` tipoDocumentoNombre, da.`NumeroFormateado`, da.`FechaIngreso`, ");
+				queryStr.append(" da.`Descripcion`, da.`IdCuenta` cuentaId, da.`CuentaNombre`, da.`IdTipoEntidad` tipoEntidadId, da.`TipoEntidadNombre`, da.`IdEntidad` entidadId, da.`EntidadNombre`, da.`IdMoneda` monedaId, ");
+				queryStr.append(" da.`MonedaNombre`, da.`MonedaCodigo`, da.`ImporteTotal`, da.`IdDocumentoAplica` docAplicaId, da.`IdAdministracionDocumentoAplicado` docAplicaAdministracionId, da.`IdTipoDocumentoAplicado` docAplicaTipoDocumentoId, ");
+				queryStr.append(" da.`NombreTipoDocumentoAplicado` docAplicaTipoDocumentoNombre, da.`NumeroFormateadoAplicacion` docAplicaNumeroFormateado, da.`TotalAplicado` docAplicaTotal, da.`DescripcionAplicacion` docAplicaDescripcion, da.`MonedaNombreMov` movMonedaNombre, da.`MonedaCodigoMov` movMonedaCodigo, ");
 				queryStr.append(" da.`IdMovimiento` movId, da.`IdCuentaMov` movCuentaId, da.`IdTipoEntidadMov` movTipoEntidadId, da.`IdEntidadMov` movEntidadId, da.`IdMonedaMov` movMonedaId, da.`ImporteMov` movImporte, da.`Referencia` movReferencia");
-				queryStr.append(", da.cotizacion cotizacion,  dcot.cotizacion movCotizacion ");
+				queryStr.append(", da.Cotizacion cotizacion,  dcot.Cotizacion movCotizacion ");
 				//No estoy usando el campo `CotizacionMov` entonces lo uso para cotizacion Convertir que si lo necesito. En el futuro habr q crear otra clase q tenga este campo
 				//queryStr.append(", da.`CotizacionMov` movCotizacion,  dcot.cotizacion cotizacionConvertir  ");
 				/*FROM*/
 				queryStr.append("   FROM documentoaplicacionesmovimientos_v da ");
 				/*JOIN*/
-				queryStr.append(" JOIN documentomovimientoscotizaciones dcot ON (dcot.idDocumento = da.IdDocumento AND dcot.IdMoneda = " + filtro.getMonedaMuestraId() + ") ");
+				queryStr.append(" JOIN documentomovimientoscotizaciones dcot ON (dcot.IdDocumento = da.IdDocumento AND dcot.IdMoneda = " + filtro.getMonedaMuestraId() + ") ");
 				/*WHERE*/
 				queryStr.append(" WHERE 1 = 1 ");
 				
@@ -144,7 +144,7 @@ public class DocumentoAplicacionMovimientoDaoImpl extends GenericDaoImpl<Documen
 					queryStr.append(" AND da.`FechaIngreso` <=  :fecha2 ");
 				
 				/*WHERE*/
-				queryStr.append(" ORDER BY `da`.`FechaIngreso` asc,  da.`nombreTipoDocumento`  asc, da.`IdDocumento` asc ,  da.`IdAplicacion` asc ");
+				queryStr.append(" ORDER BY `da`.`FechaIngreso` asc,  da.`NombreTipoDocumento`  asc, da.`IdDocumento` asc ,  da.`IdAplicacion` asc ");
 				
 				System.out.println(queryStr);
 				

@@ -31,46 +31,46 @@ public class DocumentoMovimientoIv_V implements Serializable {
 	private String descripcion;
 	@Column(name = "IdConcepto",insertable=false, updatable=false)
 	private Integer conceptoId;
-	@Column(name = "conceptoCodigo",insertable=false, updatable=false)
+	@Column(name = "ConceptoCodigo",insertable=false, updatable=false)
 	private String conceptoCodigo;
-	@Column(name = "conceptoNombre",insertable=false, updatable=false)
+	@Column(name = "ConceptoNombre",insertable=false, updatable=false)
 	private String conceptoNombre;
 	@Column(name = "IdMoneda",insertable=false, updatable=false)
 	private Integer monedaId;
-	@Column(name = "monedaNombre",insertable=false, updatable=false)
+	@Column(name = "MonedaNombre",insertable=false, updatable=false)
 	private String monedaNombre;
-	@Column(name = "monedaCodigo",insertable=false, updatable=false)
+	@Column(name = "MonedaCodigo",insertable=false, updatable=false)
 	private String monedaCodigo;
 	@Column(name = "IdCuenta",insertable=false, updatable=false)
 	private Integer cuentaId;
-	@Column(name = "cuentaNombre",insertable=false, updatable=false)
+	@Column(name = "CuentaNombre",insertable=false, updatable=false)
 	private String cuentaNombre;
-	@Column(name = "cuentaCodigo",insertable=false, updatable=false)
+	@Column(name = "CuentaCodigo",insertable=false, updatable=false)
 	private String cuentaCodigo;
 	@Column(name = "IdTipoEntidad",insertable=false, updatable=false)
 	private Integer tipoEntidadId;
-	@Column(name = "tipoEntidadNombre",insertable=false, updatable=false)
+	@Column(name = "TipoEntidadNombre",insertable=false, updatable=false)
 	private String tipoEntidadNombre;
 	@Column(name = "IdEntidad",insertable=false, updatable=false)
 	private Integer entidadId;
-	@Column(name = "entidadNombre",insertable=false, updatable=false)
+	@Column(name = "EntidadNombre",insertable=false, updatable=false)
 	private String entidadNombre;
 	@Column(name = "IdValorTerce",insertable=false, updatable=false)
 	private Integer valorTerceId;
-	@Column(name = "numero",insertable=false, updatable=false)
+	@Column(name = "Numero",insertable=false, updatable=false)
 	private Integer numero;
 	@Column(name = "FechaVencimiento",insertable=false, updatable=false)
 	private Date fechaVencimiento;
-	@Column(name = "importeMovimiento",insertable=false, updatable=false)
+	@Column(name = "ImporteMovimiento",insertable=false, updatable=false)
 	private Double importeMovimiento;
 	@Column(name = "Cotizacion",insertable=false, updatable=false)
 	private Double cotizacion;
-	@Column(name = "nombreBanco",insertable=false, updatable=false)
+	@Column(name = "NombreBanco",insertable=false, updatable=false)
 	private String bancoNombre;
 	@Column(name = "IdDocumentoValorterMovs",insertable=false, updatable=false)
 	private Integer valorTerceMovId;
 
-	@Column(name = "monedaCodigo",insertable=false, updatable=false)
+	@Column(name = "MonedaCodigo",insertable=false, updatable=false)
 	private String emisor;
 	
 	public Integer getDocumentoId() {

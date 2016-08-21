@@ -122,7 +122,7 @@ public class PeriodoDaoImpl extends GenericDaoImpl<Periodo, Integer> implements 
 	public void cerrarPeriodoAnterior(int idAdm){
 		StringBuilder queryStr = new StringBuilder();
 	    
-		queryStr.append("update `Periodos` set `estado`='"+ Constants.PERIODO_CERRADO +"' where idAdministracion = '" +idAdm + "' ");
+		queryStr.append("update `periodos` set `Estado`='"+ Constants.PERIODO_CERRADO +"' where IdAdministracion = '" +idAdm + "' ");
 		Query query = getSession().createSQLQuery(queryStr.toString());
 
 		query.executeUpdate();

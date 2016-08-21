@@ -17,7 +17,7 @@ public class EstructuraContenidoDaoImpl extends GenericDaoImpl<EstructuraConteni
 	@Override
 	public boolean delete(int idDocumento) {
 		getSession().createSQLQuery("DELETE FROM `estructuracontenidocuentas` WHERE `IdEstructuraContenido` = "+idDocumento).executeUpdate();
-		getSession().createSQLQuery("DELETE FROM `estructurascontenido` WHERE `id` = "+idDocumento).executeUpdate();
+		getSession().createSQLQuery("DELETE FROM `estructurascontenido` WHERE `Id` = "+idDocumento).executeUpdate();
 		return true;
 	}	
 }

@@ -27,7 +27,7 @@ public class UsuarioDaoImpl extends GenericDaoImpl<Usuario, Integer> implements 
 
 		List<Usuario> users = new ArrayList<Usuario>();
 
-		users = getSession().createQuery("from User where username=?").setParameter(1, username)
+		users = getSession().createQuery("from user where username=?").setParameter(1, username)
 				.list();
 
 		if (users.size() > 0) {
@@ -65,7 +65,7 @@ public class UsuarioDaoImpl extends GenericDaoImpl<Usuario, Integer> implements 
 		if (usr != null){
 			StringBuilder queryStr = new StringBuilder();
 		    
-			queryStr.append("update `Usuarios` set `ClaveAcceso`='"+ passwordNew +"' where id = '"+usr.getId()+"' ; ");
+			queryStr.append("update `usuarios` set `ClaveAcceso`='"+ passwordNew +"' where Id = '"+usr.getId()+"' ; ");
 			Query query = getSession().createSQLQuery(queryStr.toString());
 		
 			query.executeUpdate();

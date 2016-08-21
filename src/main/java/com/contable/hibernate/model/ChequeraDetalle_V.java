@@ -24,13 +24,13 @@ public class ChequeraDetalle_V implements Serializable {
 	
 	
 	@Id
-	@Column(name = "id", unique = false, nullable = false)
+	@Column(name = "Id", unique = false, nullable = false)
 	private  long id ;
 	
 	@Column(name = "IdChequera")
 	private  Integer chequeraId;
 	
-	@Column(name = "numero")
+	@Column(name = "Numero")
 	private  Integer numero;
 	
 	@Column(name = "FechaIngreso")
@@ -55,13 +55,13 @@ public class ChequeraDetalle_V implements Serializable {
 	@Column(name = "Beneficiario")
 	private  String beneficiario;
 
-	@Column(name = "importeValor")
+	@Column(name = "ImporteValor")
 	private  Double importe;
 	
 	@Column(name = "Estado")
 	private  String estado;
 	
-	@Column(name = "descripcionEstado")
+	@Column(name = "DescripcionEstado")
 	private  String motivo;
 
 	public long getId() {

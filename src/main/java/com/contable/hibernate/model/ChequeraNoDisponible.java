@@ -25,7 +25,7 @@ public class ChequeraNoDisponible implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "Id", unique = true, nullable = false)
 	private  int id ;
 	
 	@Column(name = "Numero",nullable=true)

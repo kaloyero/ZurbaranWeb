@@ -68,24 +68,24 @@ public class EstructuraDaoImpl extends GenericDaoImpl<Estructura, Integer> imple
 			int idAdministracion, boolean fechaDesde, Integer monedaMostrarId){
 		StringBuilder queryStr = new StringBuilder();
 		
-		queryStr.append("SELECT CodigoContenido contenidoNombre, ");
-		queryStr.append("NombreCuenta cuentaNombre, ");
-		queryStr.append("NombreEntidad entidadNombre, ");
-		queryStr.append("CodigoMoneda monedaCodigo, ");
-		queryStr.append("sum(ImporteMovimiento) saldo, ");
+		queryStr.append("SELECT CodigoContenido ContenidoNombre, ");
+		queryStr.append("NombreCuenta CuentaNombre, ");
+		queryStr.append("NombreEntidad EntidadNombre, ");
+		queryStr.append("CodigoMoneda MonedaCodigo, ");
+		queryStr.append("sum(ImporteMovimiento) Saldo, ");
 		queryStr.append("	  sum(round(em.ImporteMovimiento * ");
-		queryStr.append("em.cotizacion	/ ");
+		queryStr.append("em.Cotizacion	/ ");
 		queryStr.append("(case ");
 		queryStr.append("	    when em.IdMoneda = " + monedaMostrarId + " then "); 
-		queryStr.append("em.cotizacion ");
+		queryStr.append("em.Cotizacion ");
 		queryStr.append("else ");
 		queryStr.append("dc.Cotizacion ");
 		queryStr.append("end ");
 		queryStr.append(") ");
 		queryStr.append(",2) ");
-		queryStr.append(") saldoMuestra ");
+		queryStr.append(") SaldoMuestra ");
 		queryStr.append("from estructuramovimientos_v em ");
-		queryStr.append("join documentomovimientoscotizaciones dc on dc.idDocumento = em.IdDocumento ");
+		queryStr.append("join documentomovimientoscotizaciones dc on dc.IdDocumento = em.IdDocumento ");
 		queryStr.append(" AND dc.IdMoneda =  " + monedaMostrarId + "  ");
 		queryStr.append("where IdEstructura =  " + idEstructura + "  ");
 		queryStr.append("and FechaMovimiento <= :fechaHasta ");
@@ -107,12 +107,12 @@ public class EstructuraDaoImpl extends GenericDaoImpl<Estructura, Integer> imple
 		
 		StringBuilder queryStr = new StringBuilder();
 		
-		queryStr.append("SELECT CodigoContenido contenidoNombre, ");
-		queryStr.append("NombreCuenta cuentaNombre, ");
-		queryStr.append("NombreEntidad entidadNombre, ");
-		queryStr.append("CodigoMoneda monedaCodigo, ");
-		queryStr.append("SUM(ImporteMovimiento) saldo, ");
-		queryStr.append(" '' as saldoMuestra  ");
+		queryStr.append("SELECT CodigoContenido ContenidoNombre, ");
+		queryStr.append("NombreCuenta CuentaNombre, ");
+		queryStr.append("NombreEntidad EntidadNombre, ");
+		queryStr.append("CodigoMoneda MonedaCodigo, ");
+		queryStr.append("SUM(ImporteMovimiento) Saldo, ");
+		queryStr.append(" '' as SaldoMuestra  ");
 		queryStr.append("FROM estructuramovimientos_v ");
 		queryStr.append("WHERE IdEstructura =  " + idEstructura + "  ");
 		queryStr.append("and FechaMovimiento <=  :fechaHasta ");
@@ -133,12 +133,12 @@ public class EstructuraDaoImpl extends GenericDaoImpl<Estructura, Integer> imple
 	@SuppressWarnings("unchecked")
 	private List<EstructuraSaldoForm>  excecuteQueryEstructuraSaldos(String queryStr, String fechaDesde, String fechaHasta){
 		Query query = getSession().createSQLQuery(queryStr.toString())
-				.addScalar("contenidoNombre")
-				.addScalar("cuentaNombre")
-				.addScalar("entidadNombre")
-				.addScalar("monedaCodigo")
-				.addScalar("saldo",Hibernate.STRING)
-				.addScalar("saldoMuestra",Hibernate.STRING)
+				.addScalar("ContenidoNombre")
+				.addScalar("CuentaNombre")
+				.addScalar("EntidadNombre")
+				.addScalar("MonedaCodigo")
+				.addScalar("Saldo",Hibernate.STRING)
+				.addScalar("SaldoMuestra",Hibernate.STRING)
 				.setResultTransformer( Transformers.aliasToBean(EstructuraSaldoForm.class));
 				
 		if (StringUtils.isNotBlank(fechaDesde))		

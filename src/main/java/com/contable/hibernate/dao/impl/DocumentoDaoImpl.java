@@ -25,7 +25,7 @@ public class DocumentoDaoImpl extends GenericDaoImpl<Documento, Integer> impleme
 		StringBuilder queryStr = new StringBuilder();
 		
 		queryStr.append("update `documentos` set `Estado`='"+ estado +"'");
-		queryStr.append(" WHERE `id` = '" + idDocumento + "' ");
+		queryStr.append(" WHERE `Id` = '" + idDocumento + "' ");
 
 		Query query = getSession().createSQLQuery(queryStr.toString());
 		
@@ -38,7 +38,7 @@ public class DocumentoDaoImpl extends GenericDaoImpl<Documento, Integer> impleme
 		StringBuilder queryStr = new StringBuilder();
 		
 		queryStr.append("update `documentos` set `IdDocumentoAnuladoPor`='"+ idDocumentoAnulador +"'");
-		queryStr.append(" WHERE `id` = '" + idDocumento + "' ");
+		queryStr.append(" WHERE `Id` = '" + idDocumento + "' ");
 
 		Query query = getSession().createSQLQuery(queryStr.toString());
 		
@@ -51,7 +51,7 @@ public class DocumentoDaoImpl extends GenericDaoImpl<Documento, Integer> impleme
 		//String ultimaFecha="";
 		StringBuilder queryStr = new StringBuilder();
 		
-		queryStr.append("select date_format(max(fechaIngreso),'%d-%m-%Y') as ultimaFecha from `documentos` ");
+		queryStr.append("select date_format(max(FechaIngreso),'%d-%m-%Y') as UltimaFecha from `documentos` ");
 		queryStr.append(" WHERE `IdAdministracion` = '" + id + "' ");
 
 	   

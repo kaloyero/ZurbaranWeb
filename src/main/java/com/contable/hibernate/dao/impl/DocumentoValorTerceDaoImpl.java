@@ -23,10 +23,10 @@ public class DocumentoValorTerceDaoImpl extends GenericDaoImpl<DocumentoValorTer
 			StringBuilder queryStr = new StringBuilder();
 		    
 			queryStr.append("update `documentovalortermovs` set `Estado`='"+ Constants.DOCUMENTO_ESTADO_ANULADO +"'");
-			queryStr.append(" WHERE `id` in (:idList) ");
+			queryStr.append(" WHERE `Id` in (:idList) ");
 			Query query = getSession().createSQLQuery(queryStr.toString());
 			
-			query.setParameterList("idList", valorTerceId);
+			query.setParameterList("IdList", valorTerceId);
 
 			query.executeUpdate();
 		}

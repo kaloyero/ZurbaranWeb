@@ -26,7 +26,7 @@ public class Entidad implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "Id", unique = true, nullable = false)
 	private  Integer id ;
 	
 	@Column(name = "Nombre")

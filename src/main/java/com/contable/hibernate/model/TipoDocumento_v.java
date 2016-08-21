@@ -23,7 +23,7 @@ public class TipoDocumento_v implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "Id", unique = true, nullable = false)
 	private  int id ;
 	
 	@Column(name = "Nombre",insertable=false, updatable=false)

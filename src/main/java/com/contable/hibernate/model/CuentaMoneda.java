@@ -24,7 +24,7 @@ public class CuentaMoneda implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "Id", unique = true, nullable = false)
 	private  int id ;
 	
 	@OneToOne(fetch=FetchType.EAGER)

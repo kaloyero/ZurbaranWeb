@@ -22,7 +22,7 @@ public class MonedaDaoImpl extends GenericDaoImpl<Moneda, Integer> implements Mo
 	public void poneMonedaLocalEnFalsoParaTodas(){
 		StringBuilder queryStr = new StringBuilder();
 	    
-		queryStr.append("update `Monedas` set `MonedaLocal`='"+ Constants.BD_INACTIVO +"'");
+		queryStr.append("update `monedas` set `MonedaLocal`='"+ Constants.BD_INACTIVO +"'");
 		Query query = getSession().createSQLQuery(queryStr.toString());
 
 		query.executeUpdate();
