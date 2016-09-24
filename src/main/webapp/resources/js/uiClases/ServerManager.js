@@ -142,6 +142,7 @@ showSaldoEstructuraMovimiento: function(config){
 
 },
 showCambiarClave: function(config){
+	console.log("chupala 1")
 	$.ajax({
 		type: 'GET',
 		url: 'usuario/cambiarClave',

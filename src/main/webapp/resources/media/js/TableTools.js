@@ -2354,7 +2354,7 @@ TableTools.BUTTONS = {
  *   and will use its internal copy for the remainder of its run time.
  */
 TableTools.classes = {
-	"container": "DTTT_container",
+//	"container": "DTTT_container",
 	"buttons": {
 		"normal": "DTTT_button",
 		"disabled": "DTTT_disabled"
@@ -2404,7 +2404,7 @@ TableTools.DEFAULTS = {
 	"fnPreRowSelect":  null,
 	"fnRowSelected":   null,
 	"fnRowDeselected": null,
-	"aButtons":        [ "copy", "csv", "xls", "pdf", "print" ],
+//	"aButtons":        [ "copy", "csv", "xls", "pdf", "print" ],
 	"oTags": {
 		"container": "div",
 		"button": "a", // We really want to use buttons here, but Firefox and IE ignore the

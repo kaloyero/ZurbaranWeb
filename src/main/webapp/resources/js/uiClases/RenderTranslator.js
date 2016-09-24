@@ -46,6 +46,7 @@ var RenderTranslator = new Class({
 		case "saldoEstructuraMovimiento":
 			return saldoEstructuraMovimientoRender;
 		case "cambiarClave":
+			console.log("chupala 2");
 			return cambiarClaveRender;
 		case "resumenCuenta":
 			return resumenCuentaRender;

@@ -72,7 +72,7 @@
 
 			<!-- Widget heading -->
 			<div class="widget-head">
-				<h4 class="heading">Complete los datos</h4>
+				<h4 class="heading">Cotización de Moneda</h4>
 			</div>
 			<!-- // Widget heading END -->
 

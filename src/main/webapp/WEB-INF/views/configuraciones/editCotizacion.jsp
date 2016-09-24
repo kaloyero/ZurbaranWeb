@@ -13,7 +13,7 @@
 
 			<!-- Widget heading -->
 			<div class="widget-head">
-				<h4 class="heading">Complete los datos</h4>
+				<h4 class="heading">Cotización de Moneda</h4>
 			</div>
 			<!-- // Widget heading END -->
 
@@ -40,7 +40,7 @@
 							<div class="control-group">
 								<label class="control-label" for="firstname">Cotizaci&oacute;n</label>
 								<div class="controls"><form:input path ="cotizacion" class="span12" id="cotizacion"  type="number" min="0" step="0.0001" /></div>
-									<div id="chart_ordered_bars" style="height: 250px;width: 450px;"></div>
+									<!-- <div id="chart_ordered_bars" style="height: 250px;width: 450px;"></div> -->
 							</div>
 
 

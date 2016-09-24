@@ -139,7 +139,7 @@ makeDatatable : function() {
 					            'bSortable' : false,
 					            'aTargets' : [ -1 ]
 					        } ,				 
-						oTableTools : {
+						/*oTableTools : {
 							"sSwfPath" : "resources/media/swf/copy_csv_xls_pdf.swf",
 							"aButtons" : [ "copy", {
 								"sExtends" : "csv",
@@ -154,7 +154,7 @@ makeDatatable : function() {
 								"sTitle" : "titleExportpdf",
 								"sFileName" : "saldoEstructura.pdf"
 							}, "print" ]
-						},
+						},*/
 						"oLanguage" : {
 							"sProcessing" : "Procesando...",
 							"sSearch" : "B�squeda:",

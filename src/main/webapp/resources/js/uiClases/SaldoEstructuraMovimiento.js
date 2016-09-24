@@ -154,7 +154,7 @@ var SaldoEstructuraMovimiento = new Class({
 						            'bSortable' : false,
 						            'aTargets' : [ -1 ]
 						        } ,				 
-							"oTableTools" : {
+							/*"oTableTools" : {
 								"sSwfPath" : "resources/media/swf/copy_csv_xls_pdf.swf",
 								"aButtons" : [ "copy", {
 									"sExtends" : "csv",
@@ -169,7 +169,7 @@ var SaldoEstructuraMovimiento = new Class({
 									"sTitle" : "titleExportpdf",
 									"sFileName" : "movimientos.pdf"
 								}, "print" ]
-							},
+							},*/
 //							"sEcho": "[% sEcho %]",
 //							"iTotalRecords": "[% iTotalRecords %]",
 //							"iTotalDisplayRecords": "[% iTotalDisplayRecords%]", 

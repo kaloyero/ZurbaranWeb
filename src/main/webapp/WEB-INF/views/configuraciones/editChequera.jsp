@@ -55,8 +55,8 @@
 								<label class="control-label">Estado</label>
 								<div class="controls">
 <form:select path ='estado'  id="estado" name="estado" class="selectpicker span10"  readonly="true">
-																		    <form:option value="F" label="Inactivo"   disabled="true"/>
-																			<form:option value="T" label="Activo"  disabled="true"/>
+																		    <form:option value="Inactivo" label="Inactivo"   disabled="true"/>
+																			<form:option value="Activo" label="Activo"  disabled="true"/>
 																		</form:select>
 								</div>
 							</div>

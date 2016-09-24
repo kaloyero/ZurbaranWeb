@@ -56,6 +56,7 @@ var ComponentTranslator = new Class(
 						});
 					},
 					showCambiarClave : function(objectType) {
+						console.log("chupala 3");
 						serverManager.showCambiarClave({
 							object : objectType,
 							onSuccess : function(data) {
