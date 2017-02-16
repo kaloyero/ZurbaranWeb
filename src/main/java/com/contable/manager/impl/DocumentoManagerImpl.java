@@ -19,6 +19,7 @@ import com.contable.common.beans.FiltroDocumentoBean;
 import com.contable.common.beans.Mapper;
 import com.contable.common.beans.NumeroBean;
 import com.contable.common.beans.Property;
+import com.contable.common.constants.AuditoriaTipo;
 import com.contable.common.constants.Constants;
 import com.contable.common.constants.ConstantsErrors;
 import com.contable.common.excel.WriteDetalleDocumentoExcel;
@@ -38,6 +39,7 @@ import com.contable.form.DocumentoMovimientoValorPropioForm;
 import com.contable.form.DocumentoMovimientoValorTerceForm;
 import com.contable.form.MonedaForm;
 import com.contable.form.PeriodoForm;
+import com.contable.form.UsuarioForm;
 import com.contable.hibernate.model.Cuenta;
 import com.contable.hibernate.model.Documento;
 import com.contable.hibernate.model.DocumentoAplicacion;
@@ -54,6 +56,7 @@ import com.contable.manager.PeriodoManager;
 import com.contable.mappers.DocumentoMapper;
 import com.contable.mappers.MonedaMapper;
 import com.contable.mappers.NumeracionMapper;
+import com.contable.services.AuditoriaService;
 import com.contable.services.CuentaService;
 import com.contable.services.DocumentoAplicacionService;
 import com.contable.services.DocumentoMovimientoCotizacionService;
@@ -93,6 +96,9 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 
 	@Autowired
 	MonedaService monedaService;
+
+	@Autowired
+	AuditoriaService auditoriaService;
 	
 	@Override
 	protected AbstractService<Documento> getRelatedService() {
@@ -257,9 +263,11 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		/* Guardo las cotizaciones para el documento*/
 		saveDocumentoCotizacionMovimiento(form);
 		
+		/* Guardo en la tabla de auditoria */
+		auditoriaService.saveAuditoria(idDocumento, AuditoriaTipo.NUEVO, form.getUsuario().getId());
+		
 		return res;
 	}
-	
 	
 	private void saveDocumentoCotizacionMovimiento(DocumentoForm form){
 		List<DocumentoMovimientoCotizacion> cotizaciones =	getDocumentoMovimientosCotizaciones(form);
@@ -443,6 +451,10 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		//Obtengo TOTALES
 		setTotalesMovimientosForm(documento, id, documento.getMonedaId(), documento.getCotizacion());
 		
+		
+		/* Obtengo datos de auditoria */
+		documento.setAuditoria(auditoriaService.getAuditoriaByDocumentId(id));
+		
 		return documento;
 	}
 
@@ -516,10 +528,15 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 	}
 
 	@Transactional
-	public ErrorRespuestaBean anularDocumentoById(Integer documentoId) {
+	public ErrorRespuestaBean anularDocumentoById(Integer documentoId,UsuarioForm usuario) {
 		ErrorRespuestaBean respuesta = new ErrorRespuestaBean(true);
+		
+		//Documento a Anular
+		Documento documentoAnular = documentoService.findById(documentoId);
+		/* Guardo en la tabla de auditoria Documento a Anular*/
+		auditoriaService.saveAuditoria(documentoAnular.getId(), AuditoriaTipo.ANULADO, usuario.getId());
 		//Clono el documento que recibo
-		Documento documento = documentoService.clone(documentoService.findById(documentoId));
+		Documento documento = documentoService.clone(documentoAnular);
 
 		/* Nuevo numero de Documento*/
 		documento.setId(0);
@@ -592,7 +609,9 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		/* 	ix. Guardo las cotizaciones de los movimientos */
 			saveAnulacionDocumentoCotizacionMovimiento(documentoId, idDocumentoAnulacion);;
 			
-			
+		/* Guardo en la tabla de auditoria Documento que Anula*/
+		auditoriaService.saveAuditoria(idDocumentoAnulacion, AuditoriaTipo.ANULADOR, usuario.getId());
+
 		return respuesta;
 	}
 
@@ -608,7 +627,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 	}
 	
 	@Transactional
-	public ErrorRespuestaBean eliminarById(int documentoId) {
+	public ErrorRespuestaBean eliminarById(int documentoId,UsuarioForm usuario) {
 		ErrorRespuestaBean respuesta = new ErrorRespuestaBean(true);
 
 		/*	Valido que se sea un id valido 	*/
@@ -670,6 +689,9 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 			respuesta.setError(ConstantsErrors.ELIMINAR_COD_1_ERROR);
 			respuesta.setDescripcion("El documento seleccionado no se ha podido eliminar debido a que otros Documentos hacen referencia al mismo.");
 		}
+		
+		/* Guardo en la tabla de auditoria */
+		auditoriaService.saveAuditoria(documentoId, AuditoriaTipo.ELIMINADO, usuario.getId());
 		
 		return respuesta;
 	}

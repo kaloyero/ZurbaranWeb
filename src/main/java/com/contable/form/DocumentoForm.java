@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.contable.common.beans.FormConfig;
 import com.contable.common.constants.Constants;
+import com.contable.hibernate.model.Auditoria;
 
 /**
  * @author kaloye
@@ -67,7 +68,9 @@ public class DocumentoForm implements FormConfig  {
   	private List<DocumentoAplicacionForm> aplicacionesAplicadas=new ArrayList<DocumentoAplicacionForm>();  	
   	private List<DocumentoMovimientoValorTerceForm> valoresEgreTerce=new ArrayList<DocumentoMovimientoValorTerceForm>();  	;
   	private List<DocumentoMovimientoValorPropioForm> valoresPropio=new ArrayList<DocumentoMovimientoValorPropioForm>();
+  	private List<Auditoria> auditoria =new ArrayList<Auditoria>();
   	
+  	private UsuarioForm usuario;
   	
   	public List<DocumentoAplicacionForm> getAplicaciones() {
 		return aplicaciones;
@@ -378,6 +381,18 @@ public class DocumentoForm implements FormConfig  {
 	}
 	public void setPermiteAnular(String permiteAnular) {
 		this.permiteAnular = permiteAnular;
+	}
+	public UsuarioForm getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(UsuarioForm usuario) {
+		this.usuario = usuario;
+	}
+	public List<Auditoria> getAuditoria() {
+		return auditoria;
+	}
+	public void setAuditoria(List<Auditoria> auditoria) {
+		this.auditoria = auditoria;
 	}
 
 }

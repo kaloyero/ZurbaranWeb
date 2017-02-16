@@ -13,7 +13,7 @@ public class DateUtil {
 
 	static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 	static SimpleDateFormat formatterHour = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	
+	static SimpleDateFormat formatterHour2 = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 	
 	/**
 	 * Recibe un String y devuelve un date  formateado
@@ -50,6 +50,23 @@ public class DateUtil {
 		String resultDate = null; 
 		if (d != null){
 			resultDate = formatter.format(d);
+		}
+
+		return resultDate;
+		
+	}
+	
+	/**
+	 * Recibe un date y devuelve un String formateado
+	 * 
+	 * @param d
+	 * @return
+	 */
+	public synchronized static String convertDateToStringWithHour (Date d){
+		
+		String resultDate = null; 
+		if (d != null){
+			resultDate = formatterHour2.format(d);
 		}
 
 		return resultDate;

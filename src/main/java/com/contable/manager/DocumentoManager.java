@@ -10,6 +10,7 @@ import com.contable.common.beans.FiltroDocumentoBean;
 import com.contable.form.DocumentoAplicacionForm;
 import com.contable.form.DocumentoAplicacionMovimientoForm;
 import com.contable.form.DocumentoForm;
+import com.contable.form.UsuarioForm;
 import com.contable.hibernate.model.Documento;
 
 public interface DocumentoManager extends AbstractManager<Documento,DocumentoForm>{
@@ -67,7 +68,7 @@ public interface DocumentoManager extends AbstractManager<Documento,DocumentoFor
 	 * @param documentoId
 	 * @return
 	 */
-	public ErrorRespuestaBean anularDocumentoById(Integer documentoId);
+	public ErrorRespuestaBean anularDocumentoById(Integer documentoId, UsuarioForm usuario);
 	
 	/**
 	 * Metoddo para exportar excel
@@ -80,7 +81,7 @@ public interface DocumentoManager extends AbstractManager<Documento,DocumentoFor
 	
 	public void exportDocumentoAplicadoExcel(List<DocumentoAplicacionMovimientoForm> documentos,FiltroDocAplicacionBean busqueda);
 	
-	public ErrorRespuestaBean eliminarById(int documentoId);
+	public ErrorRespuestaBean eliminarById(int documentoId, UsuarioForm usuario);
 	
 	/**
 	 * Filtra, busca documentos  Aplicados Movimientos

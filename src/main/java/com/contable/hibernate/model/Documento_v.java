@@ -119,8 +119,10 @@ public class Documento_v implements Serializable {
     
     @Column(name="CantidadAplicaciones",insertable=false, updatable=false)
 	private  Integer cantidadAplicaciones;
+    
+    
 
-        /** Este metodo devuelve la informacion para filtrar	 */
+    /** Este metodo devuelve la informacion para filtrar	 */
 	public static Property fieldEstado() {
 		return new Property("estado",Property.TYPE_CADENA);
 	}

@@ -12,8 +12,7 @@ import com.contable.common.constants.Constants;
 public class FormatUtil {
 
 	static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-	static SimpleDateFormat formatterHour = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	
+	static SimpleDateFormat formatterHour = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 	
 	/**
 	 * Agrega 2 decimales al parametro double

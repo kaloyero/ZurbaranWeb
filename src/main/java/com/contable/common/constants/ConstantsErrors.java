@@ -69,5 +69,6 @@ public interface ConstantsErrors {
 	public static final String  LOGIN_COD_2_ERROR = "Nueva Clave y repetir nueva clave deben ser iguales.";
 	public static final Integer LOGIN_COD_3_COD_ERROR = 20;
 	public static final String  LOGIN_COD_3_ERROR = "Usuario seleccionado incorrecto.";
-
+	public static final Integer LOGIN_COD_4_COD_ERROR = 21;
+	public static final String  LOGIN_COD_4_ERROR = "Debe iniciar sesión nuevamente para realizar esta acción.";
 }

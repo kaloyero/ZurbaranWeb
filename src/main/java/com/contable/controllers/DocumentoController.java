@@ -30,6 +30,7 @@ import com.contable.common.beans.ErrorRespuestaBean;
 import com.contable.common.beans.FiltroDocumentoBean;
 import com.contable.common.beans.NumeroBean;
 import com.contable.common.constants.Constants;
+import com.contable.common.constants.ConstantsErrors;
 import com.contable.common.utils.ConvertionUtil;
 import com.contable.common.utils.DataTable;
 import com.contable.common.utils.DateUtil;
@@ -42,6 +43,7 @@ import com.contable.form.DocumentoValTerceForm;
 import com.contable.form.NumeracionForm;
 import com.contable.form.NumeracionSearch;
 import com.contable.form.PeriodoForm;
+import com.contable.form.UsuarioForm;
 import com.contable.hibernate.model.Documento;
 import com.contable.manager.AdministracionManager;
 import com.contable.manager.BancoManager;
@@ -114,6 +116,7 @@ public class DocumentoController extends AbstractControllerImpl<Documento,Docume
 	}
 	@RequestMapping(value = "/listadoShow", method = RequestMethod.GET)
 	public String showInitListado(Locale locale, Model model,		HttpServletRequest request) {
+
 		List<ConfigBean> listadoAdministraciones =administracionManager.getConfigNameList();
 		List<ConfigBean> listadoMonedas =monedaManager.getConfigNameList(AdministracionManager.CAMPO_TODAS);
 		List<ConfigBean> listadocuentas =cuentaManager.getConfigNameList(AdministracionManager.CAMPO_TODAS);
@@ -219,9 +222,20 @@ public class DocumentoController extends AbstractControllerImpl<Documento,Docume
 	
 	
 	@RequestMapping(value = "/testSave", method = RequestMethod.POST)
-    public @ResponseBody ErrorRespuestaBean saveUser(@RequestBody DocumentoGenericForm[] listado) {
-//    	DocumentoForm header = new DocumentoForm();
-		ErrorRespuestaBean error=documentoManager.guardarNuevo(mapperDocumento.getDocumentoForm(listado));
+    public @ResponseBody ErrorRespuestaBean saveUser(@RequestBody DocumentoGenericForm[] listado, HttpServletRequest request) {
+		
+		UsuarioForm usuario = (UsuarioForm) request.getSession().getAttribute("usuarioInfo");
+		if (usuario == null){
+			ErrorRespuestaBean res=new ErrorRespuestaBean();
+			res.setValido(false);
+			res.setCodError(ConstantsErrors.LOGIN_COD_4_COD_ERROR);
+			res.setError(ConstantsErrors.LOGIN_COD_4_ERROR);
+			res.setDescripcion("No encuentra un usuario logueado en la sesion.");
+			return res;
+		}
+		DocumentoForm form =mapperDocumento.getDocumentoForm(listado);
+		form.setUsuario(usuario);
+		ErrorRespuestaBean error=documentoManager.guardarNuevo(form);
 		return error;
     } 
 	@RequestMapping(value = "/getAplicaciones", method = RequestMethod.POST)
@@ -245,19 +259,37 @@ public class DocumentoController extends AbstractControllerImpl<Documento,Docume
 	}
 	@RequestMapping(value = "/anularDocumentoById/{id}", method = RequestMethod.GET)
 	public @ResponseBody ErrorRespuestaBean anularDocumentoById(Locale locale, Model model,@PathVariable int id, HttpServletRequest request) throws ParseException{
-		ErrorRespuestaBean respuesta =documentoManager.anularDocumentoById(id);
+		UsuarioForm usuario = (UsuarioForm) request.getSession().getAttribute("usuarioInfo");
+		if (usuario == null){
+			ErrorRespuestaBean res=new ErrorRespuestaBean();
+			res.setValido(false);
+			res.setCodError(ConstantsErrors.LOGIN_COD_4_COD_ERROR);
+			res.setError(ConstantsErrors.LOGIN_COD_4_ERROR);
+			res.setDescripcion(ConstantsErrors.LOGIN_COD_4_ERROR);
+			return res;
+		}
+		
+		ErrorRespuestaBean respuesta =documentoManager.anularDocumentoById(id,usuario);
 
 	    return respuesta;
 	}
 	@RequestMapping(value = "/borrarDocumentoById/{id}", method = RequestMethod.GET)
 	public @ResponseBody ErrorRespuestaBean borrarDocumentoById(Locale locale, Model model,@PathVariable int id, HttpServletRequest request) throws ParseException{
-		ErrorRespuestaBean respuesta =documentoManager.eliminarById(id);
+		UsuarioForm usuario = (UsuarioForm) request.getSession().getAttribute("usuarioInfo");
+		if (usuario == null){
+			ErrorRespuestaBean res=new ErrorRespuestaBean();
+			res.setValido(false);
+			res.setCodError(ConstantsErrors.LOGIN_COD_4_COD_ERROR);
+			res.setError(ConstantsErrors.LOGIN_COD_4_ERROR);
+			res.setDescripcion("No encuentra un usuario logueado en la sesion.");
+			return res;
+		}
+		ErrorRespuestaBean respuesta =documentoManager.eliminarById(id,usuario);
 
 	    return respuesta;
 	}
 	@RequestMapping(value = "/getBySearch", method = RequestMethod.POST)
-	public @ResponseBody DataTable getBySearch(@RequestBody FiltroDocumentoBean busqueda){
-		
+	public @ResponseBody DataTable getBySearch(@RequestBody FiltroDocumentoBean busqueda, HttpServletRequest request){
 		//Guardo los Filtros para exportar la lista.
 		setFiltrosDeBusqueda(busqueda); 
 
