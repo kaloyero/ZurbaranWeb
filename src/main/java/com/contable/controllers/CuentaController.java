@@ -25,6 +25,7 @@ import com.contable.common.beans.ConfigBean;
 import com.contable.common.beans.FiltroCuentaBean;
 import com.contable.common.constants.Constants;
 import com.contable.common.utils.ControllerUtil;
+import com.contable.common.utils.ConvertionUtil;
 import com.contable.common.utils.DataTable;
 import com.contable.common.utils.DateUtil;
 import com.contable.common.utils.DocumentoUtil;
@@ -248,7 +249,7 @@ public class CuentaController  extends ConfigurationControllerImpl<Cuenta, Cuent
 		String saldoFinMostrar = " - ";
 		String saldoTotalMovMostrar = " - ";
 		if (StringUtils.isNotBlank(busqueda.getFechaDesde())){
-			//Le resto un día a la fecha inicial
+			//Le resto un dï¿½a a la fecha inicial
 			String fechaDesde = DateUtil.sumarDias(busqueda.getFechaDesde(), -1);
 			
 			Map<String,Double> saldosInicial = cuentaManager.buscarSaldosCuentaParaResumen(busqueda, fechaDesde, "", true);
@@ -301,7 +302,7 @@ public class CuentaController  extends ConfigurationControllerImpl<Cuenta, Cuent
 		Double saldoAcumulado = 0.0;
 		Double saldoAcumuladoMonedaEn = 0.0;
 		if (StringUtils.isNotBlank(busqueda.getFechaDesde())){
-			//Le resto un día a la fecha inicial
+			//Le resto un dï¿½a a la fecha inicial
 			String fechaDesde = DateUtil.sumarDias(busqueda.getFechaDesde(), -1);
 			Map<String,Double> saldos = cuentaManager.buscarSaldosCuentaParaResumen(busqueda, fechaDesde, "", true);
 			
@@ -347,8 +348,9 @@ public class CuentaController  extends ConfigurationControllerImpl<Cuenta, Cuent
     			//Debito - credito
     			row.add(SaldosUtil.getImporte(formRow.getDebitoMostrar(),formRow.getCreditoMostrar()));
         		//saldo acumulado
-        		saldoAcumuladoMonedaEn = SaldosUtil.sumar(saldoAcumuladoMonedaEn, formRow.getDebitoMostrar(), formRow.getCreditoMostrar());
-        		row.add(FormatUtil.formatNegativeNumber(FormatUtil.format2DecimalsStr( saldoAcumuladoMonedaEn )));
+        		//saldoAcumuladoMonedaEn = SaldosUtil.sumar(saldoAcumuladoMonedaEn, formRow.getDebitoMostrar(), formRow.getCreditoMostrar());
+    			saldoAcumuladoMonedaEn =saldoAcumulado/ConvertionUtil.DouValueOf(formRow.getCotizacion());
+    			row.add(FormatUtil.formatNegativeNumber(FormatUtil.format2DecimalsStr( saldoAcumuladoMonedaEn )));
     		}
     		
 

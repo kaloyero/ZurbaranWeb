@@ -1,5 +1,6 @@
 package com.contable.hibernate.dao.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -180,11 +181,58 @@ public class CuentaSaldo_VDaoImpl extends GenericDaoImpl<CuentaSaldo_V, Integer>
 		
 		String queryStr = getQryStrSaldoCuentaActualCuenta(filtro, muestraMoneda);
 		List<CuentaBusquedaForm> result = getExcecuteSaldoCuentaActualCuenta(queryStr,fechaDesde,fechaHasta, muestraMoneda);
-				
+		
+		
 		return result;
 		
 	}
-	
+	public Double getQryCotizBaseMoneda(Integer idMonedaAMostrar,Integer idMonedaDocumento,String fecha,Integer cuentaId,Integer tipoEntidadId,String idEntidad) {
+
+		StringBuilder queryStr = new StringBuilder();
+		Integer entidad=null;
+		
+		
+		queryStr.append (" select cotizacion from documentomovimientoscotizaciones where IdMoneda = "+ idMonedaAMostrar );
+		queryStr.append (" and IdDocumento = (select max(dc.Id) from documentomovimientos mov, documentos dc where mov.Iddocumento=dc.Id" );
+		queryStr.append (" and mov.IdMoneda 	= "+ idMonedaDocumento +" and mov.IdCuenta  	= "+ cuentaId );
+		
+		if (tipoEntidadId ==null){
+			queryStr.append (" and mov.IdTipoEntidad is NULL" );
+
+		}else{
+			queryStr.append (" and mov.IdTipoEntidad  	= "+ tipoEntidadId );
+
+		}
+		
+		
+		
+		if (idEntidad.isEmpty()){
+			queryStr.append (" and mov.IdEntidad is NULL" );
+
+		}else{
+				entidad=Integer.parseInt(idEntidad);
+				queryStr.append (" and mov.IdEntidad 	= "+ entidad  );
+
+			
+		}
+		queryStr.append (" and fechaingreso <= :fechaConvertida)" );
+
+		
+		
+		
+		
+		String queryGeneral =queryStr.toString();
+		Query query = null; 
+		
+		query = getSession().createSQLQuery(queryGeneral.toString()).setDate("fechaConvertida", DateUtil.convertStringToDate(fecha));
+		List<BigDecimal> result = query.list();
+		BigDecimal total=new BigDecimal(1);
+		if (!result.isEmpty() ){
+			total=result.get(0);
+		}
+		return total.doubleValue();
+		
+	}
 	private String getQryStrSaldoCuentaActualCuenta(FiltroCuentaBean filtro,boolean mostrarMonedaEn) {
 
 		StringBuilder queryStr = new StringBuilder();

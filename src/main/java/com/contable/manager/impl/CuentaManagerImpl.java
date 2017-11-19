@@ -186,7 +186,7 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 			for (CuentaBusquedaForm saldo : list) {
 				Double cotizacionMoneda = ConvertionUtil.DouValueOf(saldo.getCotizacion());
 				
-				//Pregunto si la moneda que muestro es igual a la que quiero mostrar. De ser así dejo el mismo valor.
+				//Pregunto si la moneda que muestro es igual a la que quiero mostrar. De ser asï¿½ dejo el mismo valor.
 				if (filtros.getMonedaMuestraId().equals(saldo.getMonedaId())){
 					saldo.setMonedaMostrarCodigo(saldo.getMonedaCodigo());
 					//Dejo mismo valor
@@ -196,7 +196,7 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 					Double cotizacionAConvertir = ConvertionUtil.DouValueOf(saldo.getCotizacionAconvertir());
 					
 					if ( ! mostrarMonedaLocal){
-						//seteo la cotización a la moneda q convierto
+						//seteo la cotizaciï¿½n a la moneda q convierto
 						saldo.setCotizacion(FormatUtil.format2DecimalsStr( cotizacionAConvertir));
 							
 					}
@@ -259,12 +259,11 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 		//Obtengo los movimientos del mes Actual
 		List<CuentaBusquedaForm> movimientosMes = cuentaService.buscarSaldoCuentaActualByFiltros(filtros,fechaDesde, fechaHasta,campoOrden, orderByAsc);
 
-
 		/*Obtengo los saldos del mes anterior*/
 		List<CuentaBusquedaForm> movimientosMesAnterior = cuentaService.buscarSaldoPorFiltros(filtros,fechaDesde, fechaHasta,campoOrden,orderByAsc);
 
 		
-		//Si la lista de movimientos del mes no esta vacía
+		//Si la lista de movimientos del mes no esta vacï¿½a
 		if ( ! movimientosMes.isEmpty() ) {
 			
 			if ( ! movimientosMesAnterior.isEmpty() ) {
@@ -306,7 +305,7 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 			lista.addAll(movimientosMes);
 
 		} else {
-			//Si esta vacía solo agrego las del mes anterior
+			//Si esta vacï¿½a solo agrego las del mes anterior
 			lista = movimientosMesAnterior;
 		}
 		
@@ -337,6 +336,9 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 		}
 		
 		/* MOSTRAR EN MONEDA*/
+		Double cotizacionMonedaBase=cuentaService.cotizacionMonedaBase(filtros,fechaHasta,campoOrden, orderByAsc);
+		Double totalMostraren=ConvertionUtil.DouValueOf(lista.get(0).getSaldo() ) *cotizacionMonedaBase;
+		lista.get(0).setTotalMostrar(FormatUtil.format2DecimalsStr( totalMostraren.toString()));
 		//Actualiza los valores de Mostrar en moneda.
 		if (filtros.isMonedaMuestraCotizaFecha()){
 			muestraEnMonedaNombre(lista, filtros.getMonedaMuestraId());
@@ -362,7 +364,7 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 		if (StringUtils.isNotBlank(filtros.getFechaDesde())){
 			//NOMBRE
 			nombre += "_" +filtros.getFechaDesde() ;
-			//Le resto un día a la fecha inicial
+			//Le resto un dï¿½a a la fecha inicial
 			String fechaDesde = DateUtil.sumarDias(filtros.getFechaDesde(), -1);
 			Map<String,Double> saldos = buscarSaldosCuentaParaResumen(filtros, fechaDesde, "", true);
 			
@@ -431,7 +433,7 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 				CotizacionForm cotForm =cotizacionManager.getUltimaCotizacion(monedaMuestraId); 
 				Double cotizacion = cotForm.getCotizacion();
 				
-				// Si la moneda no tiene cotización no muestra nada.
+				// Si la moneda no tiene cotizaciï¿½n no muestra nada.
 				if (cotForm.getMoneda() == null && (new Double(0.00)).equals(cotizacion)){
 					return;
 				}
@@ -444,7 +446,7 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 					saldo.setMonedaMostrarCodigo(cotForm.getMoneda().getCodigo());
 					saldo.setMonedaMostrarNombre(cotForm.getMoneda().getNombre());
 					String total = Constants.ZERO;
-					//Pregunto si la moneda que muestro es igual a la que quiero mostrar. De ser así dejo el mismo valor.
+					//Pregunto si la moneda que muestro es igual a la que quiero mostrar. De ser asï¿½ dejo el mismo valor.
 					if (monedaMuestraId == saldo.getMonedaId()){
 						total = saldo.getSaldo();
 					} else {

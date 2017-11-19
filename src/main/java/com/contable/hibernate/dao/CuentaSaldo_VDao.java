@@ -14,6 +14,6 @@ public interface CuentaSaldo_VDao extends GenericDao<CuentaSaldo_V, Integer> {
 	
 	public List<CuentaBusquedaForm> buscarSaldoCuentaActualByFiltros (	FiltroCuentaBean filtro, Date fechaDesde, String fechaHasta,String campoOrder, boolean orderByAsc);
 	public List<CuentaBusquedaForm> buscarSaldoAnteriorCuentaByFiltros(	FiltroCuentaBean filtro, String anioMesDesde, String anioMesHasta, String campoOrder, boolean orderByAsc);
-
+	public Double getQryCotizBaseMoneda(Integer idMonedaAMostrar,Integer idMonedaDocumento,String fecha,Integer cuentaId,Integer tipoEntidadId,String idEntidad);
 	
 }

@@ -124,11 +124,11 @@ public class CuentaServiceImpl extends AbstractServiceImpl<Cuenta> implements Cu
 
 		List<CuentaBusquedaForm> list = new ArrayList<CuentaBusquedaForm>();
 		String anioMesDesde = "";
-		/* SI fechaDesde y fecha hasta coinciden en mes y año retorna una lista vacía*/
+		/* SI fechaDesde y fecha hasta coinciden en mes y aï¿½o retorna una lista vacï¿½a*/
 		if (StringUtils.isNotBlank(fechaDesde) && DateUtil.compararMesAnioIguales(fechaDesde, fechaHasta)){
 			return list;
 		}
-		/* SI no se le pasa la fecha retorna una lista vacía*/
+		/* SI no se le pasa la fecha retorna una lista vacï¿½a*/
 		if (StringUtils.isNotBlank(fechaHasta)){
 			//Tomo el mes y el anio de la fecha hasta
 			Date fechaSaldoHasta = DateUtil.convertStringToDate(fechaHasta);
@@ -168,11 +168,11 @@ public class CuentaServiceImpl extends AbstractServiceImpl<Cuenta> implements Cu
 		Date fechaDesde = null;
 		String fechaHasta = fechaFinal;
 		
-		/* SI no se le pasa la fecha retorna una lista vacía*/
+		/* SI no se le pasa la fecha retorna una lista vacï¿½a*/
 		if (StringUtils.isNotBlank(fechaHasta)){
 			/* Pregunto si se cargo una fecha inicial 
 			 * Si se cargo, verifico que no sea el mismo mes que la fecha final. En el caso que no se cargue tomo el primer dia de la fecha final
-			 * Si la fecha inicial es del mismo mes que la fecha final tomo el dìa de la fecha inicial como fecha desde. Si no es el mismo mes que la fecha final tomo el primer dia de la fecha final*/
+			 * Si la fecha inicial es del mismo mes que la fecha final tomo el dï¿½a de la fecha inicial como fecha desde. Si no es el mismo mes que la fecha final tomo el primer dia de la fecha final*/
 			if (DateUtil.compararMesAnioIguales(fechaInicio, fechaHasta)){
 				fechaDesde = DateUtil.convertStringToDate(fechaInicio);
 			} else {
@@ -187,11 +187,21 @@ public class CuentaServiceImpl extends AbstractServiceImpl<Cuenta> implements Cu
 		return list;
 
 	}
+	
+	
+	public Double cotizacionMonedaBase(FiltroCuentaBean filtro, String fecha, String campoOrden, boolean orderByAsc) {
+	
+
+			Double totalMoneda= cuentaSaldo_VDao.getQryCotizBaseMoneda(filtro.getMonedaId(),filtro.getMonedaId(),fecha,filtro.getCuentaId(),filtro.getTipoEntidadId(),filtro.getEntidadId());
+			Double totalMonedaMuestra=cuentaSaldo_VDao.getQryCotizBaseMoneda(filtro.getMonedaMuestraId(),filtro.getMonedaId(),fecha,filtro.getCuentaId(),filtro.getTipoEntidadId(),filtro.getEntidadId());
+			return totalMoneda/totalMonedaMuestra;
+
+	}
 
 //	public List<CuentaBusquedaForm> buscarSaldoCuenta(FiltroCuentaBean filtros, String campoOrden, boolean orderByAsc) {
 //
 //		List<CuentaBusquedaForm> list = new ArrayList<CuentaBusquedaForm>();
-//		/* SI no se le pasa la fecha retorna una lista vacía*/
+//		/* SI no se le pasa la fecha retorna una lista vacï¿½a*/
 //		if (StringUtils.isNotBlank(filtros.getFechaHasta())){
 //			//Tomo el mes y el anio
 //			Date fecha = DateUtil.convertStringToDate(filtros.getFechaHasta());

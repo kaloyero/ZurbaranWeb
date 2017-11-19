@@ -11,6 +11,7 @@ import com.contable.hibernate.model.CuentaMoneda;
 
 public interface CuentaService extends AbstractService<Cuenta>{
 
+	public Double cotizacionMonedaBase(FiltroCuentaBean filtro, String fecha, String campoOrden, boolean orderByAsc);
 	void saveCuentaMoneda(List<CuentaMoneda> dto);
 	
 	void updateCuentaMoneda(List<Integer> idsMonedas, int idCuenta);
