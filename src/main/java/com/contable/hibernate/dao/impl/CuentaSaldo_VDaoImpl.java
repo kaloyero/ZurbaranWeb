@@ -186,6 +186,7 @@ public class CuentaSaldo_VDaoImpl extends GenericDaoImpl<CuentaSaldo_V, Integer>
 		return result;
 		
 	}
+	@Transactional
 	public Double getQryCotizBaseMoneda(Integer idMonedaAMostrar,Integer idMonedaDocumento,String fecha,Integer cuentaId,Integer tipoEntidadId,String idEntidad) {
 
 		StringBuilder queryStr = new StringBuilder();
@@ -196,20 +197,16 @@ public class CuentaSaldo_VDaoImpl extends GenericDaoImpl<CuentaSaldo_V, Integer>
 		queryStr.append (" and IdDocumento = (select max(dc.Id) from documentomovimientos mov, documentos dc where mov.Iddocumento=dc.Id" );
 		queryStr.append (" and mov.IdMoneda 	= "+ idMonedaDocumento +" and mov.IdCuenta  	= "+ cuentaId );
 		
-		if (tipoEntidadId ==null){
-			queryStr.append (" and mov.IdTipoEntidad is NULL" );
-
-		}else{
+		if (tipoEntidadId !=null){
+	
 			queryStr.append (" and mov.IdTipoEntidad  	= "+ tipoEntidadId );
 
 		}
 		
 		
 		
-		if (idEntidad.isEmpty()){
-			queryStr.append (" and mov.IdEntidad is NULL" );
-
-		}else{
+		if (!idEntidad.isEmpty()){
+		
 				entidad=Integer.parseInt(idEntidad);
 				queryStr.append (" and mov.IdEntidad 	= "+ entidad  );
 

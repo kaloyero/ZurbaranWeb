@@ -128,7 +128,7 @@ public class WriteCuentaResumenExcel extends WriteExcel{
 			addCaption(sheet, 0, initRow, "Fecha Ingreso",9);
 			addCaption(sheet, 1, initRow, "Tipo Documento",12);
 	    	addCaption(sheet, 2, initRow, "Numero",10);
-	    	addCaption(sheet, 3, initRow, "Descripción",12);
+	    	addCaption(sheet, 3, initRow, "Descripciï¿½n",12);
 	    	addCaption(sheet, 4, initRow, "Referencia",15);
 	    	addCaption(sheet, 5, initRow, "Cuenta",12);
 	    	addCaption(sheet, 6, initRow, "Tipo Entidad",8);
@@ -190,7 +190,13 @@ public class WriteCuentaResumenExcel extends WriteExcel{
 				    //Debito - credito
 	        		addNumber(sheet, 14, initRow, SaldosUtil.getImporteExcel(form.getDebitoMostrar(),form.getCreditoMostrar()));
 	        		//saldo acumulado
-	        		saldoAcumuladoMonedaEn = SaldosUtil.sumar(saldoAcumuladoMonedaEn, form.getDebitoMostrar(), form.getCreditoMostrar());
+	        		Double cotizacionDouble=0.0;
+	        		if (!form.getCotizacion().isEmpty()&& form.getCotizacion()!=null){
+		        		 cotizacionDouble=Double.valueOf(form.getCotizacion());
+
+	        		}
+	        		saldoAcumuladoMonedaEn =saldoAcumulado/ cotizacionDouble;
+	        		//saldoAcumuladoMonedaEn = SaldosUtil.sumar(saldoAcumuladoMonedaEn, form.getDebitoMostrar(), form.getCreditoMostrar());
 	        		addNumber(sheet, 15, initRow, saldoAcumuladoMonedaEn);
 	    		}
 			  

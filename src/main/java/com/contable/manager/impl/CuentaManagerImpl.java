@@ -201,7 +201,7 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 							
 					}
 					saldo.setMonedaMostrarCodigo(monedaCodigoMostrar);
-					//Calculo los valores
+					
 					saldo.setDebitoMostrar(CalculosUtil.calcularImporteByCOtizacion(ConvertionUtil.DouValueOf(saldo.getDebito()), cotizacionMoneda, cotizacionAConvertir));					
 					saldo.setCreditoMostrar(CalculosUtil.calcularImporteByCOtizacion(ConvertionUtil.DouValueOf(saldo.getCredito()), cotizacionMoneda, cotizacionAConvertir));
 					
@@ -337,8 +337,15 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 		
 		/* MOSTRAR EN MONEDA*/
 		Double cotizacionMonedaBase=cuentaService.cotizacionMonedaBase(filtros,fechaHasta,campoOrden, orderByAsc);
-		Double totalMostraren=ConvertionUtil.DouValueOf(lista.get(0).getSaldo() ) *cotizacionMonedaBase;
-		lista.get(0).setTotalMostrar(FormatUtil.format2DecimalsStr( totalMostraren.toString()));
+		Double totalMostraren=0.0;
+		//Significa que no hay movimientos para el saldo anterior
+		if (!lista.isEmpty()){
+			totalMostraren=ConvertionUtil.DouValueOf(lista.get(0).getSaldo() ) *cotizacionMonedaBase;
+			lista.get(0).setTotalMostrar(FormatUtil.format2DecimalsStr( totalMostraren.toString()));
+
+
+		}
+		 
 		//Actualiza los valores de Mostrar en moneda.
 		if (filtros.isMonedaMuestraCotizaFecha()){
 			muestraEnMonedaNombre(lista, filtros.getMonedaMuestraId());
