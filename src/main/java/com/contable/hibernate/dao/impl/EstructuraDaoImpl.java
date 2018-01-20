@@ -68,25 +68,16 @@ public class EstructuraDaoImpl extends GenericDaoImpl<Estructura, Integer> imple
 			int idAdministracion, boolean fechaDesde, Integer monedaMostrarId){
 		StringBuilder queryStr = new StringBuilder();
 		
+
+		
+		queryStr.append("select  ContenidoNombre,CuentaNombre, EntidadNombre, MonedaCodigo, sdoe.IdDocumento,");
+		queryStr.append("saldo, round(saldo*ifnull(dc.cotizacion,1)/ifnull(dc1.cotizacion,1),2) SaldoMuestra from ( ");
 		queryStr.append("SELECT CodigoContenido ContenidoNombre, ");
 		queryStr.append("NombreCuenta CuentaNombre, ");
-		queryStr.append("NombreEntidad EntidadNombre, ");
-		queryStr.append("CodigoMoneda MonedaCodigo, ");
-		queryStr.append("sum(ImporteMovimiento) Saldo, ");
-		queryStr.append("	  sum(round(em.ImporteMovimiento * ");
-		queryStr.append("em.Cotizacion	/ ");
-		queryStr.append("(case ");
-		queryStr.append("	    when em.IdMoneda = " + monedaMostrarId + " then "); 
-		queryStr.append("em.Cotizacion ");
-		queryStr.append("else ");
-		queryStr.append("dc.Cotizacion ");
-		queryStr.append("end ");
-		queryStr.append(") ");
-		queryStr.append(",2) ");
-		queryStr.append(") SaldoMuestra ");
+		queryStr.append("NombreEntidad EntidadNombre,IdMoneda, ");
+		queryStr.append("CodigoMoneda MonedaCodigo,max(em.IdDocumento) IdDocumento, ");
+		queryStr.append("sum(ImporteMovimiento) Saldo  ");
 		queryStr.append("from estructuramovimientos_v em ");
-		queryStr.append("join documentomovimientoscotizaciones dc on dc.IdDocumento = em.IdDocumento ");
-		queryStr.append(" AND dc.IdMoneda =  " + monedaMostrarId + "  ");
 		queryStr.append("where IdEstructura =  " + idEstructura + "  ");
 		queryStr.append("and FechaMovimiento <= :fechaHasta ");
 		if (fechaDesde){
@@ -96,7 +87,14 @@ public class EstructuraDaoImpl extends GenericDaoImpl<Estructura, Integer> imple
 		queryStr.append("CodigoContenido, ");
 		queryStr.append("NombreCuenta, ");
 		queryStr.append("NombreEntidad, ");
-		queryStr.append("CodigoMoneda ; ");
+		queryStr.append("IdMoneda, ");
+		queryStr.append("CodigoMoneda ) Sdoe ");
+
+		queryStr.append("left join documentomovimientoscotizaciones dc on Sdoe.IdDocumento = dc.IdDocumento AND Sdoe.IdMoneda = dc.IdMoneda ");
+		queryStr.append("left join documentomovimientoscotizaciones dc1 on Sdoe.IdDocumento = dc1.IdDocumento ");
+		queryStr.append("AND dc1.IdMoneda =  "+monedaMostrarId);
+
+		
 		
 		
 		return queryStr.toString();

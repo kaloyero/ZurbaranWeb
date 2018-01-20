@@ -2,10 +2,10 @@ package com.contable.common.constants;
 
 public enum AuditoriaTipo {
 
-	NUEVO("NUEVO","Se creo el documento"),
-	ANULADO("ANULADO","Se anulo el documento"),
-	ANULADOR("ANULADOR","Se creo el Documento anulador"),
-	ELIMINADO("ELIMINADO","Se creo el documento");
+	N("N","Se creo el documento"),
+	A("A","Se anulo el documento"),
+	Z("Z","Se creo el Documento anulador"),
+	E("E","Se elimino el documento");
 	
     private String valor; 
     private String label;

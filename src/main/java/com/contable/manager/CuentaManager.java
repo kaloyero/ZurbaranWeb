@@ -23,6 +23,7 @@ public interface CuentaManager extends ConfigurationManager<Cuenta,CuentaForm>{
 	public Map<String,Double> buscarSaldosCuentaParaResumen(FiltroCuentaBean filtros,String fecha, String campoOrden,boolean orderByAsc);
 	
 	public List<CuentaBusquedaForm> buscarSaldosCuenta(FiltroCuentaBean filtros,String fechaDesde,String fechaHasta, String campoOrden,boolean orderByAsc);
+
 	
 	public void exportSaldoExcel(FiltroCuentaBean filtros);
 	

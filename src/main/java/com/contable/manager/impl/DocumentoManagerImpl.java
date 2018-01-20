@@ -206,12 +206,12 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		form.setPeriodoId(periodo.getId());
 		
 
-		/* ----  Obtengo según el tipo de Documento la IdCuenta y el IdTipoEntidad ---- */
+		/* ----  Obtengo segï¿½n el tipo de Documento la IdCuenta y el IdTipoEntidad ---- */
 		TipoDocumento_v tipoDoc = tipoDocumentoService.findById_v(form.getTipoDocumentoId());
 		form.setTipoEntidadId(tipoDoc.getTipoEntidadId());
 		form.setCuentaId(tipoDoc.getCuentaId());
 		
-		/* ----  Válido que el Numero Ingresado no este Repetido si no es una Anulacion----*/ 
+		/* ----  Vï¿½lido que el Numero Ingresado no este Repetido si no es una Anulacion----*/ 
 		NumeracionMapper mapNum = new NumeracionMapper();
 		NumeroBean numero = mapNum.getEntidad(form);
 		res = numeracionManager.validarNumeroNoRepetido(idAministracion, tipoDoc.getId(),form.getTipoEntidadId(), form.getEntidadId(),numero) ;
@@ -264,7 +264,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		saveDocumentoCotizacionMovimiento(form);
 		
 		/* Guardo en la tabla de auditoria */
-		auditoriaService.saveAuditoria(idDocumento, AuditoriaTipo.NUEVO, form.getUsuario().getId());
+		auditoriaService.saveAuditoria(idDocumento, AuditoriaTipo.N, form.getUsuario().getId());
 		
 		return res;
 	}
@@ -310,7 +310,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 	private ErrorRespuestaBean validacionesPreGuardarNuevo (DocumentoForm form){
 		ErrorRespuestaBean res = new ErrorRespuestaBean(true); 
 		
-		/* Válido que tenga movimientos*/
+		/* Vï¿½lido que tenga movimientos*/
 		if ( 	(form.getAplicaciones() == null || form.getAplicaciones().isEmpty())  &&
 				(form.getImputaciones() == null || form.getImputaciones().isEmpty())  &&
 				(form.getValoresEgreTerce() == null || form.getValoresEgreTerce().isEmpty())  &&
@@ -334,7 +334,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		
 		if ( res.isValido()){
 			/* seleccion de Periodo*/
-			//Valida que la fecha XXX esté dentro de un periodo.
+			//Valida que la fecha XXX estï¿½ dentro de un periodo.
 			res = periodoManager.validaFechaEnPeriodoActual(form.getAdministracion().getId().intValue(), form.getFechaIngreso());
 		}
 		
@@ -402,7 +402,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 	
 	@Transactional
 	public DocumentoForm findDocumentoById(Integer id){
-		// Obtengo la información de Documento
+		// Obtengo la informaciï¿½n de Documento
 		DocumentoForm documento = new DocumentoForm();
 		//Mapper
 		DocumentoMapper mapper = new DocumentoMapper();
@@ -534,16 +534,16 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		//Documento a Anular
 		Documento documentoAnular = documentoService.findById(documentoId);
 		/* Guardo en la tabla de auditoria Documento a Anular*/
-		auditoriaService.saveAuditoria(documentoAnular.getId(), AuditoriaTipo.ANULADO, usuario.getId());
+		auditoriaService.saveAuditoria(documentoAnular.getId(), AuditoriaTipo.A, usuario.getId());
 		//Clono el documento que recibo
 		Documento documento = documentoService.clone(documentoAnular);
 
 		/* Nuevo numero de Documento*/
 		documento.setId(0);
 		
-		/* Válido que no sea Aplicado por otro documento. */
+		/* Vï¿½lido que no sea Aplicado por otro documento. */
 		if (documentoAplicacionService.tieneAplicaionDeOtroDocumento(documentoId)){
-			/* Válido que otro si otro documento lo aplica, en el caso que los TOTALES aplicados sea 0 (cero), PUEDE ANULAR */
+			/* Vï¿½lido que otro si otro documento lo aplica, en el caso que los TOTALES aplicados sea 0 (cero), PUEDE ANULAR */
 			if (documentoAplicacionService.sumaTotalesAplicadosAlDocumento(documentoId) != 0){
 				respuesta.setValido(false);
 				respuesta.setCodError(ConstantsErrors.ANULAR_COD_1_COD_ERROR);
@@ -563,12 +563,12 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		String tipoMovimientoInvertido = DocumentoUtil.invertirTipoDeMovimiento(documento.getTipoMovimiento());
 		documento.setTipoMovimiento(tipoMovimientoInvertido); 		
 		 
-		/*	iii.IdDocumentoAnulaa – IdDocumento que se anulo */
+		/*	iii.IdDocumentoAnulaa ï¿½ IdDocumento que se anulo */
 		documento.setDocumentoAnulaaId(documentoId);
 		
-		/*	iv.	Fecha Real – Fecha del dia
-		 *	v.	Fecha Ingreso – Fecha del dia
-		 *	vi.	Fecha Vencimiento – Fecha de Dia */
+		/*	iv.	Fecha Real ï¿½ Fecha del dia
+		 *	v.	Fecha Ingreso ï¿½ Fecha del dia
+		 *	vi.	Fecha Vencimiento ï¿½ Fecha de Dia */
 		//			ent.setFechaIngreso(DateUtil.convertStringToDate(form.getFechaIngreso()));
 
 		//documento.setFechaIngreso(DateUtil.getDateToday());
@@ -602,7 +602,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		/* ANULO Cancelaciones */
 			anulaDocumentoAplicaciones(documentoId, idDocumentoAnulacion);
 		
-		/*	ii.	IdDocumentoAnuladoPor – Actualizar en Documento anulado con IdDocumento */
+		/*	ii.	IdDocumentoAnuladoPor ï¿½ Actualizar en Documento anulado con IdDocumento */
 			documentoService.actualizarEstadoDocumento(documentoId, Constants.DOCUMENTO_ESTADO_ANULADO);	
 			documentoService.actualizarDocumentoAnuladoPor(documentoId, idDocumentoAnulacion);
 
@@ -610,7 +610,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 			saveAnulacionDocumentoCotizacionMovimiento(documentoId, idDocumentoAnulacion);;
 			
 		/* Guardo en la tabla de auditoria Documento que Anula*/
-		auditoriaService.saveAuditoria(idDocumentoAnulacion, AuditoriaTipo.ANULADOR, usuario.getId());
+		auditoriaService.saveAuditoria(idDocumentoAnulacion, AuditoriaTipo.Z, usuario.getId());
 
 		return respuesta;
 	}
@@ -632,7 +632,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 
 		/*	Valido que se sea un id valido 	*/
 		if (documentoId < 1){
-			respuesta.setDescripcion("Id no válido.");
+			respuesta.setDescripcion("Id no vï¿½lido.");
 			respuesta.setValido(false);
 			return respuesta;
 		}
@@ -644,7 +644,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		
 		
 		/*	VALIDACION PERIODO -> Validar que el documento que se quiere eliminar pertenezca al periodo actual abierto.	*/
-		//Valida que la fecha Actual esté dentro de un periodo.
+		//Valida que la fecha Actual estï¿½ dentro de un periodo.
 		respuesta = periodoManager.validaFechaEnPeriodoActual(documento.getAdministracion().getId(), documento.getFechaIngreso());
 		//Si no es el periodo actual
 		if (! respuesta.isValido()){
@@ -652,7 +652,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		}
 
 		/* 	VALIDACION TIPO DE NUMERACION AUTOMATICA 
-			-  Verificar que no se haya ingresado un documento con numeración siguiente
+			-  Verificar que no se haya ingresado un documento con numeraciï¿½n siguiente
 			en este caso no se borra. */
 		//Obtengo el Tipo de Documento
 		TipoDocumento tipoDoc = tipoDocumentoService.findById(documento.getTipoDocumentoId());
@@ -691,7 +691,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 		}
 		
 		/* Guardo en la tabla de auditoria */
-		auditoriaService.saveAuditoria(documentoId, AuditoriaTipo.ELIMINADO, usuario.getId());
+		auditoriaService.saveAuditoria(documentoId, AuditoriaTipo.E, usuario.getId());
 		
 		return respuesta;
 	}
@@ -852,7 +852,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 			for (DocumentoAplicacionMovimientoForm row : list) {
 				//Cotizacion x la que muestro el valor
 				//row.setCotizacion(FormatUtil.format2DecimalsStr(cotizacionAConvertir));
-				//Pregunto si la moneda que muestro es igual a la que quiero mostrar. De ser así dejo el mismo valor.
+				//Pregunto si la moneda que muestro es igual a la que quiero mostrar. De ser asï¿½ dejo el mismo valor.
 				if (filtros.getMonedaMuestraId() ==  filtros.getMovMonedaId()){
 					row.setMonedaMostrarCodigo(row.getMovMonedaCodigo());
 					//Dejo mismo valor
@@ -880,7 +880,7 @@ public class DocumentoManagerImpl extends AbstractManagerImpl<Documento,Document
 			for (DocumentoAplicacionMovimientoForm row : list) {
 				//Cotizacion x la que muestro el valor
 				//row.setCotizacion(FormatUtil.format2DecimalsStr(cotizacionAConvertir));
-				//Pregunto si la moneda que muestro es igual a la que quiero mostrar. De ser así dejo el mismo valor.
+				//Pregunto si la moneda que muestro es igual a la que quiero mostrar. De ser asï¿½ dejo el mismo valor.
 				if (filtros.getMonedaMuestraId().equals(row.getDocAplicaMonedaId())){
 					//Dejo mismo valor
 					row.setImporteMostrarTotal(row.getImporteTotal());

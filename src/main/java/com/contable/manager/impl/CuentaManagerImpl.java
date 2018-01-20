@@ -335,15 +335,18 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 			lista = saldosSinZero;
 		}
 		
-		/* MOSTRAR EN MONEDA*/
-		Double cotizacionMonedaBase=cuentaService.cotizacionMonedaBase(filtros,fechaHasta,campoOrden, orderByAsc);
-		Double totalMostraren=0.0;
-		//Significa que no hay movimientos para el saldo anterior
-		if (!lista.isEmpty()){
-			totalMostraren=ConvertionUtil.DouValueOf(lista.get(0).getSaldo() ) *cotizacionMonedaBase;
-			lista.get(0).setTotalMostrar(FormatUtil.format2DecimalsStr( totalMostraren.toString()));
+		for (CuentaBusquedaForm saldo : lista) {
+			/* MOSTRAR EN MONEDA*/
+			filtros.setEntidadId(saldo.getEntidadId().toString());
+			filtros.setTipoEntidadId(saldo.getTipoEntidadId());
+			Double cotizacionMonedaBase=cuentaService.cotizacionMonedaBase(filtros,fechaHasta,campoOrden, orderByAsc);
+			Double totalMostraren=0.0;
+			//Significa que no hay movimientos para el saldo anterior
+				totalMostraren=ConvertionUtil.DouValueOf(saldo.getSaldo() ) *cotizacionMonedaBase;
+				saldo.setTotalMostrar(FormatUtil.format2DecimalsStr( totalMostraren.toString()));
 
 
+			
 		}
 		 
 		//Actualiza los valores de Mostrar en moneda.
@@ -355,7 +358,126 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 
 		return lista;
 	}
+	
+	@Transactional
+	public List<CuentaBusquedaForm> buscarSaldosCuentaConCotizacion(FiltroCuentaBean filtros,String fechaDesde,String fechaHasta, String campoOrden,boolean orderByAsc){
+		/* LISTA Q VOY A MOSTRAR */
+		List<CuentaBusquedaForm> lista =  new ArrayList<CuentaBusquedaForm>();
+		boolean mostrarMonedaEn = false;
 		
+		// Si esta seleccionado la moneda que se muestra
+		if (filtros.getMonedaMuestraId() != null && filtros.getMonedaMuestraId() > 0){
+			mostrarMonedaEn = true;
+		}
+		
+		if (StringUtils.isBlank(fechaHasta)){
+			//Si no se le pasa la fecha devuelve una lista vacia
+			return lista;
+		}
+		
+		//Obtengo los movimientos del mes Actual
+		List<CuentaBusquedaForm> movimientosMes = cuentaService.buscarSaldoCuentaActualByFiltros(filtros,fechaDesde, fechaHasta,campoOrden, orderByAsc);
+
+		/*Obtengo los saldos del mes anterior*/
+		List<CuentaBusquedaForm> movimientosMesAnterior = cuentaService.buscarSaldoPorFiltros(filtros,fechaDesde, fechaHasta,campoOrden,orderByAsc);
+
+		
+		//Si la lista de movimientos del mes no esta vac�a
+		if ( ! movimientosMes.isEmpty() ) {
+			
+			if ( ! movimientosMesAnterior.isEmpty() ) {
+				//itereo la lista de movimientos de mes actual
+				for (CuentaBusquedaForm mesAnt : movimientosMesAnterior) {			
+					boolean agregar = true;
+					//itereo la lista de movimientos de mes actual buscando si alguno pertenece al periodo
+					for (CuentaBusquedaForm mesAct : movimientosMes) {
+						//Pregunto si todos los campos por los que agrupo son iguales
+						if ( (mesAct.getAdministracionId() == null && mesAnt.getAdministracionId() == null) || (mesAct.getAdministracionId().equals(mesAnt.getAdministracionId()))){
+							if ( (mesAct.getCuentaId() == null && mesAnt.getCuentaId() == null) || ( mesAct.getCuentaId().equals(mesAnt.getCuentaId()))){
+								if ( (mesAct.getTipoEntidadId() == null && mesAnt.getTipoEntidadId() == null) || (mesAct.getTipoEntidadId().equals(mesAnt.getTipoEntidadId()))){
+									if ( (mesAct.getEntidadId() == null && mesAnt.getEntidadId() == null) || (mesAct.getEntidadId().equals(mesAnt.getEntidadId()))){
+										if ( (mesAct.getMonedaId() == null && mesAnt.getMonedaId() == null) || (mesAct.getMonedaId().equals(mesAnt.getMonedaId()))){	
+											
+											//Si esta el saldo, lo actualizo 
+											mesAct.setSaldo(FormatUtil.format2DecimalsStr(ConvertionUtil.DouValueOf(mesAct.getSaldo()) + ConvertionUtil.DouValueOf(mesAnt.getSaldo())));
+											if (mostrarMonedaEn){
+												//Moneda en que se muestra
+												mesAct.setTotalMostrar(FormatUtil.format2DecimalsStr(ConvertionUtil.DouValueOf(mesAct.getTotalMostrar()) + ConvertionUtil.DouValueOf(mesAnt.getTotalMostrar())));	
+											}
+											//existe, NO lo agrego
+											agregar = false;				
+										}
+									}
+								}
+							}
+						}		
+					}
+					//Si luego de iterar los movimientos del mes actual, el saldo no esta en la lista lo agrego
+					if (agregar){
+						//Agrego saldo nuevo
+						lista.add(mesAnt);
+					}
+				}
+			}
+
+			//Agrego los registros de mes actual a la tabla
+			lista.addAll(movimientosMes);
+
+		} else {
+			//Si esta vac�a solo agrego las del mes anterior
+			lista = movimientosMesAnterior;
+		}
+		
+		
+//		/* Consulta los saldos */
+//		lista = cuentaService.buscarSaldoCuenta(filtros, campoOrden, orderByAsc);
+
+		/* No muestro los saldos en ZERO*/
+		
+		if (filtros.isMostrarSaldosZero() == false){
+			List<CuentaBusquedaForm> saldosSinZero = new ArrayList<CuentaBusquedaForm>();
+			for (CuentaBusquedaForm saldo : lista) {
+				if (filtros.getMonedaMuestraId() != null && filtros.getMonedaMuestraId() > 1){
+					if (ConvertionUtil.DouValueOf(saldo.getSaldo()).doubleValue() != 0.0 || ConvertionUtil.DouValueOf(saldo.getTotalMostrar()).doubleValue() != 0.0  ){
+						//si el saldo es diferente de zero lo agrego a la lista temporal
+						saldosSinZero.add(saldo);
+					}
+				} else {
+					if (ConvertionUtil.DouValueOf(saldo.getSaldo()).doubleValue() != 0.0  ){
+						//si el saldo es diferente de zero lo agrego a la lista temporal
+						saldosSinZero.add(saldo);
+					}
+				}
+				
+				
+			}
+			lista = saldosSinZero;
+		}
+		for (CuentaBusquedaForm saldo : lista) {
+			/* MOSTRAR EN MONEDA*/
+			filtros.setEntidadId(saldo.getEntidadId().toString());
+			filtros.setTipoEntidadId(saldo.getTipoEntidadId());
+			Double cotizacionMonedaBase=cuentaService.cotizacionMonedaBase(filtros,fechaHasta,campoOrden, orderByAsc);
+			Double totalMostraren=0.0;
+			//Significa que no hay movimientos para el saldo anterior
+				totalMostraren=ConvertionUtil.DouValueOf(saldo.getSaldo() ) *cotizacionMonedaBase;
+				saldo.setTotalMostrar(FormatUtil.format2DecimalsStr( totalMostraren.toString()));
+
+
+			
+		}
+	
+		 
+		//Actualiza los valores de Mostrar en moneda.
+		if (filtros.isMonedaMuestraCotizaFecha()){
+			muestraEnMonedaNombre(lista, filtros.getMonedaMuestraId());
+		} else {
+			muestraEnMoneda(lista, filtros.getMonedaMuestraId());	
+		}
+
+		return lista;
+	}
+	
 	public void exportResumenExcel(FiltroCuentaBean filtros) {
 		String nombre = "ResumenDeCuenta_";
 		String cuentaNombre = getNombreCuenta(filtros.getCuentaId());
