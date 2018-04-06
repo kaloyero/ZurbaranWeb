@@ -337,8 +337,15 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 		
 		for (CuentaBusquedaForm saldo : lista) {
 			/* MOSTRAR EN MONEDA*/
-			filtros.setEntidadId(saldo.getEntidadId().toString());
-			filtros.setTipoEntidadId(saldo.getTipoEntidadId());
+		
+			if (saldo.getEntidadId()!=null){
+				filtros.setEntidadId(saldo.getEntidadId().toString());
+
+			}
+			if (saldo.getTipoEntidadId()!=null){
+				filtros.setTipoEntidadId(saldo.getTipoEntidadId());
+
+			}
 			Double cotizacionMonedaBase=cuentaService.cotizacionMonedaBase(filtros,fechaHasta,campoOrden, orderByAsc);
 			Double totalMostraren=0.0;
 			//Significa que no hay movimientos para el saldo anterior

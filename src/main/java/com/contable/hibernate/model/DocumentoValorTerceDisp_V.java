@@ -57,7 +57,7 @@ public class DocumentoValorTerceDisp_V implements Serializable {
 	@Column(name = "TipoentidadNombre",updatable=false,insertable=false)
 	private  String tipoEntidadNombre;
 
-	@Column(name = "NonedaNombre",updatable=false,insertable=false)
+	@Column(name = "MonedaNombre",updatable=false,insertable=false)
 	private  String monedaNombre;
 
 

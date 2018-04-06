@@ -205,7 +205,7 @@ public class CuentaSaldo_VDaoImpl extends GenericDaoImpl<CuentaSaldo_V, Integer>
 		
 		
 		
-		if (!idEntidad.isEmpty()){
+		if (idEntidad!=null && !idEntidad.isEmpty() ){
 		
 				entidad=Integer.parseInt(idEntidad);
 				queryStr.append (" and mov.IdEntidad 	= "+ entidad  );
