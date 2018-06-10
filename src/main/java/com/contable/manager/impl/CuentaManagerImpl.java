@@ -346,8 +346,13 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 				filtros.setTipoEntidadId(saldo.getTipoEntidadId());
 
 			}
+			
 			//Pisamos el filtro de MonedaId por el MonedaId del registro (Para TODAS o por si no elige nada)
 			filtros.setMonedaId(saldo.getMonedaId());
+			//Pisamos el filtro de CuentaId por el CuentaId del registro (por si no elige nada)
+
+			filtros.setCuentaId(saldo.getCuentaId());
+
 			Double cotizacionMonedaBase=cuentaService.cotizacionMonedaBase(filtros,fechaHasta,campoOrden, orderByAsc);
 			Double totalMostraren=0.0;
 			//Significa que no hay movimientos para el saldo anterior
