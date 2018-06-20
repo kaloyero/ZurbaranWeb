@@ -188,7 +188,20 @@ public class CuentaServiceImpl extends AbstractServiceImpl<Cuenta> implements Cu
 
 	}
 	
+	public List<CuentaBusquedaForm> buscarSaldoCuentaByFiltros(FiltroCuentaBean filtro, String fechaInicio, String fechaFinal, String campoOrden, boolean orderByAsc) {
+		List<CuentaBusquedaForm> list = new ArrayList<CuentaBusquedaForm>();
+
+		list = cuentaSaldo_VDao.buscarSaldoCuentaActualByFiltros(filtro, DateUtil.convertStringToDate(fechaInicio), fechaFinal, campoOrden, orderByAsc);
+
 	
+		return list;
+
+	}
+	
+	/* Esto nos devuelve la cotizacion a la fecha fin
+	 * (non-Javadoc)
+	 * @see com.contable.services.CuentaService#cotizacionMonedaBase(com.contable.common.beans.FiltroCuentaBean, java.lang.String, java.lang.String, boolean)
+	 */
 	public Double cotizacionMonedaBase(FiltroCuentaBean filtro, String fecha, String campoOrden, boolean orderByAsc) {
 	
 

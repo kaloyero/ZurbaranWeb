@@ -27,4 +27,7 @@ public interface CuentaService extends AbstractService<Cuenta>{
 	public List<CuentaBusquedaForm> buscarSaldoPorFiltros(FiltroCuentaBean filtros, String fechaDesde, String fechaHasta, String campoOrden, boolean orderByAsc);
 	
 	public List<CuentaBusquedaForm> buscarSaldoCuentaActualByFiltros(FiltroCuentaBean filtro, String fechaInicio, String fechaFinal, String campoOrden, boolean orderByAsc);
+	public List<CuentaBusquedaForm> buscarSaldoCuentaByFiltros(FiltroCuentaBean filtro, String fechaInicio, String fechaFinal, String campoOrden, boolean orderByAsc);
+
+
 }

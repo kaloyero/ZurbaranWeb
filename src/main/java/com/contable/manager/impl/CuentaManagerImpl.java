@@ -1,6 +1,7 @@
 package com.contable.manager.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -244,6 +245,7 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 	public List<CuentaBusquedaForm> buscarSaldosCuenta(FiltroCuentaBean filtros,String fechaDesde,String fechaHasta, String campoOrden,boolean orderByAsc){
 		/* LISTA Q VOY A MOSTRAR */
 		List<CuentaBusquedaForm> lista =  new ArrayList<CuentaBusquedaForm>();
+		List<CuentaBusquedaForm> movimientosMesAnterior = new ArrayList<CuentaBusquedaForm>();
 		boolean mostrarMonedaEn = false;
 		
 		// Si esta seleccionado la moneda que se muestra
@@ -259,9 +261,22 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 		//Obtengo los movimientos del mes Actual
 		List<CuentaBusquedaForm> movimientosMes = cuentaService.buscarSaldoCuentaActualByFiltros(filtros,fechaDesde, fechaHasta,campoOrden, orderByAsc);
 
-		/*Obtengo los saldos del mes anterior*/
-		List<CuentaBusquedaForm> movimientosMesAnterior = cuentaService.buscarSaldoPorFiltros(filtros,fechaDesde, fechaHasta,campoOrden,orderByAsc);
+		if (fechaDesde.startsWith("01")||(fechaDesde=="")){
+			/*Obtengo los saldos del mes anterior*/
+		      movimientosMesAnterior = cuentaService.buscarSaldoPorFiltros(filtros,fechaDesde, fechaHasta,campoOrden,orderByAsc);
+		}else {
+			
+			String ultimoDiaMes=DateUtil.convertDateToString(DateUtil.getUltimoDiaMes(fechaDesde));
+			movimientosMesAnterior = cuentaService.buscarSaldoCuentaByFiltros(filtros,fechaDesde,ultimoDiaMes ,campoOrden, orderByAsc);
+			int diferenciaMeses=DateUtil.getDiferenciaMeses(DateUtil.convertStringToDate(fechaDesde),DateUtil.convertStringToDate(fechaHasta));
+			if (diferenciaMeses>1){
+				  Date primerDiaMesSiguiente=DateUtil.getPrimerDiaMes(DateUtil.getMesSiguiente(DateUtil.convertStringToDate(fechaDesde )));
+			      movimientosMesAnterior.addAll(cuentaService.buscarSaldoPorFiltros(filtros,DateUtil.convertDateToString(primerDiaMesSiguiente), fechaHasta,campoOrden,orderByAsc));
 
+			}
+		}
+		
+		
 		
 		//Si la lista de movimientos del mes no esta vac�a
 		if ( ! movimientosMes.isEmpty() ) {
@@ -352,7 +367,7 @@ public class CuentaManagerImpl extends ConfigurationManagerImpl<Cuenta,CuentaFor
 			//Pisamos el filtro de CuentaId por el CuentaId del registro (por si no elige nada)
 
 			filtros.setCuentaId(saldo.getCuentaId());
-
+			//
 			Double cotizacionMonedaBase=cuentaService.cotizacionMonedaBase(filtros,fechaHasta,campoOrden, orderByAsc);
 			Double totalMostraren=0.0;
 			//Significa que no hay movimientos para el saldo anterior

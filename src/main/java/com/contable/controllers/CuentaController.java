@@ -349,7 +349,12 @@ public class CuentaController  extends ConfigurationControllerImpl<Cuenta, Cuent
     			row.add(SaldosUtil.getImporte(formRow.getDebitoMostrar(),formRow.getCreditoMostrar()));
         		//saldo acumulado
         		//saldoAcumuladoMonedaEn = SaldosUtil.sumar(saldoAcumuladoMonedaEn, formRow.getDebitoMostrar(), formRow.getCreditoMostrar());
-    			saldoAcumuladoMonedaEn =saldoAcumulado/ConvertionUtil.DouValueOf(formRow.getCotizacion());
+    			if (busqueda.getMonedaId()!=busqueda.getMonedaMuestraId()){
+        			saldoAcumuladoMonedaEn =saldoAcumulado/ConvertionUtil.DouValueOf(formRow.getCotizacion());
+    			}else{
+        			saldoAcumuladoMonedaEn =saldoAcumulado;
+
+    			}
     			row.add(FormatUtil.formatNegativeNumber(FormatUtil.format2DecimalsStr( saldoAcumuladoMonedaEn )));
     		}
     		

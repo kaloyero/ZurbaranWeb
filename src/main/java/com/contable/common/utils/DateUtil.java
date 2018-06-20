@@ -229,6 +229,16 @@ public class DateUtil {
         return cal.getTime();
     }
     
+   public synchronized static Date getUltimoDiaMes(Date fch) {
+    	
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(fch);
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+        return cal.getTime();
+    }
+    
+ 
     public synchronized static Date getPrimerDiaMes(String fch) {
     	if (StringUtils.isBlank(fch)){
     		return null;
@@ -236,7 +246,12 @@ public class DateUtil {
         return getPrimerDiaMes(convertStringToDate(fch));
     }
     
-    
+    public synchronized static Date getUltimoDiaMes(String fch) {
+    	if (StringUtils.isBlank(fch)){
+    		return null;
+    	}
+        return getUltimoDiaMes(convertStringToDate(fch));
+    }
     public synchronized static int getHora(Date fch) {
     	DateFormat hourFormat = new SimpleDateFormat("HH");
     	return Integer.parseInt(hourFormat.format(fch));
@@ -295,5 +310,21 @@ public class DateUtil {
     	} else {
         	return minutes % 60;	
     	}
+    }
+    public synchronized static int getDiferenciaMeses(Date startDate,Date endDate ){
+    	Calendar startCalendar = new GregorianCalendar();
+    	startCalendar.setTime(startDate);
+    	Calendar endCalendar = new GregorianCalendar();
+    	endCalendar.setTime(endDate);
+
+    	int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
+    	int diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
+    	return diffMonth;
+    }
+    public synchronized static Date getMesSiguiente(Date fecha ){
+    	Calendar calendar = new GregorianCalendar();
+    	calendar.setTime(fecha);
+    	calendar.add(Calendar.MONTH, 1);
+        return calendar.getTime();
     }
 }
