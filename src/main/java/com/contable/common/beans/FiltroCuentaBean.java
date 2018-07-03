@@ -2,7 +2,7 @@ package com.contable.common.beans;
 
 
 
-public class FiltroCuentaBean {
+public class FiltroCuentaBean  implements Cloneable{
 
 	private  Integer 	administracionId ;
 	
@@ -16,7 +16,7 @@ public class FiltroCuentaBean {
 	private  String 	entidadId ;
 	private  Integer 	monedaId ;
 	private  Integer 	monedaMuestraId ;
-	//Es true si filtra por la fecha de cotización del movimiento. Si es false toma la cotización al dia de la fecha.
+	//Es true si filtra por la fecha de cotizaciï¿½n del movimiento. Si es false toma la cotizaciï¿½n al dia de la fecha.
 	private  boolean 	monedaMuestraCotizaFecha = true ;
 	private  boolean 	mostrarSaldosZero = true ;
 	private  Integer	anio;
@@ -169,6 +169,9 @@ public class FiltroCuentaBean {
 	}
 
 
-	
+    public FiltroCuentaBean clone() throws CloneNotSupportedException{
+    	FiltroCuentaBean clon = (FiltroCuentaBean) super.clone();
+        return clon;
+   }
 
 }

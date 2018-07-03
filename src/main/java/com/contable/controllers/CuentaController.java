@@ -234,7 +234,14 @@ public class CuentaController  extends ConfigurationControllerImpl<Cuenta, Cuent
 	}
 	@RequestMapping(value = "/getBySearchSaldosCuentaForResumen", method = RequestMethod.POST)
 	public @ResponseBody List getBySearchForResumen(@RequestBody FiltroCuentaBean busqueda){
-
+		//Se usa este clon,porque el filtro de busqueda queda sucio luego de su uso
+		FiltroCuentaBean clonDelFiltro = null;
+		try {
+			 clonDelFiltro=busqueda.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Double saldoIniNum = 0.0;
 		Double saldoFinNum = 0.0;
 		Double saldoTotalMovNum = 0.0;
@@ -259,7 +266,7 @@ public class CuentaController  extends ConfigurationControllerImpl<Cuenta, Cuent
 			saldoIniMostrarNum = saldosInicial.get(Constants.CUENTA_RESUMEN_SALDO_MONEDA_EN);
 			saldoIniMostrar = FormatUtil.format2DecimalsStr(saldoIniMostrarNum);
 		}
-		Map<String,Double> saldosFinal = cuentaManager.buscarSaldosCuentaParaResumen(busqueda, busqueda.getFechaHasta(), "", true);
+		Map<String,Double> saldosFinal = cuentaManager.buscarSaldosCuentaParaResumen(clonDelFiltro,clonDelFiltro.getFechaHasta(), "", true);
 		saldoFinNum = saldosFinal.get(Constants.CUENTA_RESUMEN_SALDO);
 		saldoFin = FormatUtil.format2DecimalsStr(saldoFinNum);
 		saldoTotalMovNum = saldoFinNum - saldoIniNum;
