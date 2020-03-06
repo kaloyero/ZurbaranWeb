@@ -75,7 +75,8 @@ public class ChequeraManagerImpl extends ConfigurationManagerImpl<Chequera,Chequ
 	public ErrorRespuestaBean guardarNuevo(ChequeraForm form){
 		ErrorRespuestaBean res = new ErrorRespuestaBean(true);
 		
-		Chequera chequeraUltima = chequeraService.getChequeByCuentaEntidad(form.getAdministracion().getId(),form.getCuentaId(),form.getEntidadId(),form.getMoneda().getId());
+		//Se comenta lo siguiente el 6 de Marzo 2020 .Esta validacion no va mas
+		/*Chequera chequeraUltima = chequeraService.getChequeByCuentaEntidad(form.getAdministracion().getId(),form.getCuentaId(),form.getEntidadId(),form.getMoneda().getId());
 		if (chequeraUltima != null){
 			if (form.getNumeroIni() <= chequeraUltima.getNumeroFin()){
 				res.setValido(false);
@@ -84,7 +85,7 @@ public class ChequeraManagerImpl extends ConfigurationManagerImpl<Chequera,Chequ
 				res.setDescripcion("El número inicial debe ser mayor al de la última chequera.");
 				return res;
 			}
-		}
+		}*/
 		//Guarda
 		chequeraService.save(getMapper().getEntidad(form));
 		
